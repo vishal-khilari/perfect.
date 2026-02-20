@@ -1,0 +1,231 @@
+@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Sans:wght@300;400;500&family=Courier+Prime&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --void: #0e0e0e;
+  --dust: #1a1a1a;
+  --ash: #2a2a2a;
+  --mist: #3d3d3d;
+  --pale: #888888;
+  --ghost: #b0b0b0;
+  --whisper: #f1f1f1;
+  --rain: #6b7f8f;
+  --static: #7a7a8a;
+  --silence: #8f8f7a;
+  --night: #4a5a6a;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 18px;
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--void);
+  color: var(--whisper);
+  font-family: 'DM Sans', system-ui, sans-serif;
+  font-weight: 300;
+  min-height: 100vh;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* ── Grain texture overlay ───────────────────────────────────────────── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: -50%;
+  width: 200%;
+  height: 200%;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+  opacity: 0.035;
+  pointer-events: none;
+  z-index: 9999;
+  animation: grain 8s steps(10) infinite;
+}
+
+@keyframes grain {
+  0%, 100% { transform: translate(0, 0); }
+  10% { transform: translate(-2%, -3%); }
+  20% { transform: translate(3%, 2%); }
+  30% { transform: translate(-1%, 4%); }
+  40% { transform: translate(4%, -1%); }
+  50% { transform: translate(-3%, 3%); }
+  60% { transform: translate(2%, -4%); }
+  70% { transform: translate(-4%, 1%); }
+  80% { transform: translate(1%, -2%); }
+  90% { transform: translate(-2%, 3%); }
+}
+
+/* ── Beetle silhouette watermark ─────────────────────────────────────── */
+.beetle-watermark {
+  position: fixed;
+  bottom: 5vh;
+  right: 5vw;
+  width: 180px;
+  height: 180px;
+  opacity: 0.025;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ── Typography ──────────────────────────────────────────────────────── */
+h1, h2, h3 {
+  font-family: 'EB Garamond', Georgia, serif;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+}
+
+h1 { font-size: clamp(2rem, 5vw, 3.5rem); }
+h2 { font-size: clamp(1.4rem, 3vw, 2rem); }
+h3 { font-size: clamp(1.1rem, 2vw, 1.4rem); }
+
+p {
+  line-height: 1.8;
+  color: var(--ghost);
+}
+
+/* ── Reading content ─────────────────────────────────────────────────── */
+.reading-body {
+  font-family: 'EB Garamond', Georgia, serif;
+  font-size: 1.15rem;
+  line-height: 1.9;
+  color: var(--ghost);
+  white-space: pre-wrap;
+}
+
+/* ── Links ───────────────────────────────────────────────────────────── */
+a {
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+/* ── Scrollbar ───────────────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 2px; }
+::-webkit-scrollbar-track { background: var(--void); }
+::-webkit-scrollbar-thumb { background: var(--ash); }
+
+/* ── Selection ───────────────────────────────────────────────────────── */
+::selection {
+  background: rgba(107, 127, 143, 0.3);
+  color: var(--whisper);
+}
+
+/* ── Input base ──────────────────────────────────────────────────────── */
+input, textarea {
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--whisper);
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 300;
+  resize: none;
+}
+
+input::placeholder, textarea::placeholder {
+  color: var(--mist);
+}
+
+/* ── Midnight mode ───────────────────────────────────────────────────── */
+.midnight body {
+  background-color: #080808;
+}
+
+/* ── Soft button ─────────────────────────────────────────────────────── */
+.btn-ghost {
+  border: 1px solid var(--ash);
+  color: var(--pale);
+  padding: 0.5rem 1.25rem;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  background: transparent;
+  transition: all 0.4s ease;
+}
+
+.btn-ghost:hover {
+  border-color: var(--mist);
+  color: var(--ghost);
+  background: rgba(255,255,255,0.02);
+}
+
+/* ── Post card hover ─────────────────────────────────────────────────── */
+.post-card .preview-text {
+  filter: blur(2px);
+  transition: filter 0.6s ease;
+}
+
+.post-card:hover .preview-text {
+  filter: blur(0);
+}
+
+/* ── Divider ─────────────────────────────────────────────────────────── */
+.divider {
+  border: none;
+  border-top: 1px solid var(--ash);
+  margin: 3rem 0;
+}
+
+/* ── Mood badge ──────────────────────────────────────────────────────── */
+.mood-badge {
+  font-family: 'Courier Prime', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 0.2rem 0.6rem;
+  border: 1px solid currentColor;
+  opacity: 0.6;
+}
+
+/* ── Audio player ────────────────────────────────────────────────────── */
+.audio-player audio {
+  width: 100%;
+  filter: invert(0.8) contrast(0.5);
+}
+
+/* ── Reaction button ─────────────────────────────────────────────────── */
+.reaction-btn {
+  background: transparent;
+  border: 1px solid var(--ash);
+  color: var(--pale);
+  padding: 0.5rem 1rem;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.5s ease;
+  font-weight: 300;
+}
+
+.reaction-btn:hover {
+  border-color: var(--mist);
+  color: var(--ghost);
+}
+
+.reaction-btn.reacted {
+  border-color: var(--pale);
+  color: var(--whisper);
+}
+
+/* ── Waveform canvas ─────────────────────────────────────────────────── */
+canvas.waveform {
+  opacity: 0.4;
+}
+
+/* ── Modal overlay ───────────────────────────────────────────────────── */
+.modal-overlay {
+  background: rgba(8, 8, 8, 0.85);
+  backdrop-filter: blur(4px);
+}
