@@ -1,5 +1,7 @@
+import type { PostPreview, FullPost, Mood } from "@/types";
 import { google } from "googleapis";
 import { OAuth2Client } from "google-auth-library";
+import { Readable } from "stream";
 
 // ─── Auth ────────────────────────────────────────────────────────────────────
 
@@ -211,23 +213,6 @@ export async function createPost(data: PostData): Promise<string> {
   return docId;
 }
 
-// ─── Post Retrieval ────────────────────────────────────────────────────────────
-
-export interface PostPreview {
-  id: string;
-  title: string;
-  name: string;
-  mood: string;
-  preview: string;
-  wordCount: number;
-  readingTime: number;
-  hasAudio: boolean;
-  createdAt: number;
-  reactFelt: number;
-  reactAlone: number;
-  reactUnderstand: number;
-}
-
 export async function getPublicPosts(options?: {
   limit?: number;
   mood?: string;
@@ -261,7 +246,7 @@ export async function getPublicPosts(options?: {
         id: file.id!,
         title: file.name!,
         name: props.name || "Anonymous",
-        mood: props.mood || "Silence",
+        mood: (props.mood as Mood) ?? "Silence",
         preview: "",
         wordCount: parseInt(props.wordCount || "0"),
         readingTime: parseInt(props.readingTime || "1"),
@@ -326,23 +311,6 @@ export async function getPostPreview(fileId: string): Promise<string> {
   return lines.slice(bodyStart).join(" ").substring(0, 120);
 }
 
-export interface FullPost {
-  id: string;
-  title: string;
-  name: string;
-  mood: string;
-  body: string;
-  wordCount: number;
-  readingTime: number;
-  hasAudio: boolean;
-  audioFileId: string;
-  createdAt: number;
-  createdDate: string;
-  reactFelt: number;
-  reactAlone: number;
-  reactUnderstand: number;
-}
-
 export async function getPost(fileId: string): Promise<FullPost> {
   const drive = await getDrive();
   const docs = await getDocs();
@@ -384,7 +352,7 @@ export async function getPost(fileId: string): Promise<FullPost> {
     id: fileId,
     title: meta.data.name!,
     name: props.name || "Anonymous",
-    mood: props.mood || "Silence",
+    mood: (props.mood as Mood) ?? "Silence",
     body,
     wordCount: parseInt(props.wordCount || "0"),
     readingTime: parseInt(props.readingTime || "1"),
@@ -446,16 +414,17 @@ export async function uploadAudio(
 ): Promise<string> {
   const drive = await getDrive();
   const { audioFilesId } = await ensureRootFolders();
-
+  const stream = Readable.from(audioBuffer);
   const res = await drive.files.create({
     requestBody: {
       name: `audio-${userId}-${Date.now()}`,
       mimeType,
       parents: [audioFilesId],
     },
+
     media: {
       mimeType,
-      body: audioBuffer,
+      body: stream,
     },
     fields: "id",
   });
