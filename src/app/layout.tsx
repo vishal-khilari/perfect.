@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import './globals.css';
 import { MidnightWrapper } from '@/components/ui/MidnightWrapper';
 
@@ -10,6 +10,13 @@ export const metadata: Metadata = {
     description: 'A minimalist archive of human experience.',
     type: 'website',
   },
+};
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
 };
 
 export default function RootLayout({

@@ -82,7 +82,7 @@ export function LandingClient({ initialPosts }: LandingClientProps) {
               </p>
             </div>
           ) : (
-            <div>
+            <div className="w-full border-t border-ash/20 overflow-hidden">
               {initialPosts.map((post, i) => (
                 <PostCard key={post.id} post={post} index={i} />
               ))}

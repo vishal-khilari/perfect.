@@ -24,16 +24,16 @@ export function PostCard({ post, index = 0 }: PostCardProps) {
     >
       <Link href={`/post/${post.id}`}>
         <div
-          className="post-card group border-b border-ash/50 py-8 cursor-pointer transition-all duration-700 hover:border-ash hover:translate-y-[-2px]"        >
+          className="post-card group border-b border-ash/50 py-8 cursor-pointer transition-all duration-700 hover:border-ash hover:translate-y-[-2px] w-full overflow-hidden"        >
           <div className="flex items-start justify-between gap-4 mb-3">
-            <h3 className="font-serif text-whisper/80 group-hover:text-whisper transition-all duration-700 text-lg leading-tight group-hover:tracking-wide">              {post.title || 'Untitled'}
+            <h3 className="font-serif text-whisper/80 group-hover:text-whisper transition-all duration-700 text-lg leading-tight group-hover:tracking-wide break-words">              {post.title || 'Untitled'}
             </h3>
             <span className={`mood-badge shrink-0 ${moodColor}`}>
               {post.mood}
             </span>
           </div>
 
-          <p className="preview-text font-sans text-sm text-pale/70 leading-relaxed mb-4">
+          <p className="preview-text font-sans text-sm text-pale/70 leading-relaxed mb-4 break-words">
             {post.preview || '...'}
             {post.preview && post.preview.length >= 120 && (
               <span className="text-mist"> ···</span>
