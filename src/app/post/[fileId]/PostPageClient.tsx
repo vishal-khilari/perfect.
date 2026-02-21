@@ -45,7 +45,7 @@ export function PostPageClient({ post }: PostPageClientProps) {
   }
 
   return (
-    <div className="min-h-screen px-6 pt-28 pb-32" style={{ maxWidth: '650px', margin: '0 auto' }}>
+    <div className="min-h-screen px-6 pt-24 sm:pt-28 pb-32 max-w-reading mx-auto">
       <motion.article
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -62,13 +62,13 @@ export function PostPageClient({ post }: PostPageClientProps) {
         </h1>
 
         {/* Meta */}
-        <div className="flex flex-wrap gap-4 items-center mb-12 text-xs font-mono text-mist tracking-wider">
+        <div className="flex flex-wrap items-center gap-x-4 gap-y-2 mb-10 sm:mb-12 text-[10px] sm:text-xs font-mono text-mist tracking-widest uppercase">
           <span>{post.name || 'Anonymous'}</span>
-          <span>·</span>
+          <span className="opacity-30">·</span>
           <span>{post.createdDate}</span>
-          <span>·</span>
+          <span className="opacity-30">·</span>
           <span>{post.wordCount} words</span>
-          <span>·</span>
+          <span className="opacity-30">·</span>
           <span>{post.readingTime} min read</span>
         </div>
 

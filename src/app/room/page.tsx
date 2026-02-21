@@ -58,28 +58,28 @@ export default function RoomPage() {
     <>
       <Nav />
 
-      <div className="min-h-screen px-6 pt-28 pb-24" style={{ maxWidth: '650px', margin: '0 auto' }}>
+      <div className="min-h-screen px-6 pt-24 sm:pt-28 pb-24 max-w-reading mx-auto">
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1.5 }}
         >
-          <p className="font-mono text-xs text-mist tracking-[0.2em] uppercase mb-3">
+          <p className="font-mono text-[10px] sm:text-xs text-mist tracking-[0.2em] uppercase mb-3">
             The Archive
           </p>
-          <p className="font-serif italic text-pale/40 text-base mb-14">
+          <p className="font-serif italic text-pale/40 text-sm sm:text-base mb-10 sm:mb-14">
             What people left behind.
           </p>
 
           {/* Controls */}
-          <div className="flex flex-wrap gap-6 mb-12">
+          <div className="flex flex-col sm:flex-row sm:items-center gap-6 mb-10 sm:mb-12">
             {/* Sort */}
-            <div className="flex gap-2">
+            <div className="flex gap-4">
               {sorts.map(({ value, label }) => (
                 <button
                   key={value}
                   onClick={() => setSort(value)}
-                  className="text-xs font-mono tracking-wider transition-colors duration-400"
+                  className="text-[10px] sm:text-xs font-mono tracking-widest transition-colors duration-400 min-h-[32px]"
                   style={{
                     color: sort === value ? 'rgba(176,176,176,0.9)' : 'rgba(61,61,61,0.9)',
                     textDecoration: sort === value ? 'underline' : 'none',
@@ -93,12 +93,12 @@ export default function RoomPage() {
             </div>
 
             {/* Mood filter */}
-            <div className="flex gap-2 flex-wrap">
+            <div className="flex gap-3 flex-wrap">
               {moods.map((m) => (
                 <button
                   key={m}
                   onClick={() => setMoodFilter(m)}
-                  className="text-xs font-mono tracking-wider capitalize transition-colors duration-400"
+                  className="text-[10px] sm:text-xs font-mono tracking-widest capitalize transition-colors duration-400 min-h-[32px]"
                   style={{
                     color: moodFilter === m ? 'rgba(176,176,176,0.9)' : 'rgba(61,61,61,0.9)',
                   }}
@@ -111,7 +111,7 @@ export default function RoomPage() {
             {/* Audio only */}
             <button
               onClick={() => setAudioOnly(!audioOnly)}
-              className="text-xs font-mono tracking-wider transition-colors duration-400"
+              className="text-[10px] sm:text-xs font-mono tracking-widest transition-colors duration-400 min-h-[32px] text-left"
               style={{
                 color: audioOnly ? 'rgba(176,176,176,0.9)' : 'rgba(61,61,61,0.9)',
               }}
@@ -121,10 +121,10 @@ export default function RoomPage() {
           </div>
 
           {/* Random confession button */}
-          <div className="mb-12">
+          <div className="mb-10 sm:mb-12">
             <button
               onClick={loadRandom}
-              className="text-xs font-mono text-mist hover:text-pale tracking-[0.2em] uppercase transition-colors duration-500"
+              className="text-[10px] sm:text-xs font-mono text-mist hover:text-pale tracking-[0.2em] uppercase transition-colors duration-500 min-h-[44px] flex items-center"
             >
               Open a random confession →
             </button>

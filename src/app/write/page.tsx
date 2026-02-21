@@ -217,17 +217,17 @@ export default function WritePage() {
     <>
       <Nav />
 
-      <div className="min-h-screen px-6 pt-28 pb-24" style={{ maxWidth: '650px', margin: '0 auto' }}>
+      <div className="min-h-screen px-6 pt-24 sm:pt-28 pb-24 max-w-reading mx-auto">
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1.5 }}
         >
-          <p className="font-mono text-xs text-mist tracking-[0.2em] uppercase mb-16">
+          <p className="font-mono text-[10px] sm:text-xs text-mist tracking-[0.2em] uppercase mb-10 sm:mb-16">
             Write something
           </p>
 
-          <form onSubmit={handleSubmit} className="space-y-10">
+          <form onSubmit={handleSubmit} className="space-y-8 sm:space-y-10">
             {/* Name */}
             <div>
               <input
@@ -236,7 +236,7 @@ export default function WritePage() {
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 maxLength={80}
-                className="w-full bg-transparent border-b border-ash/50 pb-2 text-ghost/70 text-sm font-sans focus:border-mist/70 transition-colors duration-500 placeholder:text-mist/50"
+                className="w-full bg-transparent border-b border-ash/50 pb-2 text-ghost/70 text-sm font-sans focus:border-mist/70 transition-colors duration-500 placeholder:text-mist/50 min-h-[44px]"
               />
             </div>
 
@@ -248,7 +248,7 @@ export default function WritePage() {
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
                 maxLength={200}
-                className="w-full bg-transparent border-b border-ash/50 pb-2 font-serif text-xl text-whisper/70 focus:border-mist/70 transition-colors duration-500 placeholder:text-mist/40"
+                className="w-full bg-transparent border-b border-ash/50 pb-2 font-serif text-lg sm:text-xl text-whisper/70 focus:border-mist/70 transition-colors duration-500 placeholder:text-mist/40 min-h-[44px]"
               />
             </div>
 
@@ -262,17 +262,17 @@ export default function WritePage() {
                   playTypingSound();
                 }}
                 onKeyDown={() => playTypingSound()}
-                rows={14}
+                rows={12}
                 maxLength={10000}
-                className="w-full bg-transparent font-serif text-lg text-ghost/80 leading-loose placeholder:text-mist/40 focus:outline-none"
-                style={{ minHeight: '280px' }}
+                className="w-full bg-transparent font-serif text-base sm:text-lg text-ghost/80 leading-relaxed sm:leading-loose placeholder:text-mist/40 focus:outline-none"
+                style={{ minHeight: '250px' }}
               />
 
               <div className="flex justify-between items-center mt-3">
-                <span className="text-xs font-mono text-mist tracking-wider">
+                <span className="text-[10px] font-mono text-mist tracking-wider uppercase">
                   {wordCount} words · {readingTime} min read
                 </span>
-                <span className="text-xs font-mono text-mist tracking-wider">
+                <span className="text-[10px] font-mono text-mist tracking-wider">
                   {body.length} / 10,000
                 </span>
               </div>
@@ -280,7 +280,7 @@ export default function WritePage() {
 
             {/* Mood selector */}
             <div>
-              <p className="text-xs font-mono text-mist tracking-[0.2em] uppercase mb-4">
+              <p className="text-[10px] sm:text-xs font-mono text-mist tracking-[0.2em] uppercase mb-4">
                 Mood
               </p>
               <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
@@ -289,14 +289,14 @@ export default function WritePage() {
                     key={value}
                     type="button"
                     onClick={() => setMood(value)}
-                    className="border py-2 px-3 text-xs font-mono tracking-wider transition-all duration-500 text-left"
+                    className="border py-3 px-4 text-[10px] sm:text-xs font-mono tracking-widest transition-all duration-500 text-left min-h-[50px] flex flex-col justify-center"
                     style={{
                       borderColor: mood === value ? 'rgba(136,136,136,0.6)' : 'rgba(42,42,42,0.8)',
                       color: mood === value ? 'rgba(176,176,176,0.9)' : 'rgba(61,61,61,0.9)',
                     }}
                   >
-                    <span className="block font-medium">{value}</span>
-                    <span className="block text-[10px] opacity-60 mt-0.5">{description}</span>
+                    <span className="block font-medium uppercase tracking-widest">{value}</span>
+                    <span className="block text-[8px] sm:text-[10px] opacity-50 mt-1 lowercase italic">{description}</span>
                   </button>
                 ))}
               </div>
@@ -305,15 +305,15 @@ export default function WritePage() {
             {/* Audio section */}
             <div>
               <div className="flex items-center gap-4 mb-4">
-                <p className="text-xs font-mono text-mist tracking-[0.2em] uppercase">
+                <p className="text-[10px] sm:text-xs font-mono text-mist tracking-[0.2em] uppercase">
                   Audio (optional)
                 </p>
                 <button
                   type="button"
                   onClick={() => setShowAudio(!showAudio)}
-                  className="text-xs text-mist hover:text-pale transition-colors duration-300 font-mono"
+                  className="text-[10px] sm:text-xs text-mist hover:text-pale transition-colors duration-300 font-mono tracking-widest uppercase min-h-[32px]"
                 >
-                  {showAudio ? 'hide' : 'add audio'}
+                  {showAudio ? '[ hide ]' : '[ add audio ]'}
                 </button>
               </div>
 
@@ -324,6 +324,7 @@ export default function WritePage() {
                     animate={{ opacity: 1, height: 'auto' }}
                     exit={{ opacity: 0, height: 0 }}
                     transition={{ duration: 0.5 }}
+                    className="overflow-hidden"
                   >
                     <AudioRecorder onAudioReady={setAudioBlobOrFile} />
                   </motion.div>
@@ -332,44 +333,44 @@ export default function WritePage() {
             </div>
 
             {/* Options */}
-            <div className="space-y-3 pt-2">
-              <label className="flex items-center gap-3 cursor-pointer group">
+            <div className="space-y-4 pt-2">
+              <label className="flex items-center gap-4 cursor-pointer group min-h-[32px]">
                 <input
                   type="checkbox"
                   checked={isPrivate}
                   onChange={(e) => setIsPrivate(e.target.checked)}
                   className="hidden"
                 />
-                <div className="w-4 h-4 border border-ash flex items-center justify-center transition-colors duration-300 group-hover:border-mist">
-                  {isPrivate && <div className="w-2 h-2 bg-pale/60" />}
+                <div className="w-5 h-5 border border-ash flex items-center justify-center transition-colors duration-300 group-hover:border-mist shrink-0">
+                  {isPrivate && <div className="w-2.5 h-2.5 bg-pale/60" />}
                 </div>
-                <span className="text-xs font-mono text-mist tracking-wider">Keep private (draft only)</span>
+                <span className="text-[10px] sm:text-xs font-mono text-mist tracking-widest uppercase">Keep private (draft only)</span>
               </label>
 
-              <label className="flex items-center gap-3 cursor-pointer group">
+              <label className="flex items-center gap-4 cursor-pointer group min-h-[32px]">
                 <input
                   type="checkbox"
                   checked={burnAfter}
                   onChange={(e) => setBurnAfter(e.target.checked)}
                   className="hidden"
                 />
-                <div className="w-4 h-4 border border-ash flex items-center justify-center transition-colors duration-300 group-hover:border-mist">
-                  {burnAfter && <div className="w-2 h-2 bg-pale/60" />}
+                <div className="w-5 h-5 border border-ash flex items-center justify-center transition-colors duration-300 group-hover:border-mist shrink-0">
+                  {burnAfter && <div className="w-2.5 h-2.5 bg-pale/60" />}
                 </div>
-                <span className="text-xs font-mono text-mist tracking-wider">Burn after 7 days</span>
+                <span className="text-[10px] sm:text-xs font-mono text-mist tracking-widest uppercase">Burn after 7 days</span>
               </label>
 
-              <label className="flex items-center gap-3 cursor-pointer group">
+              <label className="flex items-center gap-4 cursor-pointer group min-h-[32px]">
                 <input
                   type="checkbox"
                   checked={soundOn}
                   onChange={(e) => setSoundOn(e.target.checked)}
                   className="hidden"
                 />
-                <div className="w-4 h-4 border border-ash flex items-center justify-center transition-colors duration-300 group-hover:border-mist">
-                  {soundOn && <div className="w-2 h-2 bg-pale/60" />}
+                <div className="w-5 h-5 border border-ash flex items-center justify-center transition-colors duration-300 group-hover:border-mist shrink-0">
+                  {soundOn && <div className="w-2.5 h-2.5 bg-pale/60" />}
                 </div>
-                <span className="text-xs font-mono text-mist tracking-wider">Soft typing sounds</span>
+                <span className="text-[10px] sm:text-xs font-mono text-mist tracking-widest uppercase">Soft typing sounds</span>
               </label>
             </div>
 

@@ -139,7 +139,7 @@ export function AudioRecorder({ onAudioReady }: AudioRecorderProps) {
       {!audioUrl ? (
         <div className="space-y-3">
           {/* Record button */}
-          <div className="flex items-center gap-4">
+          <div className="flex flex-wrap items-center gap-4">
             {!isRecording ? (
               <button
                 type="button"

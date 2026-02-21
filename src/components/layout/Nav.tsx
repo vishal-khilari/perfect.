@@ -18,17 +18,18 @@ export function Nav() {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 1.5, delay: 0.5 }}
-      className="fixed top-0 left-0 right-0 z-50 px-8 py-6 flex justify-between items-center"
+      className="fixed top-0 left-0 right-0 z-50 px-4 sm:px-8 py-4 sm:py-6 flex justify-between items-center"
       style={{ background: 'linear-gradient(to bottom, rgba(14,14,14,0.9) 0%, transparent 100%)' }}
     >
       <Link
         href="/"
-        className="font-serif text-whisper/60 hover:text-whisper/90 transition-colors duration-500 text-sm tracking-widest uppercase"
+        className="font-serif text-whisper/60 hover:text-whisper/90 transition-colors duration-500 text-xs sm:text-sm tracking-widest uppercase"
       >
-        The Quiet Room
+        <span className="hidden xs:inline">The Quiet Room</span>
+        <span className="xs:hidden">TQR</span>
       </Link>
 
-      <div className="flex gap-8">
+      <div className="flex gap-4 sm:gap-8">
         {links.map(({ href, label }) => (
           <Link
             key={href}

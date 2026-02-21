@@ -24,11 +24,9 @@ export function PostCard({ post, index = 0 }: PostCardProps) {
     >
       <Link href={`/post/${post.id}`}>
         <div
-          className="post-card group border-b border-ash/50 py-8 cursor-pointer transition-all duration-700 hover:border-ash"
-        >
+          className="post-card group border-b border-ash/50 py-8 cursor-pointer transition-all duration-700 hover:border-ash hover:translate-y-[-2px]"        >
           <div className="flex items-start justify-between gap-4 mb-3">
-            <h3 className="font-serif text-whisper/80 group-hover:text-whisper transition-colors duration-500 text-lg leading-tight">
-              {post.title || 'Untitled'}
+            <h3 className="font-serif text-whisper/80 group-hover:text-whisper transition-all duration-700 text-lg leading-tight group-hover:tracking-wide">              {post.title || 'Untitled'}
             </h3>
             <span className={`mood-badge shrink-0 ${moodColor}`}>
               {post.mood}
@@ -42,15 +40,15 @@ export function PostCard({ post, index = 0 }: PostCardProps) {
             )}
           </p>
 
-          <div className="flex items-center gap-4 text-xs font-mono text-mist tracking-wider">
+          <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-[10px] sm:text-xs font-mono text-mist tracking-wider uppercase">
             <span>{post.name || 'Anonymous'}</span>
-            <span>·</span>
+            <span className="opacity-30">·</span>
             <span>{date}</span>
-            <span>·</span>
+            <span className="opacity-30">·</span>
             <span>{post.readingTime} min</span>
             {post.hasAudio && (
               <>
-                <span>·</span>
+                <span className="opacity-30">·</span>
                 <span className="text-pale/60">⟡ audio</span>
               </>
             )}

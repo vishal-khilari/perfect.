@@ -19,7 +19,7 @@ export function MidnightWrapper({ children }: { children: React.ReactNode }) {
   return (
     <div
       style={{
-        backgroundColor: isMidnight ? '#060606' : '#0e0e0e',
+        backgroundColor: isMidnight ? '#050505' : '#0e0e0e',
         minHeight: '100vh',
         transition: 'background-color 2s ease',
       }}
