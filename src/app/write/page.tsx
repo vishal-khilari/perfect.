@@ -284,11 +284,12 @@ export default function WritePage() {
               </p>
               <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-4 gap-3">
                 {MOODS.map(({ value, description }) => (
-                  <button
+                  <motion.button
                     key={value}
                     type="button"
                     onClick={() => setMood(value)}
-                    className="border py-4 px-5 text-[10px] sm:text-xs font-mono tracking-[0.15em] transition-all duration-700 text-left min-h-[60px] flex flex-col justify-center"
+                    whileTap={{ scale: 0.98, backgroundColor: 'rgba(255,255,255,0.05)' }}
+                    className="border py-4 px-5 text-[10px] sm:text-xs font-mono tracking-[0.15em] transition-all duration-700 text-left min-h-[64px] flex flex-col justify-center"
                     style={{
                       borderColor: mood === value ? 'rgba(136,136,136,0.5)' : 'rgba(42,42,42,0.4)',
                       color: mood === value ? 'rgba(176,176,176,1)' : 'rgba(107,127,143,0.5)',
@@ -297,7 +298,7 @@ export default function WritePage() {
                   >
                     <span className="block font-medium uppercase tracking-[0.15em] mb-1">{value}</span>
                     <span className="block text-[8px] sm:text-[9px] opacity-40 lowercase italic">{description}</span>
-                  </button>
+                  </motion.button>
                 ))}
               </div>
             </div>
@@ -389,13 +390,14 @@ export default function WritePage() {
 
             {/* Submit */}
             <div className="pt-10">
-              <button
+              <motion.button
                 type="submit"
                 disabled={submitting || body.trim().length < 10}
-                className="btn-ghost w-full sm:w-auto disabled:opacity-20 disabled:cursor-not-allowed text-[10px] tracking-[0.3em] min-h-[54px] sm:px-16"
+                whileTap={{ scale: 0.98 }}
+                className="btn-ghost w-full sm:w-auto disabled:opacity-20 disabled:cursor-not-allowed text-[10px] tracking-[0.3em] min-h-[56px] sm:min-h-[54px] sm:px-16"
               >
                 {submitting ? 'Saving...' : 'Leave it here'}
-              </button>
+              </motion.button>
             </div>
           </form>
         </motion.div>

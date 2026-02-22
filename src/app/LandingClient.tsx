@@ -46,9 +46,14 @@ export function LandingClient({ initialPosts }: LandingClientProps) {
           >
             <Link
               href="/write"
-              className="inline-flex border border-ash/40 text-pale/70 hover:text-ghost hover:border-mist px-10 sm:px-14 py-4 text-[9px] sm:text-xs tracking-[0.25em] sm:tracking-[0.35em] uppercase font-sans transition-all duration-1000 min-h-[50px] items-center justify-center bg-transparent"
+              className="block sm:inline-block"
             >
-              Enter the Room
+              <motion.span
+                whileTap={{ scale: 0.98 }}
+                className="inline-flex w-full sm:w-auto border border-ash/40 text-pale/70 hover:text-ghost hover:border-mist px-10 sm:px-14 py-4 text-[9px] sm:text-xs tracking-[0.25em] sm:tracking-[0.35em] uppercase font-sans transition-all duration-1000 min-h-[56px] sm:min-h-[50px] items-center justify-center bg-transparent"
+              >
+                Enter the Room
+              </motion.span>
             </Link>
           </motion.div>
         </motion.div>

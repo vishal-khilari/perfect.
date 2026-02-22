@@ -34,7 +34,7 @@ export function FirstVisitModal() {
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.98 }}
             transition={{ duration: 1.5, delay: 0.5 }}
-            className="text-center max-w-[300px] sm:max-w-sm px-10 py-16 border border-ash/10 bg-void/60 backdrop-blur-xl"
+            className="text-center w-[calc(100%-48px)] sm:w-full max-w-[300px] sm:max-w-sm px-8 sm:px-10 py-16 border border-ash/10 bg-void/60 backdrop-blur-xl"
             onClick={(e) => e.stopPropagation()}
           >
             <p className="font-serif text-2xl sm:text-3xl text-whisper/95 mb-4 italic leading-tight">
@@ -45,7 +45,7 @@ export function FirstVisitModal() {
             </p>
             <button
               onClick={dismiss}
-              className="btn-ghost w-full sm:w-auto px-12 py-4 text-[10px] sm:text-xs tracking-[0.3em] min-h-[50px]"
+              className="btn-ghost w-full px-12 py-4 text-[10px] sm:text-xs tracking-[0.3em] min-h-[54px] sm:min-h-[50px] flex items-center justify-center"
             >
               I understand
             </button>

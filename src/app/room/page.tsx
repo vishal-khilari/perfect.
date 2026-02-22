@@ -78,12 +78,13 @@ export default function RoomPage() {
             {/* Sort */}
             <div className="flex flex-col gap-4">
               <span className="text-[9px] font-mono text-mist/40 tracking-[0.2em] uppercase">Order by</span>
-              <div className="flex gap-6 sm:gap-8">
+              <div className="flex gap-6 sm:gap-8 overflow-x-auto pb-2 scrollbar-hide">
                 {sorts.map(({ value, label }) => (
-                  <button
+                  <motion.button
                     key={value}
                     onClick={() => setSort(value)}
-                    className="text-[10px] sm:text-xs font-mono tracking-[0.2em] transition-all duration-500 min-h-[44px] relative py-1"
+                    whileTap={{ scale: 0.95 }}
+                    className="text-[10px] sm:text-xs font-mono tracking-[0.2em] transition-all duration-500 min-h-[48px] relative py-1 whitespace-nowrap"
                     style={{
                       color: sort === value ? 'rgba(176,176,176,1)' : 'rgba(107,127,143,0.4)',
                     }}
@@ -92,7 +93,7 @@ export default function RoomPage() {
                     {sort === value && (
                       <motion.div layoutId="sort-underline" className="absolute bottom-0 left-0 right-0 h-[1px] bg-pale/40" />
                     )}
-                  </button>
+                  </motion.button>
                 ))}
               </div>
             </div>
@@ -101,12 +102,13 @@ export default function RoomPage() {
               {/* Mood filter */}
               <div className="flex flex-col gap-4">
                 <span className="text-[9px] font-mono text-mist/40 tracking-[0.2em] uppercase">Filter by mood</span>
-                <div className="flex gap-4 flex-wrap">
+                <div className="flex gap-3 flex-wrap">
                   {moods.map((m) => (
-                    <button
+                    <motion.button
                       key={m}
                       onClick={() => setMoodFilter(m)}
-                      className="text-[10px] sm:text-xs font-mono tracking-[0.1em] capitalize transition-all duration-500 min-h-[36px] px-3 border border-transparent"
+                      whileTap={{ scale: 0.95 }}
+                      className="text-[10px] sm:text-xs font-mono tracking-[0.1em] capitalize transition-all duration-500 min-h-[44px] px-4 border border-transparent flex items-center justify-center"
                       style={{
                         color: moodFilter === m ? 'rgba(176,176,176,1)' : 'rgba(107,127,143,0.4)',
                         borderColor: moodFilter === m ? 'rgba(136,136,136,0.2)' : 'transparent',
@@ -114,33 +116,35 @@ export default function RoomPage() {
                       }}
                     >
                       {m}
-                    </button>
+                    </motion.button>
                   ))}
                 </div>
               </div>
 
               {/* Audio only */}
-              <button
+              <motion.button
                 onClick={() => setAudioOnly(!audioOnly)}
-                className="text-[10px] sm:text-xs font-mono tracking-[0.2em] transition-all duration-500 min-h-[44px] flex items-center gap-2"
+                whileTap={{ scale: 0.98 }}
+                className="text-[10px] sm:text-xs font-mono tracking-[0.2em] transition-all duration-500 min-h-[50px] flex items-center gap-3 border border-ash/10 sm:border-transparent px-4 sm:px-0"
                 style={{
                   color: audioOnly ? 'rgba(176,176,176,1)' : 'rgba(107,127,143,0.4)',
                 }}
               >
                 <span className={`w-1.5 h-1.5 rounded-full transition-colors duration-500 ${audioOnly ? 'bg-pale/60' : 'bg-ash/40'}`} />
                 with audio
-              </button>
+              </motion.button>
             </div>
           </div>
 
           {/* Random confession button */}
           <div className="mb-12 sm:mb-20">
-            <button
+            <motion.button
               onClick={loadRandom}
-              className="text-[10px] sm:text-xs font-mono text-mist/60 hover:text-pale tracking-[0.2em] uppercase transition-all duration-700 min-h-[50px] flex items-center border border-ash/20 px-6 hover:bg-white/[0.02]"
+              whileTap={{ scale: 0.98 }}
+              className="text-[10px] sm:text-xs font-mono text-mist/60 hover:text-pale tracking-[0.2em] uppercase transition-all duration-700 min-h-[56px] flex items-center border border-ash/20 px-6 hover:bg-white/[0.02] w-full sm:w-auto justify-center sm:justify-start"
             >
               Open a random confession →
-            </button>
+            </motion.button>
           </div>
 
           <hr className="divider opacity-30" />

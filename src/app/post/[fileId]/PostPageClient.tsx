@@ -104,10 +104,11 @@ export function PostPageClient({ post }: PostPageClientProps) {
 
           <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 items-stretch sm:items-center">
             {REACTIONS.map(({ key, label, countKey }) => (
-              <button
+              <motion.button
                 key={key}
                 onClick={() => handleReaction(key)}
-                className={`reaction-btn flex-1 sm:flex-none px-8 py-4 transition-all duration-1000 ${reacted.has(key) ? 'reacted bg-white/[0.03]' : 'hover:bg-white/[0.01]'}`}
+                whileTap={{ scale: 0.98 }}
+                className={`reaction-btn flex-1 sm:flex-none px-8 py-4 transition-all duration-1000 min-h-[56px] ${reacted.has(key) ? 'reacted bg-white/[0.03]' : 'hover:bg-white/[0.01]'}`}
                 disabled={reacted.has(key)}
               >
                 <span className="tracking-[0.1em]">{label}</span>
@@ -116,7 +117,7 @@ export function PostPageClient({ post }: PostPageClientProps) {
                     {counts[key]}
                   </span>
                 )}
-              </button>
+              </motion.button>
             ))}
           </div>
 

@@ -186,6 +186,15 @@ a {
   color: var(--whisper);
 }
 
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
 /* ── Input base ──────────────────────────────────────────────────────── */
 input,
 textarea {
@@ -238,11 +247,18 @@ textarea::placeholder {
 
 /* ── Post card hover ─────────────────────────────────────────────────── */
 .post-card .preview-text {
-  filter: blur(4px);
+  filter: blur(2.5px);
   transition: filter 1s ease;
 }
 
-.post-card:hover .preview-text {
+@media (min-width: 768px) {
+  .post-card .preview-text {
+    filter: blur(4px);
+  }
+}
+
+.post-card:hover .preview-text,
+.post-card:active .preview-text {
   filter: blur(0);
 }
 

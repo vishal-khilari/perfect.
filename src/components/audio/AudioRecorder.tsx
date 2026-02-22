@@ -160,28 +160,33 @@ export function AudioRecorder({ onAudioReady }: AudioRecorderProps) {
         <div className="space-y-4">
           <div className="flex flex-wrap items-center gap-4">
             {!isRecording ? (
-              <button
+              <motion.button
                 type="button"
                 onClick={startRecording}
-                className="btn-ghost flex items-center gap-3 px-6"
+                whileTap={{ scale: 0.98 }}
+                className="btn-ghost flex items-center gap-3 px-6 min-h-[56px] sm:min-h-[50px] flex-1 sm:flex-none justify-center"
                 disabled={micError}
               >
                 <span className="w-2 h-2 rounded-full bg-pale/60 group-hover:bg-whisper transition-colors" />
                 Record
-              </button>
+              </motion.button>
             ) : (
-              <button
+              <motion.button
                 type="button"
                 onClick={stopRecording}
-                className="btn-ghost flex items-center gap-3 px-6"
+                whileTap={{ scale: 0.98 }}
+                className="btn-ghost flex items-center gap-3 px-6 min-h-[56px] sm:min-h-[50px] flex-1 sm:flex-none justify-center"
                 style={{ borderColor: 'rgba(136,136,136,0.6)', color: 'rgba(241,241,241,0.8)' }}
               >
                 <span className="w-2.5 h-2.5 bg-red-400/70 animate-pulse" />
                 Stop · {formatDuration(duration)}
-              </button>
+              </motion.button>
             )}
 
-            <label className="btn-ghost cursor-pointer px-6">
+            <motion.label 
+              whileTap={{ scale: 0.98 }}
+              className="btn-ghost cursor-pointer px-6 min-h-[56px] sm:min-h-[50px] flex-1 sm:flex-none items-center justify-center"
+            >
               Upload
               <input
                 type="file"
@@ -189,7 +194,7 @@ export function AudioRecorder({ onAudioReady }: AudioRecorderProps) {
                 className="hidden"
                 onChange={handleFileUpload}
               />
-            </label>
+            </motion.label>
           </div>
 
           {micError && (
