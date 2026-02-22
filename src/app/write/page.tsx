@@ -216,7 +216,6 @@ export default function WritePage() {
   return (
     <>
       <Nav />
-
       <div className="min-h-screen px-6 pt-24 sm:pt-32 pb-32 max-w-reading mx-auto">
         <motion.div
           initial={{ opacity: 0 }}
@@ -396,31 +395,6 @@ export default function WritePage() {
                 className="btn-ghost w-full sm:w-auto disabled:opacity-20 disabled:cursor-not-allowed text-[10px] tracking-[0.3em] min-h-[54px] sm:px-16"
               >
                 {submitting ? 'Saving...' : 'Leave it here'}
-              </button>
-            </div>
-          </form>
-        </motion.div>
-      </div>
-
-            {/* Error */}
-            {error && (
-              <motion.p
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                className="text-xs font-mono text-pale/60"
-              >
-                {error}
-              </motion.p>
-            )}
-
-            {/* Submit */}
-            <div className="pt-4">
-              <button
-                type="submit"
-                disabled={submitting || body.trim().length < 10}
-                className="btn-ghost w-full sm:w-auto disabled:opacity-30 disabled:cursor-not-allowed"
-              >
-                {submitting ? 'Saving your words...' : 'Leave it here'}
               </button>
             </div>
           </form>
