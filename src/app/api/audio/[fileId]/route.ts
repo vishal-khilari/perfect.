@@ -1,6 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { google } from 'googleapis';
 import { GoogleAuth } from 'google-auth-library';
+import { Readable } from 'stream';
+
+export const dynamic = 'force-dynamic';
 
 export async function GET(
   req: NextRequest,
@@ -16,39 +19,69 @@ export async function GET(
     });
 
     const drive = google.drive({ version: 'v3', auth });
+    const range = req.headers.get('range');
 
-    const response = await drive.files.get(
+    // First, get file metadata to ensure we have the correct size and mimeType
+    const meta = await drive.files.get({
+      fileId: params.fileId,
+      fields: 'size, mimeType',
+    });
+
+    const fileSize = parseInt(meta.data.size || '0');
+    const contentType = meta.data.mimeType || 'audio/webm';
+
+    const driveResponse = await drive.files.get(
       {
         fileId: params.fileId,
         alt: 'media',
       },
-      { responseType: 'stream' }
+      { 
+        responseType: 'stream',
+        headers: range ? { Range: range } : {},
+      }
     );
 
-    const contentType = response.headers['content-type'] || 'audio/webm';
+    const headers = new Headers();
+    headers.set('Content-Type', contentType);
+    headers.set('Accept-Ranges', 'bytes');
+    headers.set('Cache-Control', 'no-cache, no-store, must-revalidate');
+    headers.set('Pragma', 'no-cache');
+    headers.set('Expires', '0');
 
-    // Stream the audio response
-    const stream = response.data as NodeJS.ReadableStream;
-    const chunks: Buffer[] = [];
+    // Transfer critical headers from Google Drive response
+    if (driveResponse.headers['content-range']) {
+      headers.set('Content-Range', driveResponse.headers['content-range'] as string);
+    }
+    if (driveResponse.headers['content-length']) {
+      headers.set('Content-Length', driveResponse.headers['content-length'] as string);
+    } else if (!range && fileSize > 0) {
+      headers.set('Content-Length', fileSize.toString());
+    }
 
-    await new Promise<void>((resolve, reject) => {
-      stream.on('data', (chunk: Buffer) => chunks.push(chunk));
-      stream.on('end', resolve);
-      stream.on('error', reject);
-    });
+    const status = range ? 206 : 200;
 
-    const buffer = Buffer.concat(chunks);
-
-    return new NextResponse(buffer, {
-      headers: {
-        'Content-Type': contentType,
-        'Content-Length': String(buffer.length),
-        'Cache-Control': 'public, max-age=86400',
-        'Accept-Ranges': 'bytes',
+    // Convert Node.js Readable stream to Web ReadableStream
+    const nodeStream = driveResponse.data as Readable;
+    const webStream = new ReadableStream({
+      start(controller) {
+        nodeStream.on('data', (chunk) => controller.enqueue(chunk));
+        nodeStream.on('end', () => controller.close());
+        nodeStream.on('error', (err) => controller.error(err));
       },
+      cancel() {
+        nodeStream.destroy();
+      }
     });
-  } catch (err) {
+
+    return new NextResponse(webStream, {
+      status,
+      headers,
+    });
+  } catch (err: any) {
     console.error('[GET /api/audio]', err);
+    if (err.code === 416) {
+      return new NextResponse(null, { status: 416, headers: { 'Content-Range': `bytes */*` } });
+    }
     return NextResponse.json({ error: 'Audio not found.' }, { status: 404 });
   }
 }
