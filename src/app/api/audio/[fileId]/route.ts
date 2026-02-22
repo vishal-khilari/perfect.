@@ -44,9 +44,8 @@ export async function GET(
     const headers = new Headers();
     headers.set('Content-Type', contentType);
     headers.set('Accept-Ranges', 'bytes');
-    headers.set('Cache-Control', 'no-cache, no-store, must-revalidate');
-    headers.set('Pragma', 'no-cache');
-    headers.set('Expires', '0');
+    // Allow browser caching for 24 hours, which is better for media streaming
+    headers.set('Cache-Control', 'public, max-age=86400, immutable');
 
     // Transfer critical headers from Google Drive response
     if (driveResponse.headers['content-range']) {
