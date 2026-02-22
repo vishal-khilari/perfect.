@@ -12,7 +12,8 @@ export function AudioRecorder({ onAudioReady }: AudioRecorderProps) {
   const [audioUrl, setAudioUrl] = useState<string | null>(null);
   const [duration, setDuration] = useState(0);
   const [uploadedFile, setUploadedFile] = useState<File | null>(null);
-  
+  const [micError, setMicError] = useState(false);
+
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const chunksRef = useRef<Blob[]>([]);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
@@ -59,6 +60,12 @@ export function AudioRecorder({ onAudioReady }: AudioRecorderProps) {
   }
 
   async function startRecording() {
+    setMicError(false);
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+      setMicError(true);
+      return;
+    }
+
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
       const mediaRecorder = new MediaRecorder(stream);
@@ -94,11 +101,14 @@ export function AudioRecorder({ onAudioReady }: AudioRecorderProps) {
       drawWaveform();
     } catch (err) {
       console.error('Microphone access denied:', err);
+      setMicError(true);
     }
   }
 
   function stopRecording() {
-    mediaRecorderRef.current?.stop();
+    if (mediaRecorderRef.current?.state === 'recording') {
+      mediaRecorderRef.current.stop();
+    }
     setIsRecording(false);
     if (timerRef.current) clearInterval(timerRef.current);
   }
@@ -128,6 +138,9 @@ export function AudioRecorder({ onAudioReady }: AudioRecorderProps) {
     return () => {
       if (timerRef.current) clearInterval(timerRef.current);
       if (animFrameRef.current) cancelAnimationFrame(animFrameRef.current);
+      if (mediaRecorderRef.current?.stream) {
+        mediaRecorderRef.current.stream.getTracks().forEach(t => t.stop());
+      }
     };
   }, []);
 
@@ -135,34 +148,33 @@ export function AudioRecorder({ onAudioReady }: AudioRecorderProps) {
     `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`;
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 p-4 border border-ash/20 rounded-sm">
       {!audioUrl ? (
-        <div className="space-y-3">
-          {/* Record button */}
+        <div className="space-y-4">
           <div className="flex flex-wrap items-center gap-4">
             {!isRecording ? (
               <button
                 type="button"
                 onClick={startRecording}
-                className="btn-ghost flex items-center gap-2"
+                className="btn-ghost flex items-center gap-3 px-6"
+                disabled={micError}
               >
-                <span className="w-2 h-2 rounded-full bg-pale/60 inline-block" />
+                <span className="w-2 h-2 rounded-full bg-pale/60 group-hover:bg-whisper transition-colors" />
                 Record
               </button>
             ) : (
               <button
                 type="button"
                 onClick={stopRecording}
-                className="btn-ghost flex items-center gap-2"
-                style={{ borderColor: 'rgba(136,136,136,0.6)' }}
+                className="btn-ghost flex items-center gap-3 px-6"
+                style={{ borderColor: 'rgba(136,136,136,0.6)', color: 'rgba(241,241,241,0.8)' }}
               >
-                <span className="w-2 h-2 bg-whisper/60 inline-block" />
+                <span className="w-2.5 h-2.5 bg-red-400/70 animate-pulse" />
                 Stop · {formatDuration(duration)}
               </button>
             )}
 
-            {/* File upload */}
-            <label className="btn-ghost cursor-pointer">
+            <label className="btn-ghost cursor-pointer px-6">
               Upload
               <input
                 type="file"
@@ -173,13 +185,18 @@ export function AudioRecorder({ onAudioReady }: AudioRecorderProps) {
             </label>
           </div>
 
-          {/* Live waveform */}
+          {micError && (
+            <p className="text-xs font-mono text-red-400/70 tracking-wide">
+              Microphone access was denied. Please enable it in your browser settings.
+            </p>
+          )}
+          
           {isRecording && (
             <canvas
               ref={canvasRef}
               className="waveform w-full"
               width={600}
-              height={40}
+              height={50}
             />
           )}
         </div>
@@ -188,21 +205,21 @@ export function AudioRecorder({ onAudioReady }: AudioRecorderProps) {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8 }}
-          className="space-y-2"
+          className="space-y-3"
         >
-          <p className="text-xs text-mist font-mono tracking-wider uppercase mb-2">
+          <p className="text-xs text-mist font-mono tracking-wider uppercase mb-2 truncate">
             {uploadedFile ? uploadedFile.name : 'Recording ready'}
           </p>
           <audio
             src={audioUrl}
             controls
             className="audio-player w-full"
-            style={{ height: '32px' }}
+            style={{ height: '38px' }}
           />
           <button
             type="button"
             onClick={clearRecording}
-            className="text-xs text-mist hover:text-pale transition-colors duration-300 font-mono tracking-wider"
+            className="text-xs text-mist hover:text-pale transition-colors duration-300 font-mono tracking-widest"
           >
             remove audio
           </button>
@@ -226,18 +243,15 @@ export function AudioPlayer({ fileId }: { fileId: string }) {
       transition={{ duration: 1 }}
       className="my-8"
     >
-      <p className="text-xs text-mist font-mono tracking-widest uppercase mb-3">
-        ⟡ audio accompaniment
-      </p>
       <audio
         src={`/api/audio/${fileId}`}
         controls
-        onLoadedData={() => setLoaded(true)}
-        className="w-full"
+        preload="metadata"
+        onCanPlay={() => setLoaded(true)}
+        className="w-full transition-opacity duration-700"
         style={{
-          opacity: loaded ? 0.6 : 0.3,
-          filter: 'invert(0.8) contrast(0.4)',
-          transition: 'opacity 0.5s ease',
+          opacity: loaded ? 0.8 : 0.4,
+          filter: 'invert(0.8) contrast(0.5)',
         }}
       />
     </motion.div>
