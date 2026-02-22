@@ -129,6 +129,8 @@ export async function createPost(data: PostData): Promise<string> {
     day: "numeric",
   });
 
+  const previewText = data.body.substring(0, 150).replace(/\n/g, " ").trim();
+
   const docRes = await drive.files.create({
     requestBody: {
       name: docTitle,
@@ -145,6 +147,7 @@ export async function createPost(data: PostData): Promise<string> {
           ? String(Date.now() + data.burnAfterDays * 86400000)
           : "",
         createdAt: String(timestamp),
+        preview: previewText,
         reactFelt: "0",
         reactAlone: "0",
         reactUnderstand: "0",
@@ -220,43 +223,47 @@ export async function getPublicPosts(options?: {
   audioOnly?: boolean;
 }): Promise<PostPreview[]> {
   const drive = await getDrive();
-  const { publicPostsId } = await ensureRootFolders();
+
+  // Optimized: Single query for all public documents using custom properties
+  let query = "mimeType='application/vnd.google-apps.document' and properties has { key='isPrivate' and value='false' } and trashed=false";
+  
+  if (options?.mood) {
+    query += ` and properties has { key='mood' and value='${options.mood}' }`;
+  }
+  if (options?.audioOnly) {
+    // Only fetch if audioFileId property exists and is not empty
+    query += " and properties has { key='audioFileId' }";
+  }
 
   const res = await drive.files.list({
-    q: `'${publicPostsId}' in parents and mimeType='application/vnd.google-apps.folder' and trashed=false`,
-    fields: "files(id)",
+    q: query,
+    fields: "files(id, name, properties, createdTime)",
+    // Get more if we need to filter manually (e.g. empty audioFileId)
+    pageSize: 100, 
   });
 
-  const userFolders = res.data.files || [];
   const allPosts: PostPreview[] = [];
 
-  for (const folder of userFolders) {
-    const filesRes = await drive.files.list({
-      q: `'${folder.id}' in parents and mimeType='application/vnd.google-apps.document' and trashed=false`,
-      fields: "files(id, name, properties, createdTime)",
+  for (const file of res.data.files || []) {
+    const props = file.properties || {};
+
+    // Extra filtering if needed
+    if (options?.audioOnly && !props.audioFileId) continue;
+
+    allPosts.push({
+      id: file.id!,
+      title: file.name!,
+      name: props.name || "Anonymous",
+      mood: (props.mood as Mood) ?? "Silence",
+      preview: props.preview || "", // Use preview from properties
+      wordCount: parseInt(props.wordCount || "0"),
+      readingTime: parseInt(props.readingTime || "1"),
+      hasAudio: !!props.audioFileId,
+      createdAt: parseInt(props.createdAt || "0"),
+      reactFelt: parseInt(props.reactFelt || "0"),
+      reactAlone: parseInt(props.reactAlone || "0"),
+      reactUnderstand: parseInt(props.reactUnderstand || "0"),
     });
-
-    for (const file of filesRes.data.files || []) {
-      const props = file.properties || {};
-
-      if (options?.mood && props.mood !== options.mood) continue;
-      if (options?.audioOnly && !props.audioFileId) continue;
-
-      allPosts.push({
-        id: file.id!,
-        title: file.name!,
-        name: props.name || "Anonymous",
-        mood: (props.mood as Mood) ?? "Silence",
-        preview: "",
-        wordCount: parseInt(props.wordCount || "0"),
-        readingTime: parseInt(props.readingTime || "1"),
-        hasAudio: !!props.audioFileId,
-        createdAt: parseInt(props.createdAt || "0"),
-        reactFelt: parseInt(props.reactFelt || "0"),
-        reactAlone: parseInt(props.reactAlone || "0"),
-        reactUnderstand: parseInt(props.reactUnderstand || "0"),
-      });
-    }
   }
 
   if (options?.orderBy === "oldest") {
@@ -267,17 +274,7 @@ export async function getPublicPosts(options?: {
     allPosts.sort((a, b) => b.createdAt - a.createdAt);
   }
 
-  const limited = allPosts.slice(0, options?.limit || 50);
-
-  for (const post of limited) {
-    try {
-      post.preview = await getPostPreview(post.id);
-    } catch {
-      post.preview = "";
-    }
-  }
-
-  return limited;
+  return allPosts.slice(0, options?.limit || 50);
 }
 
 export async function getPostPreview(fileId: string): Promise<string> {

@@ -1,6 +1,29 @@
 import type { Metadata, Viewport } from 'next';
+import { EB_Garamond, DM_Sans, Courier_Prime } from 'next/font/google';
 import './globals.css';
 import { MidnightWrapper } from '@/components/ui/MidnightWrapper';
+
+const ebGaramond = EB_Garamond({
+  subsets: ['latin'],
+  variable: '--font-eb-garamond',
+  display: 'swap',
+  weight: ['400', '500', '600'],
+  style: ['normal', 'italic'],
+});
+
+const dmSans = DM_Sans({
+  subsets: ['latin'],
+  variable: '--font-dm-sans',
+  display: 'swap',
+  weight: ['300', '400', '500'],
+});
+
+const courierPrime = Courier_Prime({
+  subsets: ['latin'],
+  variable: '--font-courier-prime',
+  display: 'swap',
+  weight: ['400'],
+});
 
 export const metadata: Metadata = {
   title: 'The Quiet Room',
@@ -23,11 +46,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-      </head>
+    <html lang="en" className={`${ebGaramond.variable} ${dmSans.variable} ${courierPrime.variable}`}>
       <body>
         <MidnightWrapper>
           {/* Beetle silhouette watermark */}

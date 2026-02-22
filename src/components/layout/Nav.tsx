@@ -34,6 +34,7 @@ export function Nav() {
           <Link
             key={href}
             href={href}
+            aria-current={pathname === href ? 'page' : undefined}
             className="relative font-sans text-[9px] sm:text-[11px] tracking-[0.15em] sm:tracking-[0.25em] uppercase transition-colors duration-500 py-1"
             style={{
               color: pathname === href ? 'rgba(241,241,241,0.9)' : 'rgba(136,136,136,0.65)',

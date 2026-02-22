@@ -15,6 +15,7 @@ export function AudioRecorder({ onAudioReady }: AudioRecorderProps) {
   const [micError, setMicError] = useState(false);
 
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
+  const audioCtxRef = useRef<AudioContext | null>(null);
   const chunksRef = useRef<Blob[]>([]);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -31,6 +32,7 @@ export function AudioRecorder({ onAudioReady }: AudioRecorderProps) {
     const dataArray = new Uint8Array(bufferLength);
 
     function draw() {
+      if (!isRecording) return;
       animFrameRef.current = requestAnimationFrame(draw);
       analyser!.getByteTimeDomainData(dataArray);
 
@@ -73,7 +75,8 @@ export function AudioRecorder({ onAudioReady }: AudioRecorderProps) {
       chunksRef.current = [];
 
       // Set up analyser for waveform
-      const audioCtx = new AudioContext();
+      const audioCtx = new (window.AudioContext || (window as any).webkitAudioContext)();
+      audioCtxRef.current = audioCtx;
       const source = audioCtx.createMediaStreamSource(stream);
       const analyser = audioCtx.createAnalyser();
       analyser.fftSize = 1024;
@@ -84,13 +87,17 @@ export function AudioRecorder({ onAudioReady }: AudioRecorderProps) {
         if (e.data.size > 0) chunksRef.current.push(e.data);
       };
 
-      mediaRecorder.onstop = () => {
+      mediaRecorder.onstop = async () => {
         const blob = new Blob(chunksRef.current, { type: 'audio/webm' });
         const url = URL.createObjectURL(blob);
         setAudioUrl(url);
         onAudioReady(blob);
         stream.getTracks().forEach(t => t.stop());
         if (animFrameRef.current) cancelAnimationFrame(animFrameRef.current);
+        if (audioCtxRef.current) {
+          await audioCtxRef.current.close();
+          audioCtxRef.current = null;
+        }
       };
 
       mediaRecorder.start();
