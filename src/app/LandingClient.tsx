@@ -19,7 +19,7 @@ export function LandingClient({ initialPosts }: LandingClientProps) {
 
       {/* Hero */}
       <section
-        className="min-h-screen flex flex-col items-center justify-center px-6 text-center pt-[10vh] sm:pt-[15vh]"
+        className="min-h-[100dvh] flex flex-col items-center justify-center px-8 text-center pt-[12vh] sm:pt-[15vh]"
       >
         <motion.div
           initial={{ opacity: 0 }}
@@ -27,15 +27,15 @@ export function LandingClient({ initialPosts }: LandingClientProps) {
           transition={{ duration: 2, delay: 0.3 }}
           className="max-w-reading mx-auto"
         >
-          <p className="font-mono text-[10px] sm:text-xs text-mist tracking-[0.25em] uppercase mb-8 sm:mb-12">
+          <p className="font-mono text-[9px] sm:text-xs text-mist/60 tracking-[0.3em] sm:tracking-[0.4em] uppercase mb-10 sm:mb-16">
             The Quiet Room
           </p>
 
-          <h1 className="font-serif text-whisper/95 mb-6 sm:mb-8 leading-[0.95] tracking-tight">
+          <h1 className="font-serif text-whisper/95 mb-8 sm:mb-10 leading-[1.05] sm:leading-[0.95] tracking-tight">
             Are you winning, son?
           </h1>
 
-          <p className="font-serif italic text-ghost/40 text-base sm:text-lg mb-12 sm:mb-20">
+          <p className="font-serif italic text-ghost/40 text-base sm:text-xl mb-16 sm:mb-24">
             Or did something change?
           </p>
 
@@ -46,7 +46,7 @@ export function LandingClient({ initialPosts }: LandingClientProps) {
           >
             <Link
               href="/write"
-              className="inline-block border border-ash text-pale/70 hover:text-ghost hover:border-mist px-8 sm:px-10 py-3 text-[10px] sm:text-xs tracking-[0.2em] uppercase font-sans transition-all duration-700 min-h-[44px] flex items-center justify-center"
+              className="inline-flex border border-ash/40 text-pale/70 hover:text-ghost hover:border-mist px-10 sm:px-14 py-4 text-[9px] sm:text-xs tracking-[0.25em] sm:tracking-[0.35em] uppercase font-sans transition-all duration-1000 min-h-[50px] items-center justify-center bg-transparent"
             >
               Enter the Room
             </Link>
@@ -57,10 +57,10 @@ export function LandingClient({ initialPosts }: LandingClientProps) {
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 1, delay: 2 }}
-          className="absolute bottom-8 sm:bottom-12 flex flex-col items-center gap-2"
+          transition={{ duration: 1, delay: 2.5 }}
+          className="absolute bottom-10 sm:bottom-16 flex flex-col items-center gap-3"
         >
-          <div className="w-px h-8 sm:h-12 bg-gradient-to-b from-transparent to-ash/60" />
+          <div className="w-[1px] h-10 sm:h-16 bg-gradient-to-b from-transparent via-ash/40 to-transparent" />
         </motion.div>
       </section>
 

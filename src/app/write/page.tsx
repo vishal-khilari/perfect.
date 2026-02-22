@@ -217,26 +217,26 @@ export default function WritePage() {
     <>
       <Nav />
 
-      <div className="min-h-screen px-6 pt-24 sm:pt-28 pb-24 max-w-reading mx-auto">
+      <div className="min-h-screen px-6 pt-24 sm:pt-32 pb-32 max-w-reading mx-auto">
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1.5 }}
         >
-          <p className="font-mono text-[10px] sm:text-xs text-mist tracking-[0.2em] uppercase mb-10 sm:mb-16">
+          <p className="font-mono text-[9px] sm:text-xs text-mist/60 tracking-[0.3em] uppercase mb-12 sm:mb-20">
             Write something
           </p>
 
-          <form onSubmit={handleSubmit} className="space-y-8 sm:space-y-10">
+          <form onSubmit={handleSubmit} className="space-y-12 sm:space-y-16">
             {/* Name */}
-            <div>
+            <div className="group">
               <input
                 type="text"
                 placeholder="Your name (optional)"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 maxLength={80}
-                className="w-full bg-transparent border-b border-ash/50 pb-2 text-ghost/70 text-sm font-sans focus:border-mist/70 transition-colors duration-500 placeholder:text-mist/50 min-h-[44px]"
+                className="w-full bg-transparent border-b border-ash/30 pb-3 text-ghost/80 text-sm font-sans focus:border-mist/60 transition-colors duration-700 placeholder:text-mist/40 min-h-[50px]"
               />
             </div>
 
@@ -248,7 +248,7 @@ export default function WritePage() {
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
                 maxLength={200}
-                className="w-full bg-transparent border-b border-ash/50 pb-2 font-serif text-lg sm:text-xl text-whisper/70 focus:border-mist/70 transition-colors duration-500 placeholder:text-mist/40 min-h-[44px]"
+                className="w-full bg-transparent border-b border-ash/30 pb-3 font-serif text-xl sm:text-2xl text-whisper/80 focus:border-mist/60 transition-colors duration-700 placeholder:text-mist/30 min-h-[50px]"
               />
             </div>
 
@@ -262,58 +262,59 @@ export default function WritePage() {
                   playTypingSound();
                 }}
                 onKeyDown={() => playTypingSound()}
-                rows={12}
+                rows={10}
                 maxLength={10000}
-                className="w-full bg-transparent font-serif text-base sm:text-lg text-ghost/80 leading-relaxed sm:leading-loose placeholder:text-mist/40 focus:outline-none"
-                style={{ minHeight: '250px' }}
+                className="w-full bg-transparent font-serif text-lg sm:text-xl text-ghost/90 leading-relaxed sm:leading-loose placeholder:text-mist/30 focus:outline-none"
+                style={{ minHeight: '300px' }}
               />
 
-              <div className="flex justify-between items-center mt-3">
-                <span className="text-[10px] font-mono text-mist tracking-wider uppercase">
-                  {wordCount} words · {readingTime} min read
+              <div className="flex justify-between items-center mt-6 pt-4 border-t border-ash/10">
+                <span className="text-[9px] sm:text-[10px] font-mono text-mist/50 tracking-[0.1em] uppercase">
+                  {wordCount} words / {readingTime} min read
                 </span>
-                <span className="text-[10px] font-mono text-mist tracking-wider">
+                <span className="text-[9px] sm:text-[10px] font-mono text-mist/50 tracking-[0.1em]">
                   {body.length} / 10,000
                 </span>
               </div>
             </div>
 
             {/* Mood selector */}
-            <div>
-              <p className="text-[10px] sm:text-xs font-mono text-mist tracking-[0.2em] uppercase mb-4">
+            <div className="pt-4">
+              <p className="text-[9px] sm:text-xs font-mono text-mist/60 tracking-[0.3em] uppercase mb-6 sm:mb-8">
                 Mood
               </p>
-              <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
+              <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-4 gap-3">
                 {MOODS.map(({ value, description }) => (
                   <button
                     key={value}
                     type="button"
                     onClick={() => setMood(value)}
-                    className="border py-3 px-4 text-[10px] sm:text-xs font-mono tracking-widest transition-all duration-500 text-left min-h-[50px] flex flex-col justify-center"
+                    className="border py-4 px-5 text-[10px] sm:text-xs font-mono tracking-[0.15em] transition-all duration-700 text-left min-h-[60px] flex flex-col justify-center"
                     style={{
-                      borderColor: mood === value ? 'rgba(136,136,136,0.6)' : 'rgba(42,42,42,0.8)',
-                      color: mood === value ? 'rgba(176,176,176,0.9)' : 'rgba(61,61,61,0.9)',
+                      borderColor: mood === value ? 'rgba(136,136,136,0.5)' : 'rgba(42,42,42,0.4)',
+                      color: mood === value ? 'rgba(176,176,176,1)' : 'rgba(107,127,143,0.5)',
+                      backgroundColor: mood === value ? 'rgba(255,255,255,0.02)' : 'transparent',
                     }}
                   >
-                    <span className="block font-medium uppercase tracking-widest">{value}</span>
-                    <span className="block text-[8px] sm:text-[10px] opacity-50 mt-1 lowercase italic">{description}</span>
+                    <span className="block font-medium uppercase tracking-[0.15em] mb-1">{value}</span>
+                    <span className="block text-[8px] sm:text-[9px] opacity-40 lowercase italic">{description}</span>
                   </button>
                 ))}
               </div>
             </div>
 
             {/* Audio section */}
-            <div>
-              <div className="flex items-center gap-4 mb-4">
-                <p className="text-[10px] sm:text-xs font-mono text-mist tracking-[0.2em] uppercase">
-                  Audio (optional)
+            <div className="pt-4">
+              <div className="flex items-center justify-between sm:justify-start gap-6 mb-6">
+                <p className="text-[9px] sm:text-xs font-mono text-mist/60 tracking-[0.3em] uppercase">
+                  Audio
                 </p>
                 <button
                   type="button"
                   onClick={() => setShowAudio(!showAudio)}
-                  className="text-[10px] sm:text-xs text-mist hover:text-pale transition-colors duration-300 font-mono tracking-widest uppercase min-h-[32px]"
+                  className="text-[9px] sm:text-xs text-mist hover:text-pale transition-all duration-500 font-mono tracking-[0.2em] uppercase min-h-[44px] px-2"
                 >
-                  {showAudio ? '[ hide ]' : '[ add audio ]'}
+                  {showAudio ? '[ - ]' : '[ + ]'}
                 </button>
               </div>
 
@@ -323,56 +324,83 @@ export default function WritePage() {
                     initial={{ opacity: 0, height: 0 }}
                     animate={{ opacity: 1, height: 'auto' }}
                     exit={{ opacity: 0, height: 0 }}
-                    transition={{ duration: 0.5 }}
+                    transition={{ duration: 0.8 }}
                     className="overflow-hidden"
                   >
-                    <AudioRecorder onAudioReady={setAudioBlobOrFile} />
+                    <div className="pb-8">
+                      <AudioRecorder onAudioReady={setAudioBlobOrFile} />
+                    </div>
                   </motion.div>
                 )}
               </AnimatePresence>
             </div>
 
             {/* Options */}
-            <div className="space-y-4 pt-2">
-              <label className="flex items-center gap-4 cursor-pointer group min-h-[32px]">
+            <div className="space-y-6 pt-6 border-t border-ash/10">
+              <label className="flex items-center gap-5 cursor-pointer group min-h-[44px]">
                 <input
                   type="checkbox"
                   checked={isPrivate}
                   onChange={(e) => setIsPrivate(e.target.checked)}
                   className="hidden"
                 />
-                <div className="w-5 h-5 border border-ash flex items-center justify-center transition-colors duration-300 group-hover:border-mist shrink-0">
-                  {isPrivate && <div className="w-2.5 h-2.5 bg-pale/60" />}
+                <div className="w-5 h-5 border border-ash/40 flex items-center justify-center transition-all duration-500 group-hover:border-mist shrink-0">
+                  {isPrivate && <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} className="w-2.5 h-2.5 bg-pale/60" />}
                 </div>
-                <span className="text-[10px] sm:text-xs font-mono text-mist tracking-widest uppercase">Keep private (draft only)</span>
+                <span className="text-[9px] sm:text-[11px] font-mono text-mist/60 group-hover:text-pale/80 tracking-[0.2em] uppercase transition-colors duration-500">Keep private</span>
               </label>
 
-              <label className="flex items-center gap-4 cursor-pointer group min-h-[32px]">
+              <label className="flex items-center gap-5 cursor-pointer group min-h-[44px]">
                 <input
                   type="checkbox"
                   checked={burnAfter}
                   onChange={(e) => setBurnAfter(e.target.checked)}
                   className="hidden"
                 />
-                <div className="w-5 h-5 border border-ash flex items-center justify-center transition-colors duration-300 group-hover:border-mist shrink-0">
-                  {burnAfter && <div className="w-2.5 h-2.5 bg-pale/60" />}
+                <div className="w-5 h-5 border border-ash/40 flex items-center justify-center transition-all duration-500 group-hover:border-mist shrink-0">
+                  {burnAfter && <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} className="w-2.5 h-2.5 bg-pale/60" />}
                 </div>
-                <span className="text-[10px] sm:text-xs font-mono text-mist tracking-widest uppercase">Burn after 7 days</span>
+                <span className="text-[9px] sm:text-[11px] font-mono text-mist/60 group-hover:text-pale/80 tracking-[0.2em] uppercase transition-colors duration-500">Burn after 7 days</span>
               </label>
 
-              <label className="flex items-center gap-4 cursor-pointer group min-h-[32px]">
+              <label className="flex items-center gap-5 cursor-pointer group min-h-[44px]">
                 <input
                   type="checkbox"
                   checked={soundOn}
                   onChange={(e) => setSoundOn(e.target.checked)}
                   className="hidden"
                 />
-                <div className="w-5 h-5 border border-ash flex items-center justify-center transition-colors duration-300 group-hover:border-mist shrink-0">
-                  {soundOn && <div className="w-2.5 h-2.5 bg-pale/60" />}
+                <div className="w-5 h-5 border border-ash/40 flex items-center justify-center transition-all duration-500 group-hover:border-mist shrink-0">
+                  {soundOn && <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} className="w-2.5 h-2.5 bg-pale/60" />}
                 </div>
-                <span className="text-[10px] sm:text-xs font-mono text-mist tracking-widest uppercase">Soft typing sounds</span>
+                <span className="text-[9px] sm:text-[11px] font-mono text-mist/60 group-hover:text-pale/80 tracking-[0.2em] uppercase transition-colors duration-500">Soft typing sounds</span>
               </label>
             </div>
+
+            {/* Error */}
+            {error && (
+              <motion.p
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                className="text-xs font-mono text-pale/60 text-center"
+              >
+                {error}
+              </motion.p>
+            )}
+
+            {/* Submit */}
+            <div className="pt-10">
+              <button
+                type="submit"
+                disabled={submitting || body.trim().length < 10}
+                className="btn-ghost w-full sm:w-auto disabled:opacity-20 disabled:cursor-not-allowed text-[10px] tracking-[0.3em] min-h-[54px] sm:px-16"
+              >
+                {submitting ? 'Saving...' : 'Leave it here'}
+              </button>
+            </div>
+          </form>
+        </motion.div>
+      </div>
 
             {/* Error */}
             {error && (

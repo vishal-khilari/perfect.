@@ -58,95 +58,108 @@ export default function RoomPage() {
     <>
       <Nav />
 
-      <div className="min-h-screen px-6 pt-24 sm:pt-28 pb-24 max-w-reading mx-auto">
+      <div className="min-h-screen px-6 pt-24 sm:pt-32 pb-32 max-w-reading mx-auto">
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1.5 }}
         >
-          <p className="font-mono text-[10px] sm:text-xs text-mist tracking-[0.2em] uppercase mb-3">
-            The Archive
-          </p>
-          <p className="font-serif italic text-pale/40 text-sm sm:text-base mb-10 sm:mb-14">
-            What people left behind.
-          </p>
+          <div className="mb-12 sm:mb-20">
+            <p className="font-mono text-[9px] sm:text-xs text-mist/60 tracking-[0.3em] uppercase mb-4">
+              The Archive
+            </p>
+            <h2 className="font-serif italic text-pale/30 text-lg sm:text-2xl">
+              What people left behind.
+            </h2>
+          </div>
 
           {/* Controls */}
-          <div className="flex flex-col sm:flex-row sm:items-center gap-6 mb-10 sm:mb-12">
+          <div className="flex flex-col gap-10 mb-12 sm:mb-20">
             {/* Sort */}
-            <div className="flex gap-4">
-              {sorts.map(({ value, label }) => (
-                <button
-                  key={value}
-                  onClick={() => setSort(value)}
-                  className="text-[10px] sm:text-xs font-mono tracking-widest transition-colors duration-400 min-h-[32px]"
-                  style={{
-                    color: sort === value ? 'rgba(176,176,176,0.9)' : 'rgba(61,61,61,0.9)',
-                    textDecoration: sort === value ? 'underline' : 'none',
-                    textUnderlineOffset: '3px',
-                    textDecorationColor: 'rgba(136,136,136,0.4)',
-                  }}
-                >
-                  {label}
-                </button>
-              ))}
+            <div className="flex flex-col gap-4">
+              <span className="text-[9px] font-mono text-mist/40 tracking-[0.2em] uppercase">Order by</span>
+              <div className="flex gap-6 sm:gap-8">
+                {sorts.map(({ value, label }) => (
+                  <button
+                    key={value}
+                    onClick={() => setSort(value)}
+                    className="text-[10px] sm:text-xs font-mono tracking-[0.2em] transition-all duration-500 min-h-[44px] relative py-1"
+                    style={{
+                      color: sort === value ? 'rgba(176,176,176,1)' : 'rgba(107,127,143,0.4)',
+                    }}
+                  >
+                    {label}
+                    {sort === value && (
+                      <motion.div layoutId="sort-underline" className="absolute bottom-0 left-0 right-0 h-[1px] bg-pale/40" />
+                    )}
+                  </button>
+                ))}
+              </div>
             </div>
 
-            {/* Mood filter */}
-            <div className="flex gap-3 flex-wrap">
-              {moods.map((m) => (
-                <button
-                  key={m}
-                  onClick={() => setMoodFilter(m)}
-                  className="text-[10px] sm:text-xs font-mono tracking-widest capitalize transition-colors duration-400 min-h-[32px]"
-                  style={{
-                    color: moodFilter === m ? 'rgba(176,176,176,0.9)' : 'rgba(61,61,61,0.9)',
-                  }}
-                >
-                  {m}
-                </button>
-              ))}
-            </div>
+            <div className="flex flex-col sm:flex-row gap-8 sm:items-end sm:justify-between">
+              {/* Mood filter */}
+              <div className="flex flex-col gap-4">
+                <span className="text-[9px] font-mono text-mist/40 tracking-[0.2em] uppercase">Filter by mood</span>
+                <div className="flex gap-4 flex-wrap">
+                  {moods.map((m) => (
+                    <button
+                      key={m}
+                      onClick={() => setMoodFilter(m)}
+                      className="text-[10px] sm:text-xs font-mono tracking-[0.1em] capitalize transition-all duration-500 min-h-[36px] px-3 border border-transparent"
+                      style={{
+                        color: moodFilter === m ? 'rgba(176,176,176,1)' : 'rgba(107,127,143,0.4)',
+                        borderColor: moodFilter === m ? 'rgba(136,136,136,0.2)' : 'transparent',
+                        backgroundColor: moodFilter === m ? 'rgba(255,255,255,0.03)' : 'transparent',
+                      }}
+                    >
+                      {m}
+                    </button>
+                  ))}
+                </div>
+              </div>
 
-            {/* Audio only */}
-            <button
-              onClick={() => setAudioOnly(!audioOnly)}
-              className="text-[10px] sm:text-xs font-mono tracking-widest transition-colors duration-400 min-h-[32px] text-left"
-              style={{
-                color: audioOnly ? 'rgba(176,176,176,0.9)' : 'rgba(61,61,61,0.9)',
-              }}
-            >
-              ⟡ with audio
-            </button>
+              {/* Audio only */}
+              <button
+                onClick={() => setAudioOnly(!audioOnly)}
+                className="text-[10px] sm:text-xs font-mono tracking-[0.2em] transition-all duration-500 min-h-[44px] flex items-center gap-2"
+                style={{
+                  color: audioOnly ? 'rgba(176,176,176,1)' : 'rgba(107,127,143,0.4)',
+                }}
+              >
+                <span className={`w-1.5 h-1.5 rounded-full transition-colors duration-500 ${audioOnly ? 'bg-pale/60' : 'bg-ash/40'}`} />
+                with audio
+              </button>
+            </div>
           </div>
 
           {/* Random confession button */}
-          <div className="mb-10 sm:mb-12">
+          <div className="mb-12 sm:mb-20">
             <button
               onClick={loadRandom}
-              className="text-[10px] sm:text-xs font-mono text-mist hover:text-pale tracking-[0.2em] uppercase transition-colors duration-500 min-h-[44px] flex items-center"
+              className="text-[10px] sm:text-xs font-mono text-mist/60 hover:text-pale tracking-[0.2em] uppercase transition-all duration-700 min-h-[50px] flex items-center border border-ash/20 px-6 hover:bg-white/[0.02]"
             >
               Open a random confession →
             </button>
           </div>
 
-          <hr className="divider" />
+          <hr className="divider opacity-30" />
 
           {/* Posts */}
           {loading ? (
-            <div className="py-20 text-center">
-              <p className="font-serif italic text-pale/30 text-base animate-pulse">
+            <div className="py-32 text-center">
+              <p className="font-serif italic text-pale/20 text-lg animate-pulse tracking-widest">
                 Gathering whispers...
               </p>
             </div>
           ) : posts.length === 0 ? (
-            <div className="py-20 text-center">
-              <p className="font-serif italic text-pale/40 text-base">
-                Nothing here yet. The silence is complete.
+            <div className="py-32 text-center">
+              <p className="font-serif italic text-pale/30 text-lg tracking-wide">
+                The silence is complete.
               </p>
             </div>
           ) : (
-            <div>
+            <div className="space-y-4">
               {posts.map((post, i) => (
                 <PostCard key={post.id} post={post} index={i} />
               ))}

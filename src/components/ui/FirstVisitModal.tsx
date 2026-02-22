@@ -30,22 +30,22 @@ export function FirstVisitModal() {
           onClick={dismiss}
         >
           <motion.div
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -8 }}
-            transition={{ duration: 1.2, delay: 0.3 }}
-            className="text-center max-w-sm px-8"
+            initial={{ opacity: 0, scale: 0.98 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.98 }}
+            transition={{ duration: 1.5, delay: 0.5 }}
+            className="text-center max-w-[300px] sm:max-w-sm px-10 py-16 border border-ash/10 bg-void/60 backdrop-blur-xl"
             onClick={(e) => e.stopPropagation()}
           >
-            <p className="font-serif text-xl text-whisper/80 mb-2 italic">
+            <p className="font-serif text-2xl sm:text-3xl text-whisper/95 mb-4 italic leading-tight">
               You are entering a quiet place.
             </p>
-            <p className="font-serif text-lg text-ghost/60 italic mb-10">
+            <p className="font-serif text-lg sm:text-xl text-ghost/40 italic mb-12 sm:mb-16 tracking-wide">
               Speak softly.
             </p>
             <button
               onClick={dismiss}
-              className="btn-ghost"
+              className="btn-ghost w-full sm:w-auto px-12 py-4 text-[10px] sm:text-xs tracking-[0.3em] min-h-[50px]"
             >
               I understand
             </button>
