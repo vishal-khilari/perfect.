@@ -41,6 +41,8 @@ body {
   min-height: 100vh;
   overflow-x: hidden;
   position: relative;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
 }
 
 /* ── Grain texture overlay ───────────────────────────────────────────── */
@@ -147,6 +149,8 @@ p {
   line-height: 1.8;
   color: var(--ghost);
   white-space: pre-wrap;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
 }
 
 @media (min-width: 768px) {

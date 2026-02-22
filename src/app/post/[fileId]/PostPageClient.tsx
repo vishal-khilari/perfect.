@@ -45,7 +45,7 @@ export function PostPageClient({ post }: PostPageClientProps) {
   }
 
   return (
-    <div className="min-h-screen px-6 pt-24 sm:pt-32 pb-40 max-w-reading mx-auto">
+    <div className="min-h-screen px-6 pt-24 sm:pt-32 pb-40 max-w-3xl mx-auto w-full">
       <motion.article
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -57,12 +57,12 @@ export function PostPageClient({ post }: PostPageClientProps) {
         </div>
 
         {/* Title */}
-        <h1 className="font-serif text-whisper/95 mb-8 leading-[1.1] sm:leading-tight">
+        <h1 className="font-serif text-whisper/95 mb-8 leading-[1.1] sm:leading-tight max-w-full break-words">
           {post.title || 'Untitled'}
         </h1>
 
         {/* Meta */}
-        <div className="flex flex-wrap items-center gap-x-3 gap-y-3 mb-12 sm:mb-16 text-[9px] sm:text-xs font-mono text-mist/60 tracking-[0.1em] uppercase border-y border-ash/10 py-6">
+        <div className="flex flex-wrap items-center gap-x-3 gap-y-3 mb-12 sm:mb-16 text-[9px] sm:text-xs font-mono text-mist/60 tracking-[0.1em] uppercase border-y border-ash/10 py-6 w-full overflow-hidden">
           <span className="text-pale/60">{post.name || 'Anonymous'}</span>
           <span className="opacity-20 text-[8px]">/</span>
           <span>{post.createdDate}</span>

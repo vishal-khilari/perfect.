@@ -58,7 +58,7 @@ export default function RoomPage() {
     <>
       <Nav />
 
-      <div className="min-h-screen px-6 pt-24 sm:pt-32 pb-32 max-w-reading mx-auto">
+      <div className="min-h-screen px-6 pt-24 sm:pt-32 pb-32 max-w-3xl mx-auto w-full">
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}

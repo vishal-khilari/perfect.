@@ -25,7 +25,7 @@ export function LandingClient({ initialPosts }: LandingClientProps) {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 2, delay: 0.3 }}
-          className="max-w-reading mx-auto"
+          className="max-w-3xl mx-auto w-full"
         >
           <p className="font-mono text-[9px] sm:text-xs text-mist/60 tracking-[0.3em] sm:tracking-[0.4em] uppercase mb-10 sm:mb-16">
             The Quiet Room
@@ -65,7 +65,7 @@ export function LandingClient({ initialPosts }: LandingClientProps) {
       </section>
 
       {/* Recent whispers */}
-      <section className="px-6 pb-24 sm:pb-32 max-w-reading mx-auto">
+      <section className="px-6 pb-24 sm:pb-32 max-w-3xl mx-auto w-full">
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}

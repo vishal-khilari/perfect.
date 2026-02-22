@@ -216,7 +216,7 @@ export default function WritePage() {
   return (
     <>
       <Nav />
-      <div className="min-h-screen px-6 pt-24 sm:pt-32 pb-32 max-w-reading mx-auto">
+      <div className="min-h-screen px-6 pt-24 sm:pt-32 pb-32 max-w-3xl mx-auto w-full">
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -235,7 +235,7 @@ export default function WritePage() {
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 maxLength={80}
-                className="w-full bg-transparent border-b border-ash/30 pb-3 text-ghost/80 text-sm font-sans focus:border-mist/60 transition-colors duration-700 placeholder:text-mist/40 min-h-[50px]"
+                className="w-full bg-transparent border-b border-ash/30 pb-3 text-ghost/80 text-sm font-sans focus:border-mist/60 transition-colors duration-700 placeholder:text-mist/40 min-h-[50px] break-words"
               />
             </div>
 
@@ -247,7 +247,7 @@ export default function WritePage() {
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
                 maxLength={200}
-                className="w-full bg-transparent border-b border-ash/30 pb-3 font-serif text-xl sm:text-2xl text-whisper/80 focus:border-mist/60 transition-colors duration-700 placeholder:text-mist/30 min-h-[50px]"
+                className="w-full bg-transparent border-b border-ash/30 pb-3 font-serif text-xl sm:text-2xl text-whisper/80 focus:border-mist/60 transition-colors duration-700 placeholder:text-mist/30 min-h-[50px] break-words"
               />
             </div>
 
@@ -263,7 +263,7 @@ export default function WritePage() {
                 onKeyDown={() => playTypingSound()}
                 rows={10}
                 maxLength={10000}
-                className="w-full bg-transparent font-serif text-lg sm:text-xl text-ghost/90 leading-relaxed sm:leading-loose placeholder:text-mist/30 focus:outline-none"
+                className="w-full bg-transparent font-serif text-lg sm:text-xl text-ghost/90 leading-relaxed sm:leading-loose placeholder:text-mist/30 focus:outline-none break-words"
                 style={{ minHeight: '300px' }}
               />
 
