@@ -26,7 +26,7 @@ export function PostCard({ post, index = 0 }: PostCardProps) {
         className="post-card group border-b border-ash/20 py-8 sm:py-12 transition-all duration-700 w-full"
       >
         <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4 mb-4 sm:mb-6">
-          <h3 className="font-serif text-whisper/85 group-hover:text-whisper transition-colors duration-700 text-xl sm:text-2xl leading-tight break-words">
+          <h3 className="font-serif text-whisper/85 group-hover:text-whisper transition-colors duration-700 text-xl sm:text-2xl leading-tight break-words line-clamp-2">
             {post.title || 'Untitled'}
           </h3>
           <span className={`mood-badge self-start sm:self-auto shrink-0 ${moodColor}`}>

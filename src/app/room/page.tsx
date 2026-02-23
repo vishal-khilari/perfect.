@@ -1,10 +1,9 @@
-'use client';
-
 import { useState, useEffect, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import { Nav } from '@/components/layout/Nav';
 import { PostCard } from '@/components/ui/PostCard';
-import { PostPreview, Mood } from '@/types';
+import { MoodIcon } from '@/components/ui/MoodIcon'; // Import MoodIcon
+import { PostPreview, Mood, MOOD_COLORS } from '@/types'; // Import MOOD_COLORS
 
 type SortOrder = 'latest' | 'oldest' | 'random';
 type FilterMood = Mood | 'all';
@@ -54,6 +53,11 @@ export default function RoomPage() {
     { value: 'random', label: 'Random' },
   ];
 
+  const getMoodColorValue = (m: Mood) => {
+    // Helper to get hex color from MOOD_COLORS based on Mood enum
+    return MOOD_COLORS[m] || '#888888'; // Default to pale if not found
+  };
+
   return (
     <>
       <Nav />
@@ -86,7 +90,7 @@ export default function RoomPage() {
                     whileTap={{ scale: 0.95 }}
                     className="text-[10px] sm:text-xs font-mono tracking-[0.2em] transition-all duration-500 min-h-[48px] relative py-1 whitespace-nowrap"
                     style={{
-                      color: sort === value ? 'rgba(176,176,176,1)' : 'rgba(107,127,143,0.4)',
+                      color: sort === value ? 'rgba(176,176,176,1)' : 'rgba(136,136,136,0.6)',
                     }}
                   >
                     {label}
@@ -107,14 +111,18 @@ export default function RoomPage() {
                     <motion.button
                       key={m}
                       onClick={() => setMoodFilter(m)}
-                      whileTap={{ scale: 0.95 }}
-                      className="text-[10px] sm:text-xs font-mono tracking-[0.1em] capitalize transition-all duration-500 min-h-[44px] px-4 border border-transparent flex items-center justify-center"
+                      whileTap={{ scale: 0.95, boxShadow: `0 0 10px ${m === 'all' ? 'rgba(136,136,136,0.2)' : `${getMoodColorValue(m as Mood)}40`}` }} // Dynamic shadow
+                      className="text-[10px] sm:text-xs font-mono tracking-[0.1em] capitalize transition-all duration-500 min-h-[44px] px-4 border flex items-center justify-center relative overflow-hidden group"
                       style={{
-                        color: moodFilter === m ? 'rgba(176,176,176,1)' : 'rgba(107,127,143,0.4)',
-                        borderColor: moodFilter === m ? 'rgba(136,136,136,0.2)' : 'transparent',
+                        color: moodFilter === m ? 'rgba(176,176,176,1)' : 'rgba(136,136,136,0.6)',
+                        borderColor: moodFilter === m ? 'rgba(136,136,136,0.5)' : 'rgba(42,42,42,0.4)',
                         backgroundColor: moodFilter === m ? 'rgba(255,255,255,0.03)' : 'transparent',
+                        boxShadow: moodFilter === m ? `0 0 15px ${m === 'all' ? 'rgba(136,136,136,0.2)' : `${getMoodColorValue(m as Mood)}40`}` : 'none', // Active glow
                       }}
                     >
+                      {m !== 'all' && ( // Don't show icon for 'all'
+                        <MoodIcon mood={m as Mood} className={`mr-2 h-4 w-4 ${moodFilter === m ? 'opacity-80' : 'opacity-40 group-hover:opacity-60'} transition-opacity duration-500`} />
+                      )}
                       {m}
                     </motion.button>
                   ))}
@@ -163,7 +171,7 @@ export default function RoomPage() {
               </p>
             </div>
           ) : (
-            <div className="space-y-4">
+            <div className="space-y-8">
               {posts.map((post, i) => (
                 <PostCard key={post.id} post={post} index={i} />
               ))}

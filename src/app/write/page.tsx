@@ -6,7 +6,8 @@ import { useRouter } from 'next/navigation';
 import { v4 as uuidv4 } from 'uuid';
 import { Nav } from '@/components/layout/Nav';
 import { AudioRecorder } from '@/components/audio/AudioRecorder';
-import { Mood } from '@/types';
+import { MoodIcon } from '@/components/ui/MoodIcon'; // Import MoodIcon
+import { Mood, MOOD_COLORS } from '@/types'; // Import MOOD_COLORS
 
 const MOODS: { value: Mood; description: string }[] = [
   { value: 'Rain', description: 'something heavy' },
@@ -213,6 +214,11 @@ export default function WritePage() {
     );
   }
 
+  const getMoodColorValue = (m: Mood) => {
+    // Helper to get hex color from MOOD_COLORS based on Mood enum
+    return MOOD_COLORS[m] || '#888888'; // Default to pale if not found
+  };
+
   return (
     <>
       <Nav />
@@ -288,15 +294,19 @@ export default function WritePage() {
                     key={value}
                     type="button"
                     onClick={() => setMood(value)}
-                    whileTap={{ scale: 0.98, backgroundColor: 'rgba(255,255,255,0.05)' }}
-                    className="border py-4 px-5 text-[10px] sm:text-xs font-mono tracking-[0.15em] transition-all duration-700 text-left min-h-[64px] flex flex-col justify-center"
+                    whileTap={{ scale: 0.98, boxShadow: `0 0 10px ${getMoodColorValue(value)}40` }}
+                    className="border py-4 px-5 text-[10px] sm:text-xs font-mono tracking-[0.15em] transition-all duration-700 text-left min-h-[64px] flex flex-col justify-center relative overflow-hidden group"
                     style={{
                       borderColor: mood === value ? 'rgba(136,136,136,0.5)' : 'rgba(42,42,42,0.4)',
-                      color: mood === value ? 'rgba(176,176,176,1)' : 'rgba(107,127,143,0.5)',
-                      backgroundColor: mood === value ? 'rgba(255,255,255,0.02)' : 'transparent',
+                      color: mood === value ? 'rgba(176,176,176,1)' : 'rgba(136,136,136,0.6)',
+                      backgroundColor: mood === value ? 'rgba(255,255,255,0.03)' : 'transparent',
+                      boxShadow: mood === value ? `0 0 15px ${getMoodColorValue(value)}40` : 'none',
                     }}
                   >
-                    <span className="block font-medium uppercase tracking-[0.15em] mb-1">{value}</span>
+                    <div className="flex items-center mb-1">
+                      <MoodIcon mood={value} className={`mr-2 h-4 w-4 ${mood === value ? 'opacity-80' : 'opacity-40 group-hover:opacity-60'} transition-opacity duration-500`} />
+                      <span className="block font-medium uppercase tracking-[0.15em]">{value}</span>
+                    </div>
                     <span className="block text-[8px] sm:text-[9px] opacity-40 lowercase italic">{description}</span>
                   </motion.button>
                 ))}

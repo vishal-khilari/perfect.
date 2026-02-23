@@ -122,11 +122,14 @@ h3 {
   font-family: var(--font-eb-garamond), Georgia, serif;
   font-weight: 400;
   letter-spacing: -0.01em;
-  line-height: 1.2;
+  line-height: 1.1; /* Adjusted for better cohesion */
+  -webkit-hyphens: auto;
+  -ms-hyphens: auto;
+  hyphens: auto;
 }
 
 h1 {
-  font-size: clamp(2.2rem, 8vw, 3.5rem);
+  font-size: clamp(2rem, 7vw, 3.5rem); /* Adjusted for mobile intimacy */
 }
 
 h2 {
@@ -140,6 +143,9 @@ h3 {
 p {
   line-height: 1.7;
   color: var(--ghost);
+  -webkit-hyphens: auto;
+  -ms-hyphens: auto;
+  hyphens: auto;
 }
 
 /* ── Reading content ─────────────────────────────────────────────────── */
@@ -151,6 +157,9 @@ p {
   white-space: pre-wrap;
   overflow-wrap: break-word;
   word-wrap: break-word;
+  -webkit-hyphens: auto;
+  -ms-hyphens: auto;
+  hyphens: auto;
 }
 
 @media (min-width: 768px) {
