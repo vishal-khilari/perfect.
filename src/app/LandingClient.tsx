@@ -33,10 +33,13 @@ export function LandingClient({ initialPosts }: LandingClientProps) {
           transition={{ duration: transitionDuration, delay: prefersReducedMotion ? 0 : 0.3 }} // Standardized duration
           className="max-w-3xl mx-auto w-full"
         >
-          <p className="font-mono text-[9px] sm:text-xs text-mist/60 tracking-[0.3em] sm:tracking-[0.4em] uppercase mb-10 sm:mb-16">
+          {/* Section 11.6: Visual Noise Audit - Remove uppercase, adjust tracking */}
+          {/* Section 11.5: Remove Brand Self-Reference - "The Quiet Room" branding on page, compress hero */}
+          <p className="font-mono text-[9px] sm:text-xs text-mist/60 tracking-[0.2em] mb-10 sm:mb-16"> {/* Removed uppercase, tracking adjusted */}
             The Quiet Room
           </p>
 
+          {/* Section 11.4: Hero Compression - Language refined in Section 9 */}
           <h1 className="font-serif text-whisper/95 mb-8 sm:mb-10 leading-[1.05] sm:leading-[0.95] tracking-tight">
             Leave it here.
           </h1>
@@ -57,7 +60,7 @@ export function LandingClient({ initialPosts }: LandingClientProps) {
             >
               <motion.span
                 whileTap={{ scale: prefersReducedMotion ? 1 : 0.98 }} // Standardized scale
-                className="btn-ghost w-full sm:w-auto !border-ash/60 hover:!border-mist/80 !text-pale/80 hover:!text-ghost px-10 sm:px-12 tracking-[0.3em]"
+                className="btn-ghost w-full sm:w-auto !border-ash/60 hover:!border-mist/80 !text-pale/80 hover:!text-ghost px-10 sm:px-12 tracking-[0.3em]" // No uppercase here, inherits from btn-ghost
               >
                 Unburden
               </motion.span>
@@ -68,7 +71,7 @@ export function LandingClient({ initialPosts }: LandingClientProps) {
             >
               <motion.span
                 whileTap={{ scale: prefersReducedMotion ? 1 : 0.98 }} // Standardized scale
-                className="btn-ghost w-full sm:w-auto !border-ash/20 hover:!border-ash/50 !text-pale/50 hover:!text-pale/70 px-8 sm:px-10 tracking-[0.2em]"
+                className="btn-ghost w-full sm:w-auto !border-ash/20 hover:!border-ash/50 !text-pale/50 hover:!text-pale/70 px-8 sm:px-10 tracking-[0.2em]" // No uppercase here, inherits from btn-ghost
               >
                 Open the Archive
               </motion.span>
@@ -94,7 +97,7 @@ export function LandingClient({ initialPosts }: LandingClientProps) {
           animate={{ opacity: 1 }}
           transition={{ duration: transitionDuration, delay: prefersReducedMotion ? 0 : 0.2 }} // Standardized duration and delay
         >
-          <p className="font-mono text-[10px] sm:text-xs text-mist tracking-[0.2em] uppercase mb-10 sm:mb-12">
+          <p className="font-mono text-[10px] sm:text-xs text-mist tracking-[0.15em] mb-10 sm:mb-12"> {/* Removed uppercase, tracking adjusted */}
             From the archive
           </p>
 
@@ -117,11 +120,11 @@ export function LandingClient({ initialPosts }: LandingClientProps) {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: transitionDuration, delay: prefersReducedMotion ? 0 : 0.3 }} // Standardized duration and delay
-              className="mt-16 text-center" {/* Increased mt */}
+              className="mt-16 text-center"
             >
               <Link
                 href="/room"
-                className="text-xs font-mono text-mist hover:text-pale tracking-[0.2em] uppercase transition-colors duration-500"
+                className="text-xs font-mono text-mist hover:text-pale tracking-[0.15em]" // Removed uppercase, tracking adjusted
               >
                 Enter the full archive →
               </Link>

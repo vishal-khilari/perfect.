@@ -36,11 +36,11 @@ export default function RoomPage() {
         >
           {/* Section 9.2: Room Page Tone */}
           <div className="mb-16 sm:mb-24">
-            <p className="font-mono text-[9px] sm:text-xs text-mist/60 tracking-[0.3em] uppercase mb-6 sm:mb-8">
-              the archive {/* Refined */}
+            <p className="font-mono text-[9px] sm:text-xs text-mist/60 tracking-[0.15em] mb-6 sm:mb-8"> {/* Adjusted tracking */}
+              the archive {/* Restored */}
             </p>
             <h2 className="font-serif italic text-pale/30 text-lg sm:text-2xl mb-10 sm:mb-14">
-              what has been left here. {/* Refined */}
+              what has been left here.
             </h2>
           </div>
 
@@ -48,19 +48,19 @@ export default function RoomPage() {
           <div className="flex flex-col gap-10 mt-16 sm:mt-24 mb-16 sm:mb-24">
             {/* Sort */}
             <div className="flex flex-col gap-4">
-              <span className="text-[9px] font-mono text-mist/40 tracking-[0.2em] uppercase">sort by</span> {/* Refined */}
+              <span className="text-[9px] font-mono text-mist/40 tracking-[0.15em]">sort by</span> {/* Adjusted tracking */}
               <div className="flex gap-8 sm:gap-10 overflow-x-auto pb-2 scrollbar-hide">
                 {sorts.map(({ value, label }) => (
                   <motion.button
                     key={value}
                     onClick={() => setSort(value)}
-                    whileTap={{ scale: prefersReducedMotion ? 1 : 0.98 }} // Standardized scale 0.98
+                    whileTap={{ scale: prefersReducedMotion ? 1 : 0.98 }}
                     className="text-[10px] sm:text-xs font-mono tracking-[0.2em] transition-all duration-500 min-h-[48px] relative py-1 whitespace-nowrap"
                     style={{
                       color: sort === value ? 'rgba(176,176,176,1)' : 'rgba(136,136,136,0.6)',
                     }}
                   >
-                    {label.toLowerCase()} {/* Refined */}
+                    {label.toLowerCase()}
                     {sort === value && (
                       <motion.div layoutId="sort-underline" className="absolute bottom-0 left-0 right-0 h-[1px] bg-pale/40" />
                     )}
@@ -72,19 +72,19 @@ export default function RoomPage() {
             <div className="flex flex-col sm:flex-row gap-8 sm:items-end sm:justify-between">
               {/* Mood filter */}
               <div className="flex flex-col gap-4">
-                <span className="text-[9px] font-mono text-mist/40 tracking-[0.2em] uppercase">mood</span> {/* Refined */}
+                <span className="text-[9px] font-mono text-mist/40 tracking-[0.15em]">mood</span> {/* Adjusted tracking */}
                 <div className="flex gap-4 sm:gap-6 flex-wrap">
                   {moods.map((m) => (
                     <motion.button
                       key={m}
                       onClick={() => setMoodFilter(m)}
-                      whileTap={{ scale: prefersReducedMotion ? 1 : 0.98, boxShadow: prefersReducedMotion ? 'none' : `0 0 10px ${m === 'all' ? 'rgba(136,136,136,0.2)' : `${getMoodColorValue(m as Mood)}40`}` }} // Standardized scale 0.98
+                      whileTap={{ scale: prefersReducedMotion ? 1 : 0.98, boxShadow: prefersReducedMotion ? 'none' : `0 0 10px ${m === 'all' ? 'rgba(136,136,136,0.2)' : `${getMoodColorValue(m as Mood)}40`}` }}
                       className="text-[10px] sm:text-xs font-mono tracking-[0.1em] capitalize transition-all duration-500 min-h-[44px] px-4 border flex items-center justify-center relative overflow-hidden group"
                       style={{
                         color: moodFilter === m ? 'rgba(176,176,176,1)' : 'rgba(136,136,136,0.6)',
                         borderColor: moodFilter === m ? 'rgba(136,136,136,0.5)' : 'rgba(42,42,42,0.4)',
                         backgroundColor: moodFilter === m ? 'rgba(255,255,255,0.03)' : 'transparent',
-                        boxShadow: moodFilter === m ? `0 0 15px ${m === 'all' ? 'rgba(136,136,136,0.2)' : `${getMoodColorValue(m as Mood)}40`}` : 'none',
+                        boxShadow: moodFilter === m ? `0 0 10px ${m === 'all' ? 'rgba(136,136,136,0.2)' : `${getMoodColorValue(m as Mood)}40`}` : 'none', // Reduced glow intensity
                       }}
                     >
                       {m !== 'all' && (
@@ -99,26 +99,26 @@ export default function RoomPage() {
               {/* Audio only */}
               <motion.button
                 onClick={() => setAudioOnly(!audioOnly)}
-                whileTap={{ scale: prefersReducedMotion ? 1 : 0.98 }} // Already good
+                whileTap={{ scale: prefersReducedMotion ? 1 : 0.98 }}
                 className="text-[10px] sm:text-xs font-mono tracking-[0.2em] transition-all duration-500 min-h-[50px] flex items-center gap-3 border border-ash/10 sm:border-transparent px-4 sm:px-0"
                 style={{
                   color: audioOnly ? 'rgba(176,176,176,1)' : 'rgba(107,127,143,0.4)',
                 }}
               >
                 <span className={`w-1.5 h-1.5 rounded-full transition-colors duration-500 ${audioOnly ? 'bg-pale/60' : 'bg-ash/40'}`} />
-                with a voice {/* Refined */}
+                with a voice
               </motion.button>
             </div>
           </div>
 
           {/* Random confession button */}
-          <div className="mb-16 sm:mb-20"> {/* Normalized mb */}
+          <div className="mb-16 sm:mb-20">
             <motion.button
               onClick={loadRandom}
-              whileTap={{ scale: prefersReducedMotion ? 1 : 0.98 }} // Already good
-              className="text-[10px] sm:text-xs font-mono text-mist/60 hover:text-pale tracking-[0.2em] uppercase transition-all duration-700 min-h-[56px] flex items-center border border-ash/20 px-6 hover:bg-white/[0.02] w-full sm:w-auto justify-center sm:justify-start"
+              whileTap={{ scale: prefersReducedMotion ? 1 : 0.98 }}
+              className="text-[10px] sm:text-xs font-mono text-mist/60 hover:text-pale tracking-[0.15em] transition-all duration-700 min-h-[56px] flex items-center border border-ash/20 px-6 hover:bg-white/[0.02] w-full sm:w-auto justify-center sm:justify-start"
             >
-              a random whisper → {/* Refined */}
+              a random whisper → {/* Restored */}
             </motion.button>
           </div>
 
@@ -134,7 +134,7 @@ export default function RoomPage() {
           ) : posts.length === 0 ? (
             <div className="py-32 text-center pt-16 sm:pt-20">
               <p className="font-serif italic text-pale/30 text-lg tracking-wide">
-                nothing has been left here yet. {/* Refined */}
+                nothing has been left here yet.
               </p>
             </div>
           ) : (
@@ -146,8 +146,8 @@ export default function RoomPage() {
           )}
 
           {posts.length > 0 && (
-            <p className="mt-16 text-center text-xs font-mono text-mist tracking-wider"> {/* Normalized mt */}
-              {posts.length} {posts.length === 1 ? 'whisper' : 'whispers'} now heard {/* Refined */}
+            <p className="mt-16 text-center text-xs font-mono text-mist tracking-[0.15em]"> {/* Adjusted tracking */}
+              {posts.length} {posts.length === 1 ? 'whisper' : 'whispers'} now heard {/* Restored */}
             </p>
           )}
         </motion.div>

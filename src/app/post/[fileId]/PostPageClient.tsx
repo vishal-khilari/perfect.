@@ -98,7 +98,7 @@ export function PostPageClient({ post }: PostPageClientProps) {
       <motion.article
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ duration: transitionDuration }} // Standardized duration
+        transition={{ duration: transitionDuration }}
         className="max-w-reading mx-auto"
       >
         {/* Mood badge */}
@@ -112,7 +112,7 @@ export function PostPageClient({ post }: PostPageClientProps) {
         </h1>
 
         {/* Meta */}
-        <div className="flex flex-wrap items-center gap-x-3 gap-y-3 mb-16 sm:mb-20 text-[9px] sm:text-xs font-mono text-mist/60 tracking-[0.1em] uppercase border-y border-ash/10 py-6 w-full overflow-hidden">
+        <div className="flex flex-wrap items-center gap-x-3 gap-y-3 mb-16 sm:mb-20 text-[9px] sm:text-xs font-mono text-mist/60 tracking-[0.1em]"> {/* Removed uppercase */}
           <span className="text-pale/60">{post.name || 'anonymous'}</span>
           <span className="opacity-20 text-[8px]">/</span>
           <span>{post.createdDate}</span>
@@ -126,7 +126,7 @@ export function PostPageClient({ post }: PostPageClientProps) {
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: transitionDuration, delay: prefersReducedMotion ? 0 : 0.4 }} // Standardized duration, delay 0.4s for micro-interaction
+          transition={{ duration: transitionDuration, delay: prefersReducedMotion ? 0 : 0.4 }}
           className="reading-body mb-24 sm:mb-32"
         >
           {post.body}
@@ -135,7 +135,7 @@ export function PostPageClient({ post }: PostPageClientProps) {
         {/* Audio */}
         {post.hasAudio && post.audioFileId && (
           <div className="mb-24 sm:mb-32 p-8 border border-ash/10 bg-white/[0.01]">
-            <p className="text-[9px] font-mono text-mist/40 tracking-[0.3em] uppercase mb-6 text-center">voice recording</p>
+            <p className="text-[9px] font-mono text-mist/40 tracking-[0.2em] mb-6 text-center">voice recording</p> {/* Removed uppercase, adjusted tracking */}
             <AudioPlayer fileId={post.audioFileId} />
           </div>
         )}
@@ -146,9 +146,9 @@ export function PostPageClient({ post }: PostPageClientProps) {
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: transitionDuration, delay: prefersReducedMotion ? 0 : 0.8 }} // Standardized duration
+          transition={{ duration: transitionDuration, delay: prefersReducedMotion ? 0 : 0.8 }}
         >
-          <p className="text-[9px] sm:text-xs font-mono text-mist/60 tracking-[0.3em] uppercase mb-12 sm:mb-16 text-center sm:text-left">
+          <p className="text-[9px] sm:text-xs font-mono text-mist/60 tracking-[0.2em] mb-12 sm:mb-16 text-center sm:text-left"> {/* Removed uppercase, adjusted tracking */}
             if this stayed with you
           </p>
 
@@ -157,7 +157,7 @@ export function PostPageClient({ post }: PostPageClientProps) {
               <motion.button
                 key={key}
                 onClick={() => handleReaction(key)}
-                whileTap={{ scale: whileTapScale, boxShadow: prefersReducedMotion ? 'none' : `0 0 10px ${moodHexColor}40` }} // Standardized scale
+                whileTap={{ scale: whileTapScale, boxShadow: prefersReducedMotion ? 'none' : `0 0 10px ${moodHexColor}40` }}
                 className={`reaction-btn flex-1 sm:flex-none px-8 py-4 transition-all duration-1000 min-h-[56px] relative overflow-hidden ${reacted.has(key) ? 'reacted' : 'hover:bg-white/[0.01]'}`}
                 disabled={reacted.has(key)}
               >
@@ -186,8 +186,8 @@ export function PostPageClient({ post }: PostPageClientProps) {
             <motion.p
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ duration: transitionDuration }} // Standardized duration
-              className="mt-10 text-[10px] sm:text-xs font-mono text-mist/50 italic text-center sm:text-left tracking-wide"
+              transition={{ duration: transitionDuration }}
+              className="mt-10 text-[10px] sm:text-xs font-mono text-mist/50 italic text-center sm:text-left tracking-[0.1em]" // Adjusted tracking
             >
               your listening was noted.
             </motion.p>
@@ -198,7 +198,7 @@ export function PostPageClient({ post }: PostPageClientProps) {
         <div className="mt-24 sm:mt-32 pt-12 border-t border-ash/10 text-center sm:text-left">
           <a
             href="/room"
-            className="text-[9px] sm:text-xs font-mono text-mist/50 hover:text-pale tracking-[0.3em] uppercase transition-colors duration-700 inline-flex items-center gap-2 group"
+            className="text-[9px] sm:text-xs font-mono text-mist/50 hover:text-pale tracking-[0.15em]" // Removed uppercase, adjusted tracking
           >
             <span className="transition-transform duration-500 group-hover:-translate-x-1">←</span> back to the room
           </a>
