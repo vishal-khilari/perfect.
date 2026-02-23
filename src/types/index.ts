@@ -13,6 +13,7 @@ export interface PostPreview {
   reactFelt: number;
   reactAlone: number;
   reactUnderstand: number;
+  hasReactions: boolean; // Added for subtle reaction indicator
 }
 
 export interface FullPost {
@@ -48,6 +49,13 @@ export const MOOD_COLORS: Record<Mood, string> = {
   Static: "text-static",
   Silence: "text-silence",
   Night: "text-night",
+};
+
+export const MOOD_HEX_COLORS: Record<Mood, string> = {
+  Rain: "#6b7f8f",
+  Static: "#7a7a8a",
+  Silence: "#8f8f7a",
+  Night: "#4a5a6a",
 };
 
 export const MOOD_DESCRIPTIONS: Record<Mood, string> = {

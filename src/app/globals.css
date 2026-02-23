@@ -320,9 +320,9 @@ textarea::placeholder {
 }
 
 .reaction-btn.reacted {
-  border-color: rgba(136, 136, 136, 0.4);
+  border-color: rgba(136, 136, 136, 0.5);
   color: var(--whisper);
-  background: rgba(255, 255, 255, 0.02);
+  background: rgba(255, 255, 255, 0.04);
 }
 
 /* ── Waveform canvas ─────────────────────────────────────────────────── */

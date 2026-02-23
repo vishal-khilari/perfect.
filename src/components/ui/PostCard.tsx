@@ -7,18 +7,19 @@ import { PostPreview, MOOD_COLORS } from '@/types';
 interface PostCardProps {
   post: PostPreview;
   index?: number;
-  postCardDelay?: number; // New prop for conditional delay
+  postCardDelay?: number;
+  hasReactions?: boolean; // New prop for reaction indicator
 }
 
-export function PostCard({ post, index = 0, postCardDelay }: PostCardProps) {
+export function PostCard({ post, index = 0, postCardDelay, hasReactions }: PostCardProps) {
   const moodColor = MOOD_COLORS[post.mood as keyof typeof MOOD_COLORS] || 'text-pale';
   const date = new Date(post.createdAt).toLocaleDateString('en-US', {
     month: 'long',
     year: 'numeric',
   });
 
-  const delay = postCardDelay !== undefined ? postCardDelay : (index * 0.15); // Use prop if provided, else default
-  const scaleWhileTap = postCardDelay === 0 ? 1 : 0.995; // No scale if reduced motion is preferred
+  const delay = postCardDelay !== undefined ? postCardDelay : (index * 0.15);
+  const scaleWhileTap = postCardDelay === 0 ? 1 : 0.995;
 
   return (
     <Link href={`/post/${post.id}`} className="block w-full">
@@ -55,6 +56,19 @@ export function PostCard({ post, index = 0, postCardDelay }: PostCardProps) {
             <>
               <span className="opacity-20 text-[8px]">/</span>
               <span className="text-pale/40">⟡ audio</span>
+            </>
+          )}
+          {hasReactions && (
+            <>
+              <span className="opacity-20 text-[8px]">/</span>
+              <motion.span
+                initial={{ opacity: 0.3 }}
+                animate={{ opacity: [0.3, 0.6, 0.3] }}
+                transition={{ duration: 3, repeat: Infinity }}
+                className="text-pale/60"
+              >
+                *
+              </motion.span>
             </>
           )}
         </div>
