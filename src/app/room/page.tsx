@@ -74,35 +74,33 @@ export default function RoomPage() {
           animate={{ opacity: 1 }}
           transition={{ duration: transitionDuration }}
         >
-          {/* Section 6.2: Refine spacing of the Room title and intro copy */}
-          <div className="mb-16 sm:mb-24"> {/* Increased mb here */}
-            <p className="font-mono text-[9px] sm:text-xs text-mist/60 tracking-[0.3em] uppercase mb-6 sm:mb-8"> {/* Increased mb */}
-              The Archive
+          {/* Section 9.2: Room Page Tone */}
+          <div className="mb-16 sm:mb-24">
+            <p className="font-mono text-[9px] sm:text-xs text-mist/60 tracking-[0.3em] uppercase mb-6 sm:mb-8">
+              the archive {/* Refined */}
             </p>
-            <h2 className="font-serif italic text-pale/30 text-lg sm:text-2xl mb-10 sm:mb-14"> {/* Added mb */}
-              What people left behind.
+            <h2 className="font-serif italic text-pale/30 text-lg sm:text-2xl mb-10 sm:mb-14">
+              what has been left here. {/* Refined */}
             </h2>
           </div>
 
-          {/* Section 6.3: Add more breathing room above and below the filter section */}
           {/* Controls */}
-          <div className="flex flex-col gap-10 mt-16 sm:mt-24 mb-16 sm:mb-24"> {/* Added mt and increased mb */}
+          <div className="flex flex-col gap-10 mt-16 sm:mt-24 mb-16 sm:mb-24">
             {/* Sort */}
             <div className="flex flex-col gap-4">
-              <span className="text-[9px] font-mono text-mist/40 tracking-[0.2em] uppercase">Order by</span>
-              {/* Section 6.4: Increase spacing between filter buttons slightly */}
-              <div className="flex gap-8 sm:gap-10 overflow-x-auto pb-2 scrollbar-hide"> {/* Increased gap */}
+              <span className="text-[9px] font-mono text-mist/40 tracking-[0.2em] uppercase">sort by</span> {/* Refined */}
+              <div className="flex gap-8 sm:gap-10 overflow-x-auto pb-2 scrollbar-hide">
                 {sorts.map(({ value, label }) => (
                   <motion.button
                     key={value}
                     onClick={() => setSort(value)}
-                    whileTap={{ scale: prefersReducedMotion ? 1 : 0.95 }} // Adjust whileTap
+                    whileTap={{ scale: prefersReducedMotion ? 1 : 0.95 }}
                     className="text-[10px] sm:text-xs font-mono tracking-[0.2em] transition-all duration-500 min-h-[48px] relative py-1 whitespace-nowrap"
                     style={{
                       color: sort === value ? 'rgba(176,176,176,1)' : 'rgba(136,136,136,0.6)',
                     }}
                   >
-                    {label}
+                    {label.toLowerCase()} {/* Refined */}
                     {sort === value && (
                       <motion.div layoutId="sort-underline" className="absolute bottom-0 left-0 right-0 h-[1px] bg-pale/40" />
                     )}
@@ -114,14 +112,13 @@ export default function RoomPage() {
             <div className="flex flex-col sm:flex-row gap-8 sm:items-end sm:justify-between">
               {/* Mood filter */}
               <div className="flex flex-col gap-4">
-                <span className="text-[9px] font-mono text-mist/40 tracking-[0.2em] uppercase">Filter by mood</span>
-                {/* Section 6.4: Increase spacing between filter buttons slightly */}
-                <div className="flex gap-4 sm:gap-6 flex-wrap"> {/* Increased gap */}
+                <span className="text-[9px] font-mono text-mist/40 tracking-[0.2em] uppercase">mood</span> {/* Refined */}
+                <div className="flex gap-4 sm:gap-6 flex-wrap">
                   {moods.map((m) => (
                     <motion.button
                       key={m}
                       onClick={() => setMoodFilter(m)}
-                      whileTap={{ scale: prefersReducedMotion ? 1 : 0.95, boxShadow: prefersReducedMotion ? 'none' : `0 0 10px ${m === 'all' ? 'rgba(136,136,136,0.2)' : `${getMoodColorValue(m as Mood)}40`}` }} // Adjust whileTap
+                      whileTap={{ scale: prefersReducedMotion ? 1 : 0.95, boxShadow: prefersReducedMotion ? 'none' : `0 0 10px ${m === 'all' ? 'rgba(136,136,136,0.2)' : `${getMoodColorValue(m as Mood)}40`}` }}
                       className="text-[10px] sm:text-xs font-mono tracking-[0.1em] capitalize transition-all duration-500 min-h-[44px] px-4 border flex items-center justify-center relative overflow-hidden group"
                       style={{
                         color: moodFilter === m ? 'rgba(176,176,176,1)' : 'rgba(136,136,136,0.6)',
@@ -142,14 +139,14 @@ export default function RoomPage() {
               {/* Audio only */}
               <motion.button
                 onClick={() => setAudioOnly(!audioOnly)}
-                whileTap={{ scale: prefersReducedMotion ? 1 : 0.98 }} // Adjust whileTap
+                whileTap={{ scale: prefersReducedMotion ? 1 : 0.98 }}
                 className="text-[10px] sm:text-xs font-mono tracking-[0.2em] transition-all duration-500 min-h-[50px] flex items-center gap-3 border border-ash/10 sm:border-transparent px-4 sm:px-0"
                 style={{
                   color: audioOnly ? 'rgba(176,176,176,1)' : 'rgba(107,127,143,0.4)',
                 }}
               >
                 <span className={`w-1.5 h-1.5 rounded-full transition-colors duration-500 ${audioOnly ? 'bg-pale/60' : 'bg-ash/40'}`} />
-                with audio
+                with a voice {/* Refined */}
               </motion.button>
             </div>
           </div>
@@ -158,31 +155,30 @@ export default function RoomPage() {
           <div className="mb-12 sm:mb-20">
             <motion.button
               onClick={loadRandom}
-              whileTap={{ scale: prefersReducedMotion ? 1 : 0.98 }} // Adjust whileTap
+              whileTap={{ scale: prefersReducedMotion ? 1 : 0.98 }}
               className="text-[10px] sm:text-xs font-mono text-mist/60 hover:text-pale tracking-[0.2em] uppercase transition-all duration-700 min-h-[56px] flex items-center border border-ash/20 px-6 hover:bg-white/[0.02] w-full sm:w-auto justify-center sm:justify-start"
             >
-              Open a random confession →
+              a random whisper → {/* Refined */}
             </motion.button>
           </div>
 
           <hr className="divider opacity-30" />
 
-          {/* Section 6.1, 6.6: Increase vertical spacing above the first PostCard / subtle top padding */}
           {/* Posts */}
           {loading ? (
-            <div className="space-y-8 pt-16 sm:pt-20"> {/* Added pt */}
+            <div className="space-y-8 pt-16 sm:pt-20">
               {[...Array(3)].map((_, i) => (
                 <SkeletonPostCard key={i} />
               ))}
             </div>
           ) : posts.length === 0 ? (
-            <div className="py-32 text-center pt-16 sm:pt-20"> {/* Added pt */}
+            <div className="py-32 text-center pt-16 sm:pt-20">
               <p className="font-serif italic text-pale/30 text-lg tracking-wide">
-                The silence is complete.
+                nothing has been left here yet. {/* Refined */}
               </p>
             </div>
           ) : (
-            <div className="space-y-8 pt-16 sm:pt-20"> {/* Added pt */}
+            <div className="space-y-8 pt-16 sm:pt-20">
               {posts.map((post, i) => (
                 <PostCard key={post.id} post={post} index={i} postCardDelay={postCardDelay} />
               ))}
@@ -191,7 +187,7 @@ export default function RoomPage() {
 
           {posts.length > 0 && (
             <p className="mt-12 text-center text-xs font-mono text-mist tracking-wider">
-              {posts.length} {posts.length === 1 ? 'voice' : 'voices'} in this room
+              {posts.length} {posts.length === 1 ? 'whisper' : 'whispers'} now heard {/* Refined */}
             </p>
           )}
         </motion.div>

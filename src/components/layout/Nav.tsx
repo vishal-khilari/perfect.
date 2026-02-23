@@ -8,9 +8,9 @@ export function Nav() {
   const pathname = usePathname();
 
   const links = [
-    { href: '/', label: 'entrance' },
+    { href: '/', label: 'the door' }, // Refined
     { href: '/room', label: 'the room' },
-    { href: '/write', label: 'write' },
+    { href: '/write', label: 'leave something' }, // Refined
   ];
 
   return (
@@ -26,8 +26,8 @@ export function Nav() {
           href="/"
           className="font-serif text-whisper/60 hover:text-whisper/90 transition-all duration-500 text-[10px] sm:text-sm tracking-[0.2em] sm:tracking-[0.4em] uppercase"
         >
-          <span className="hidden sm:inline">The Quiet Room</span>
-          <span className="sm:hidden">Quiet Room</span>
+          <span className="hidden sm:inline">the quiet room</span> {/* Softened */}
+          <span className="sm:hidden">quiet room</span> {/* Softened */}
         </Link>
 
         <div className="flex gap-4 sm:gap-10">

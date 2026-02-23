@@ -18,9 +18,9 @@ interface ReactionButtonState {
 }
 
 const REACTIONS_CONFIG: { key: ReactionType; initialLabel: string; changedLabel: string; countKey: keyof FullPost }[] = [
-  { key: 'felt', initialLabel: 'I felt this.', changedLabel: 'Felt.', countKey: 'reactFelt' },
-  { key: 'alone', initialLabel: "You're not alone.", changedLabel: 'Not Alone.', countKey: 'reactAlone' },
-  { key: 'understand', initialLabel: 'I understand.', changedLabel: 'Understood.', countKey: 'reactUnderstand' },
+  { key: 'felt', initialLabel: 'i felt this.', changedLabel: 'felt.', countKey: 'reactFelt' }, // Refined
+  { key: 'alone', initialLabel: "you are not alone.", changedLabel: 'not alone.', countKey: 'reactAlone' }, // Refined
+  { key: 'understand', initialLabel: 'i understand.', changedLabel: 'understood.', countKey: 'reactUnderstand' }, // Refined
 ];
 
 // Component for subtle particle animation
@@ -108,12 +108,12 @@ export function PostPageClient({ post }: PostPageClientProps) {
 
         {/* Title */}
         <h1 className="font-serif text-whisper/95 mb-12 sm:mb-16 leading-[1.1] sm:leading-tight max-w-full break-words">
-          {post.title || 'Untitled'}
+          {post.title || 'untitled'} {/* Refined */}
         </h1>
 
         {/* Meta */}
         <div className="flex flex-wrap items-center gap-x-3 gap-y-3 mb-16 sm:mb-20 text-[9px] sm:text-xs font-mono text-mist/60 tracking-[0.1em] uppercase border-y border-ash/10 py-6 w-full overflow-hidden">
-          <span className="text-pale/60">{post.name || 'Anonymous'}</span>
+          <span className="text-pale/60">{post.name || 'anonymous'}</span> {/* Refined */}
           <span className="opacity-20 text-[8px]">/</span>
           <span>{post.createdDate}</span>
           <span className="opacity-20 text-[8px]">/</span>
@@ -135,7 +135,7 @@ export function PostPageClient({ post }: PostPageClientProps) {
         {/* Audio */}
         {post.hasAudio && post.audioFileId && (
           <div className="mb-24 sm:mb-32 p-8 border border-ash/10 bg-white/[0.01]">
-            <p className="text-[9px] font-mono text-mist/40 tracking-[0.3em] uppercase mb-6 text-center">Voice Recording</p>
+            <p className="text-[9px] font-mono text-mist/40 tracking-[0.3em] uppercase mb-6 text-center">voice recording</p> {/* Refined */}
             <AudioPlayer fileId={post.audioFileId} />
           </div>
         )}
@@ -149,7 +149,7 @@ export function PostPageClient({ post }: PostPageClientProps) {
           transition={{ duration: transitionDuration, delay: prefersReducedMotion ? 0 : 0.8 }}
         >
           <p className="text-[9px] sm:text-xs font-mono text-mist/60 tracking-[0.3em] uppercase mb-12 sm:mb-16 text-center sm:text-left">
-            If this moved you
+            if this stayed with you {/* Refined */}
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 items-stretch sm:items-center">
@@ -189,7 +189,7 @@ export function PostPageClient({ post }: PostPageClientProps) {
               transition={{ duration: transitionDuration }}
               className="mt-10 text-[10px] sm:text-xs font-mono text-mist/50 italic text-center sm:text-left tracking-wide"
             >
-              Your presence was noted.
+              your listening was noted. {/* Refined */}
             </motion.p>
           )}
         </motion.div>
@@ -200,7 +200,7 @@ export function PostPageClient({ post }: PostPageClientProps) {
             href="/room"
             className="text-[9px] sm:text-xs font-mono text-mist/50 hover:text-pale tracking-[0.3em] uppercase transition-all duration-700 inline-flex items-center gap-2 group"
           >
-            <span className="transition-transform duration-500 group-hover:-translate-x-1">←</span> Back to the room
+            <span className="transition-transform duration-500 group-hover:-translate-x-1">←</span> back to the room {/* Refined */}
           </a>
         </div>
       </motion.article>

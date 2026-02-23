@@ -7,7 +7,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { Nav } from '@/components/layout/Nav';
 import { AudioRecorder } from '@/components/audio/AudioRecorder';
 import { MoodIcon } from '@/components/ui/MoodIcon'; // Import MoodIcon
-import { Mood, MOOD_COLORS } from '@/types'; // Import MOOD_COLORS
+import { Mood, MOOD_COLORS, MOOD_HEX_COLORS } from '@/types'; // Import MOOD_COLORS, MOOD_HEX_COLORS
 
 const MOODS: { value: Mood; description: string }[] = [
   { value: 'Rain', description: 'something heavy' },
@@ -104,11 +104,11 @@ export default function WritePage() {
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (body.trim().length < 10) {
-      setError('Please write at least 10 characters.');
+      setError('a few more words are needed.'); // Refined error message
       return;
     }
     if (body.length > 10000) {
-      setError('Maximum 10,000 characters.');
+      setError('too many words, please refine.'); // Refined error message
       return;
     }
 
@@ -146,7 +146,7 @@ export default function WritePage() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          name: name.trim() || 'Anonymous',
+          name: name.trim() || 'anonymous', // Refined
           title: title.trim(),
           body: body.trim(),
           mood,
@@ -159,14 +159,14 @@ export default function WritePage() {
 
       if (!res.ok) {
         const data = await res.json();
-        throw new Error(data.error || 'Something went wrong');
+        throw new Error(data.error || 'something went wrong'); // Refined
       }
 
       // Clear draft
       localStorage.removeItem(DRAFT_KEY);
       setSubmitted(true);
     } catch (err: unknown) {
-      setError(err instanceof Error ? err.message : 'Something went wrong. Please try again.');
+      setError(err instanceof Error ? err.message : 'something went wrong. please try again.'); // Refined
     } finally {
       setSubmitting(false);
     }
@@ -184,17 +184,17 @@ export default function WritePage() {
             className="text-center max-w-sm"
           >
             <p className="font-serif text-2xl text-whisper/80 italic mb-4">
-              Your words exist now.
+              a whisper has been left. {/* Refined */}
             </p>
             <p className="font-sans text-sm text-pale/50 mb-10">
-              They are stored. Quietly.
+              it rests here. quietly. {/* Refined */}
             </p>
             <div className="flex gap-6 justify-center">
               <button
                 onClick={() => router.push('/room')}
                 className="btn-ghost"
               >
-                The Room
+                to the room {/* Refined */}
               </button>
               <button
                 onClick={() => {
@@ -205,8 +205,8 @@ export default function WritePage() {
                 }}
                 className="btn-ghost"
               >
-                Write again
-              </button>
+                leave another {/* Refined */}
+              </motion.button>
             </div>
           </motion.div>
         </div>
@@ -216,28 +216,33 @@ export default function WritePage() {
 
   const getMoodColorValue = (m: Mood) => {
     // Helper to get hex color from MOOD_COLORS based on Mood enum
-    return MOOD_COLORS[m] || '#888888'; // Default to pale if not found
+    // Note: MOOD_COLORS is for Tailwind classes, getMoodColorValue was for hex.
+    // Now using MOOD_HEX_COLORS for direct hex values.
+    return MOOD_HEX_COLORS[m] || '#888888';
   };
 
   return (
     <>
       <Nav />
       <div className="min-h-screen px-6 pt-24 sm:pt-32 pb-32 max-w-3xl mx-auto w-full">
+        {/* Section 8.1: Entry Atmosphere */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1.5 }}
+          className="pt-16 sm:pt-24"
         >
-          <p className="font-mono text-[9px] sm:text-xs text-mist/60 tracking-[0.3em] uppercase mb-12 sm:mb-20">
-            Write something
+          <p className="font-mono text-[9px] sm:text-xs text-mist/60 tracking-[0.3em] uppercase mb-16 sm:mb-24">
+            leave a whisper {/* Refined */}
           </p>
 
-          <form onSubmit={handleSubmit} className="space-y-12 sm:space-y-16">
+          <form onSubmit={handleSubmit}>
+            {/* Section 8.2: Title Field Hierarchy */}
             {/* Name */}
-            <div className="group">
+            <div className="group mb-12 sm:mb-16">
               <input
                 type="text"
-                placeholder="Your name (optional)"
+                placeholder="your name (optional)" // Refined
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 maxLength={80}
@@ -246,10 +251,10 @@ export default function WritePage() {
             </div>
 
             {/* Title */}
-            <div>
+            <div className="mb-16 sm:mb-20">
               <input
                 type="text"
-                placeholder="A title (optional)"
+                placeholder="a title (optional)" // Refined
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
                 maxLength={200}
@@ -257,10 +262,11 @@ export default function WritePage() {
               />
             </div>
 
+            {/* Section 8.3: Body Textarea Emotional Depth */}
             {/* Body */}
-            <div>
+            <div className="mb-20 sm:mb-24">
               <textarea
-                placeholder="Say what you need to say..."
+                placeholder="leave your thoughts here..." // Refined
                 value={body}
                 onChange={(e) => {
                   setBody(e.target.value);
@@ -269,8 +275,7 @@ export default function WritePage() {
                 onKeyDown={() => playTypingSound()}
                 rows={10}
                 maxLength={10000}
-                className="w-full bg-transparent font-serif text-lg sm:text-xl text-ghost/90 leading-relaxed sm:leading-loose placeholder:text-mist/30 focus:outline-none break-words"
-                style={{ minHeight: '300px' }}
+                className="w-full bg-transparent font-serif text-lg sm:text-xl text-ghost/90 leading-relaxed sm:leading-loose placeholder:text-mist/30 focus:outline-none break-words min-h-[300px] sm:min-h-[350px]"
               />
 
               <div className="flex justify-between items-center mt-6 pt-4 border-t border-ash/10">
@@ -283,12 +288,13 @@ export default function WritePage() {
               </div>
             </div>
 
+            {/* Section 8.4: Mood Selection Emotional Tone */}
             {/* Mood selector */}
-            <div className="pt-4">
-              <p className="text-[9px] sm:text-xs font-mono text-mist/60 tracking-[0.3em] uppercase mb-6 sm:mb-8">
-                Mood
+            <div className="pt-16 sm:pt-20">
+              <p className="text-[9px] sm:text-xs font-mono text-mist/60 tracking-[0.3em] uppercase mb-10 sm:mb-14">
+                the feeling {/* Refined */}
               </p>
-              <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-4 gap-3">
+              <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6">
                 {MOODS.map(({ value, description }) => (
                   <motion.button
                     key={value}
@@ -314,10 +320,10 @@ export default function WritePage() {
             </div>
 
             {/* Audio section */}
-            <div className="pt-4">
+            <div className="pt-16 sm:pt-20">
               <div className="flex items-center justify-between sm:justify-start gap-6 mb-6">
-                <p className="text-[9px] sm:text-xs font-mono text-mist/60 tracking-[0.3em] uppercase">
-                  Audio
+                <p className="text-[9px] font-mono text-mist/60 tracking-[0.3em] uppercase">
+                  record a whisper {/* Refined */}
                 </p>
                 <button
                   type="button"
@@ -346,7 +352,7 @@ export default function WritePage() {
             </div>
 
             {/* Options */}
-            <div className="space-y-6 pt-6 border-t border-ash/10">
+            <div className="space-y-8 pt-16 sm:pt-20 border-t border-ash/10">
               <label className="flex items-center gap-5 cursor-pointer group min-h-[44px]">
                 <input
                   type="checkbox"
@@ -357,7 +363,7 @@ export default function WritePage() {
                 <div className="w-5 h-5 border border-ash/40 flex items-center justify-center transition-all duration-500 group-hover:border-mist shrink-0">
                   {isPrivate && <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} className="w-2.5 h-2.5 bg-pale/60" />}
                 </div>
-                <span className="text-[9px] sm:text-[11px] font-mono text-mist/60 group-hover:text-pale/80 tracking-[0.2em] uppercase transition-colors duration-500">Keep private</span>
+                <span className="text-[9px] sm:text-[11px] font-mono text-mist/60 group-hover:text-pale/80 tracking-[0.2em] uppercase transition-colors duration-500">keep this private</span> {/* Refined */}
               </label>
 
               <label className="flex items-center gap-5 cursor-pointer group min-h-[44px]">
@@ -370,7 +376,7 @@ export default function WritePage() {
                 <div className="w-5 h-5 border border-ash/40 flex items-center justify-center transition-all duration-500 group-hover:border-mist shrink-0">
                   {burnAfter && <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} className="w-2.5 h-2.5 bg-pale/60" />}
                 </div>
-                <span className="text-[9px] sm:text-[11px] font-mono text-mist/60 group-hover:text-pale/80 tracking-[0.2em] uppercase transition-colors duration-500">Burn after 7 days</span>
+                <span className="text-[9px] sm:text-[11px] font-mono text-mist/60 group-hover:text-pale/80 tracking-[0.2em] uppercase transition-colors duration-500">erase after 7 days</span> {/* Refined */}
               </label>
 
               <label className="flex items-center gap-5 cursor-pointer group min-h-[44px]">
@@ -383,30 +389,32 @@ export default function WritePage() {
                 <div className="w-5 h-5 border border-ash/40 flex items-center justify-center transition-all duration-500 group-hover:border-mist shrink-0">
                   {soundOn && <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} className="w-2.5 h-2.5 bg-pale/60" />}
                 </div>
-                <span className="text-[9px] sm:text-[11px] font-mono text-mist/60 group-hover:text-pale/80 tracking-[0.2em] uppercase transition-colors duration-500">Soft typing sounds</span>
+                <span className="text-[9px] sm:text-[11px] font-mono text-mist/60 group-hover:text-pale/80 tracking-[0.2em] uppercase transition-colors duration-500">soft sounds for writing</span> {/* Refined */}
               </label>
             </div>
 
+            {/* Section 8.6: Error / Validation Tone */}
             {/* Error */}
             {error && (
               <motion.p
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                className="text-xs font-mono text-pale/60 text-center"
+                className="text-xs font-mono text-pale/60 text-center mt-12 sm:mt-16 mb-12 sm:mb-16"
               >
                 {error}
               </motion.p>
             )}
 
+            {/* Section 8.5: Submit Button Emotional Weight */}
             {/* Submit */}
-            <div className="pt-10">
+            <div className="pt-20 sm:pt-24">
               <motion.button
                 type="submit"
                 disabled={submitting || body.trim().length < 10}
                 whileTap={{ scale: 0.98 }}
                 className="btn-ghost w-full sm:w-auto disabled:opacity-20 disabled:cursor-not-allowed text-[10px] tracking-[0.3em] min-h-[56px] sm:min-h-[54px] sm:px-16"
               >
-                {submitting ? 'Saving...' : 'Leave it here'}
+                {submitting ? 'listening...' : 'Leave it here'} {/* Refined */}
               </motion.button>
             </div>
           </form>
