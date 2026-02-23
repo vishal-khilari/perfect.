@@ -121,8 +121,8 @@ h2,
 h3 {
   font-family: var(--font-eb-garamond), Georgia, serif;
   font-weight: 400;
-  letter-spacing: -0.01em;
-  line-height: 1.1; /* Adjusted for better cohesion */
+  letter-spacing: 0; /* Adjusted for emotional gravity */
+  line-height: 1.05; /* Adjusted for tighter multi-line rhythm */
   -webkit-hyphens: auto;
   -ms-hyphens: auto;
   hyphens: auto;
@@ -141,7 +141,7 @@ h3 {
 }
 
 p {
-  line-height: 1.7;
+  line-height: 1.85; /* Increased for better reading rhythm */
   color: var(--ghost);
   -webkit-hyphens: auto;
   -ms-hyphens: auto;
@@ -152,7 +152,7 @@ p {
 .reading-body {
   font-family: var(--font-eb-garamond), Georgia, serif;
   font-size: 1.1rem;
-  line-height: 1.8;
+  line-height: 1.85; /* Increased for better reading rhythm on mobile */
   color: var(--ghost);
   white-space: pre-wrap;
   overflow-wrap: break-word;
@@ -165,7 +165,7 @@ p {
 @media (min-width: 768px) {
   .reading-body {
     font-size: 1.25rem;
-    line-height: 1.9;
+    line-height: 2.0; /* Increased for better reading rhythm on desktop */
   }
 }
 
@@ -273,7 +273,7 @@ textarea::placeholder {
 /* ── Divider ─────────────────────────────────────────────────────────── */
 .divider {
   border: none;
-  border-top: 1px solid rgba(42, 42, 42, 0.4);
+  border-top: 1px solid rgba(42, 42, 42, 0.2); /* Softer opacity */
   margin: 4rem 0;
 }
 

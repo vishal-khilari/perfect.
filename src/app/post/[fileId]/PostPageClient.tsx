@@ -53,14 +53,12 @@ export function PostPageClient({ post }: PostPageClientProps) {
     });
     return initialState;
   });
-  const [particleKey, setParticleKey] = useState(0);
-  // Removed particlePosition state
-  const reactionButtonRefs = useRef<{ [key in ReactionType]?: HTMLButtonElement }>({});
+  const [showParticleForReaction, setShowParticleForReaction] = useState<ReactionType | null>(null); // New state for particle trigger
 
   const moodTailwindClass = MOOD_COLORS[post.mood] || 'text-pale'; // For mood badge class
   const moodHexColor = MOOD_HEX_COLORS[post.mood] || '#888888'; // For boxShadow hex value
 
-  async function handleReaction(type: ReactionType) { // Removed event parameter
+  async function handleReaction(type: ReactionType) {
     if (reacted.has(type)) return;
 
     // Haptic feedback
@@ -79,7 +77,8 @@ export function PostPageClient({ post }: PostPageClientProps) {
 
     // Particle animation
     if (!prefersReducedMotion) {
-      setParticleKey(prev => prev + 1); // Trigger new particle animation (will be rendered inside button)
+      setShowParticleForReaction(type);
+      setTimeout(() => setShowParticleForReaction(null), prefersReducedMotion ? 100 : 800); // Clear after animation
     }
 
     try {
@@ -100,6 +99,7 @@ export function PostPageClient({ post }: PostPageClientProps) {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: transitionDuration }}
+        className="max-w-reading mx-auto"
       >
         {/* Mood badge */}
         <div className="mb-10 sm:mb-14">
@@ -156,7 +156,7 @@ export function PostPageClient({ post }: PostPageClientProps) {
             {REACTIONS_CONFIG.map(({ key, countKey }) => (
               <motion.button
                 key={key}
-                onClick={(e) => handleReaction(key)}
+                onClick={() => handleReaction(key)}
                 whileTap={{ scale: whileTapScale, boxShadow: prefersReducedMotion ? 'none' : `0 0 10px ${moodHexColor}40` }}
                 className={`reaction-btn flex-1 sm:flex-none px-8 py-4 transition-all duration-1000 min-h-[56px] relative overflow-hidden ${reacted.has(key) ? 'reacted' : 'hover:bg-white/[0.01]'}`}
                 disabled={reacted.has(key)}
@@ -169,9 +169,9 @@ export function PostPageClient({ post }: PostPageClientProps) {
                 )}
                 {/* Particle effect */}
                 <AnimatePresence>
-                  {reacted.has(key) && !prefersReducedMotion && (
+                  {showParticleForReaction === key && !prefersReducedMotion && (
                     <motion.div
-                      key={key + '-particle-' + particleKey} // Unique key for AnimatePresence
+                      key={key + '-particle'} // Unique key for AnimatePresence
                       className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
                     >
                       <WhisperParticle />

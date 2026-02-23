@@ -8,10 +8,9 @@ interface PostCardProps {
   post: PostPreview;
   index?: number;
   postCardDelay?: number;
-  hasReactions?: boolean; // New prop for reaction indicator
 }
 
-export function PostCard({ post, index = 0, postCardDelay, hasReactions }: PostCardProps) {
+export function PostCard({ post, index = 0, postCardDelay }: PostCardProps) {
   const moodColor = MOOD_COLORS[post.mood as keyof typeof MOOD_COLORS] || 'text-pale';
   const date = new Date(post.createdAt).toLocaleDateString('en-US', {
     month: 'long',
@@ -20,6 +19,8 @@ export function PostCard({ post, index = 0, postCardDelay, hasReactions }: PostC
 
   const delay = postCardDelay !== undefined ? postCardDelay : (index * 0.15);
   const scaleWhileTap = postCardDelay === 0 ? 1 : 0.995;
+
+  const hasReactions = (post.reactFelt || 0) + (post.reactAlone || 0) + (post.reactUnderstand || 0) > 0;
 
   return (
     <Link href={`/post/${post.id}`} className="block w-full">
@@ -49,7 +50,9 @@ export function PostCard({ post, index = 0, postCardDelay, hasReactions }: PostC
         <div className="flex flex-wrap items-center gap-x-3 gap-y-2 text-[9px] sm:text-xs font-mono text-pale/60 tracking-[0.1em] uppercase">
           <span className="text-pale/50">{post.name || 'Anonymous'}</span>
           <span className="opacity-20 text-[8px]">/</span>
-          <span>{date}</span>
+          <span>{post.createdDate}</span>
+          <span className="opacity-20 text-[8px]">/</span>
+          <span>{post.wordCount} words</span>
           <span className="opacity-20 text-[8px]">/</span>
           <span>{post.readingTime} min</span>
           {post.hasAudio && (

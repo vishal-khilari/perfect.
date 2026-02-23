@@ -13,7 +13,6 @@ export interface PostPreview {
   reactFelt: number;
   reactAlone: number;
   reactUnderstand: number;
-  hasReactions: boolean; // Added for subtle reaction indicator
 }
 
 export interface FullPost {
