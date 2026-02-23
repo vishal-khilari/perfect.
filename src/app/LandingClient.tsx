@@ -15,7 +15,7 @@ interface LandingClientProps {
 export function LandingClient({ initialPosts }: LandingClientProps) {
   const prefersReducedMotion = useReducedMotion(); // Use the hook
 
-  const transitionDuration = prefersReducedMotion ? 0.1 : 1.5; // Conditional duration
+  const transitionDuration = prefersReducedMotion ? 0.1 : 0.8; // Standardized duration
   const postCardDelay = prefersReducedMotion ? 0.0 : 0.15; // Conditional delay
 
   return (
@@ -30,7 +30,7 @@ export function LandingClient({ initialPosts }: LandingClientProps) {
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: prefersReducedMotion ? 0.1 : 2, delay: prefersReducedMotion ? 0 : 0.3 }}
+          transition={{ duration: transitionDuration, delay: prefersReducedMotion ? 0 : 0.3 }} // Standardized duration
           className="max-w-3xl mx-auto w-full"
         >
           <p className="font-mono text-[9px] sm:text-xs text-mist/60 tracking-[0.3em] sm:tracking-[0.4em] uppercase mb-10 sm:mb-16">
@@ -48,7 +48,7 @@ export function LandingClient({ initialPosts }: LandingClientProps) {
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: transitionDuration, delay: prefersReducedMotion ? 0 : 1.2 }}
+            transition={{ duration: transitionDuration, delay: prefersReducedMotion ? 0 : 0.3 }} // Standardized duration and delay
             className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6"
           >
             <Link
@@ -56,7 +56,7 @@ export function LandingClient({ initialPosts }: LandingClientProps) {
               className="w-full sm:w-auto"
             >
               <motion.span
-                whileTap={{ scale: prefersReducedMotion ? 1 : 0.98 }}
+                whileTap={{ scale: prefersReducedMotion ? 1 : 0.98 }} // Standardized scale
                 className="btn-ghost w-full sm:w-auto !border-ash/60 hover:!border-mist/80 !text-pale/80 hover:!text-ghost px-10 sm:px-12 tracking-[0.3em]"
               >
                 Unburden
@@ -67,7 +67,7 @@ export function LandingClient({ initialPosts }: LandingClientProps) {
               className="w-full sm:w-auto"
             >
               <motion.span
-                whileTap={{ scale: prefersReducedMotion ? 1 : 0.98 }}
+                whileTap={{ scale: prefersReducedMotion ? 1 : 0.98 }} // Standardized scale
                 className="btn-ghost w-full sm:w-auto !border-ash/20 hover:!border-ash/50 !text-pale/50 hover:!text-pale/70 px-8 sm:px-10 tracking-[0.2em]"
               >
                 Open the Archive
@@ -80,7 +80,7 @@ export function LandingClient({ initialPosts }: LandingClientProps) {
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: prefersReducedMotion ? 0.1 : 1, delay: prefersReducedMotion ? 0 : 2.5 }}
+          transition={{ duration: transitionDuration, delay: prefersReducedMotion ? 0 : 0.5 }} // Standardized duration and delay
           className="absolute bottom-10 sm:bottom-16 flex flex-col items-center gap-3"
         >
           <div className="w-[1px] h-10 sm:h-16 bg-gradient-to-b from-transparent via-ash/40 to-transparent" />
@@ -92,7 +92,7 @@ export function LandingClient({ initialPosts }: LandingClientProps) {
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: transitionDuration, delay: prefersReducedMotion ? 0 : 1.8 }}
+          transition={{ duration: transitionDuration, delay: prefersReducedMotion ? 0 : 0.2 }} // Standardized duration and delay
         >
           <p className="font-mono text-[10px] sm:text-xs text-mist tracking-[0.2em] uppercase mb-10 sm:mb-12">
             From the archive
@@ -116,7 +116,7 @@ export function LandingClient({ initialPosts }: LandingClientProps) {
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ duration: transitionDuration, delay: prefersReducedMotion ? 0 : 2.5 }}
+              transition={{ duration: transitionDuration, delay: prefersReducedMotion ? 0 : 0.3 }} // Standardized duration and delay
               className="mt-12 text-center"
             >
               <Link

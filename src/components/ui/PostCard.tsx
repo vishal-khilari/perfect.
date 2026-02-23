@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { PostPreview, MOOD_COLORS } from '@/types';
+import { useReducedMotion } from '@/hooks/useReducedMotion'; // Import useReducedMotion
 
 interface PostCardProps {
   post: PostPreview;
@@ -11,6 +12,8 @@ interface PostCardProps {
 }
 
 export function PostCard({ post, index = 0, postCardDelay }: PostCardProps) {
+  const prefersReducedMotion = useReducedMotion(); // Use the hook
+
   const moodColor = MOOD_COLORS[post.mood as keyof typeof MOOD_COLORS] || 'text-pale';
   const date = new Date(post.createdAt).toLocaleDateString('en-US', {
     month: 'long',
@@ -18,7 +21,7 @@ export function PostCard({ post, index = 0, postCardDelay }: PostCardProps) {
   });
 
   const delay = postCardDelay !== undefined ? postCardDelay : (index * 0.15);
-  const scaleWhileTap = postCardDelay === 0 ? 1 : 0.995;
+  const scaleWhileTap = postCardDelay === 0 ? 1 : 0.995; // Use postCardDelay to determine if reduced motion is active
 
   const hasReactions = (post.reactFelt || 0) + (post.reactAlone || 0) + (post.reactUnderstand || 0) > 0;
 
@@ -27,8 +30,8 @@ export function PostCard({ post, index = 0, postCardDelay }: PostCardProps) {
       <motion.div
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1.2, delay: delay }}
-        whileTap={{ scale: scaleWhileTap, opacity: 0.8 }}
+        transition={{ duration: prefersReducedMotion ? 0.1 : 0.8, delay: delay }} // Standardized duration, delay respects reduced motion
+        whileTap={{ scale: scaleWhileTap, opacity: 0.8 }} // Scale respects reduced motion
         className="post-card group border-b border-ash/20 py-8 sm:py-12 transition-all duration-700 w-full"
       >
         <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4 mb-4 sm:mb-6">
@@ -52,8 +55,6 @@ export function PostCard({ post, index = 0, postCardDelay }: PostCardProps) {
           <span className="opacity-20 text-[8px]">/</span>
           <span>{post.createdDate}</span>
           <span className="opacity-20 text-[8px]">/</span>
-          <span>{post.wordCount} words</span>
-          <span className="opacity-20 text-[8px]">/</span>
           <span>{post.readingTime} min</span>
           {post.hasAudio && (
             <>
@@ -65,9 +66,9 @@ export function PostCard({ post, index = 0, postCardDelay }: PostCardProps) {
             <>
               <span className="opacity-20 text-[8px]">/</span>
               <motion.span
-                initial={{ opacity: 0.3 }}
-                animate={{ opacity: [0.3, 0.6, 0.3] }}
-                transition={{ duration: 3, repeat: Infinity }}
+                initial={{ opacity: prefersReducedMotion ? 1 : 0.3 }} // No pulse if reduced motion
+                animate={{ opacity: prefersReducedMotion ? 1 : [0.3, 0.6, 0.3] }}
+                transition={{ duration: prefersReducedMotion ? 0.1 : 1.5, repeat: prefersReducedMotion ? 0 : Infinity }} // Shorter duration, no repeat if reduced motion
                 className="text-pale/60"
               >
                 *

@@ -8,6 +8,7 @@ import { Nav } from '@/components/layout/Nav';
 import { AudioRecorder } from '@/components/audio/AudioRecorder';
 import { MoodIcon } from '@/components/ui/MoodIcon'; // Import MoodIcon
 import { Mood, MOOD_COLORS, MOOD_HEX_COLORS } from '@/types'; // Import MOOD_COLORS, MOOD_HEX_COLORS
+import { useReducedMotion } from '@/hooks/useReducedMotion'; // Import useReducedMotion
 
 const MOODS: { value: Mood; description: string }[] = [
   { value: 'Rain', description: 'something heavy' },
@@ -28,6 +29,10 @@ function calcReadingTime(words: number): number {
 
 export default function WritePage() {
   const router = useRouter();
+  const prefersReducedMotion = useReducedMotion(); // Use the hook
+
+  const transitionDuration = prefersReducedMotion ? 0.1 : 0.8; // Standardized duration
+  const whileTapScale = prefersReducedMotion ? 1 : 0.98; // Standardized scale
 
   const [name, setName] = useState('');
   const [title, setTitle] = useState('');
@@ -180,7 +185,7 @@ export default function WritePage() {
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 1.5 }}
+            transition={{ duration: transitionDuration }} // Standardized duration
             className="text-center max-w-sm"
           >
             <p className="font-serif text-2xl text-whisper/80 italic mb-4">
@@ -193,6 +198,7 @@ export default function WritePage() {
               <motion.button
                 onClick={() => router.push('/room')}
                 className="btn-ghost"
+                whileTap={{ scale: whileTapScale }} // Standardized whileTap
               >
                 to the room
               </motion.button>
@@ -204,6 +210,7 @@ export default function WritePage() {
                   setName('');
                 }}
                 className="btn-ghost"
+                whileTap={{ scale: whileTapScale }} // Standardized whileTap
               >
                 leave another
               </motion.button>
@@ -229,7 +236,7 @@ export default function WritePage() {
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 1.5 }}
+          transition={{ duration: transitionDuration }} // Standardized duration
           className="pt-16 sm:pt-24"
         >
           <p className="font-mono text-[9px] sm:text-xs text-mist/60 tracking-[0.3em] uppercase mb-16 sm:mb-24">
@@ -300,13 +307,13 @@ export default function WritePage() {
                     key={value}
                     type="button"
                     onClick={() => setMood(value)}
-                    whileTap={{ scale: 0.98, boxShadow: `0 0 10px ${getMoodColorValue(value)}40` }}
+                    whileTap={{ scale: whileTapScale, boxShadow: prefersReducedMotion ? 'none' : `0 0 10px ${getMoodColorValue(value)}40` }} // Standardized scale
                     className="border py-4 px-5 text-[10px] sm:text-xs font-mono tracking-[0.15em] transition-all duration-700 text-left min-h-[64px] flex flex-col justify-center relative overflow-hidden group"
                     style={{
                       borderColor: mood === value ? 'rgba(136,136,136,0.5)' : 'rgba(42,42,42,0.4)',
                       color: mood === value ? 'rgba(176,176,176,1)' : 'rgba(136,136,136,0.6)',
                       backgroundColor: mood === value ? 'rgba(255,255,255,0.03)' : 'transparent',
-                      boxShadow: mood === value ? `0 0 15px ${getMoodColorValue(value)}40` : 'none',
+                      boxShadow: mood === value && !prefersReducedMotion ? `0 0 15px ${getMoodColorValue(value)}40` : 'none', // Reduced motion check for boxShadow
                     }}
                   >
                     <div className="flex items-center mb-1">
@@ -340,7 +347,7 @@ export default function WritePage() {
                     initial={{ opacity: 0, height: 0 }}
                     animate={{ opacity: 1, height: 'auto' }}
                     exit={{ opacity: 0, height: 0 }}
-                    transition={{ duration: 0.8 }}
+                    transition={{ duration: transitionDuration }} // Standardized duration
                     className="overflow-hidden"
                   >
                     <div className="pb-8">
@@ -399,6 +406,7 @@ export default function WritePage() {
               <motion.p
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
+                transition={{ duration: transitionDuration }} // Standardized duration
                 className="text-xs font-mono text-pale/60 text-center mt-12 sm:mt-16 mb-12 sm:mb-16"
               >
                 {error}
@@ -411,7 +419,7 @@ export default function WritePage() {
               <motion.button
                 type="submit"
                 disabled={submitting || body.trim().length < 10}
-                whileTap={{ scale: 0.98 }}
+                whileTap={{ scale: whileTapScale }} // Standardized whileTap
                 className="btn-ghost w-full sm:w-auto disabled:opacity-20 disabled:cursor-not-allowed text-[10px] tracking-[0.3em] min-h-[56px] sm:min-h-[54px] sm:px-16"
               >
                 {submitting ? 'listening...' : 'Leave it here'}

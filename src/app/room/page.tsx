@@ -19,50 +19,10 @@ export default function RoomPage() {
 
   const prefersReducedMotion = useReducedMotion(); // Use the hook
 
-  const fetchPosts = useCallback(async () => {
-    setLoading(true);
-    try {
-      const params = new URLSearchParams({
-        sort,
-        ...(moodFilter !== 'all' ? { mood: moodFilter } : {}),
-        ...(audioOnly ? { audioOnly: '1' } : {}),
-      });
-
-      const res = await fetch(`/api/posts?${params}`);
-      const data = await res.json();
-      setPosts(data.posts || []);
-    } catch {
-      setPosts([]);
-    } finally {
-      setLoading(false);
-    }
-  }, [sort, moodFilter, audioOnly]);
-
-  useEffect(() => {
-    fetchPosts();
-  }, [fetchPosts]);
-
-  async function loadRandom() {
-    const res = await fetch('/api/posts?sort=random&limit=1');
-    const data = await res.json();
-    if (data.posts?.[0]) {
-      window.location.href = `/post/${data.posts[0].id}`;
-    }
-  }
-
-  const moods: FilterMood[] = ['all', 'Rain', 'Static', 'Silence', 'Night'];
-  const sorts: { value: SortOrder; label: string }[] = [
-    { value: 'latest', label: 'Latest' },
-    { value: 'oldest', label: 'Oldest' },
-    { value: 'random', label: 'Random' },
-  ];
-
-  const getMoodColorValue = (m: Mood) => {
-    return MOOD_COLORS[m] || '#888888';
-  };
-
-  const transitionDuration = prefersReducedMotion ? 0.1 : 1.5; // Conditional duration
-  const postCardDelay = prefersReducedMotion ? 0.0 : 0.15; // Conditional delay
+  // Standardize duration to 0.8s for fade/entry
+  const transitionDuration = prefersReducedMotion ? 0.1 : 0.8; 
+  // Conditional delay for PostCard
+  const postCardDelay = prefersReducedMotion ? 0.0 : 0.15; 
 
   return (
     <>
@@ -94,7 +54,7 @@ export default function RoomPage() {
                   <motion.button
                     key={value}
                     onClick={() => setSort(value)}
-                    whileTap={{ scale: prefersReducedMotion ? 1 : 0.95 }}
+                    whileTap={{ scale: prefersReducedMotion ? 1 : 0.98 }} // Standardized scale 0.98
                     className="text-[10px] sm:text-xs font-mono tracking-[0.2em] transition-all duration-500 min-h-[48px] relative py-1 whitespace-nowrap"
                     style={{
                       color: sort === value ? 'rgba(176,176,176,1)' : 'rgba(136,136,136,0.6)',
@@ -118,7 +78,7 @@ export default function RoomPage() {
                     <motion.button
                       key={m}
                       onClick={() => setMoodFilter(m)}
-                      whileTap={{ scale: prefersReducedMotion ? 1 : 0.95, boxShadow: prefersReducedMotion ? 'none' : `0 0 10px ${m === 'all' ? 'rgba(136,136,136,0.2)' : `${getMoodColorValue(m as Mood)}40`}` }}
+                      whileTap={{ scale: prefersReducedMotion ? 1 : 0.98, boxShadow: prefersReducedMotion ? 'none' : `0 0 10px ${m === 'all' ? 'rgba(136,136,136,0.2)' : `${getMoodColorValue(m as Mood)}40`}` }} // Standardized scale 0.98
                       className="text-[10px] sm:text-xs font-mono tracking-[0.1em] capitalize transition-all duration-500 min-h-[44px] px-4 border flex items-center justify-center relative overflow-hidden group"
                       style={{
                         color: moodFilter === m ? 'rgba(176,176,176,1)' : 'rgba(136,136,136,0.6)',
@@ -139,7 +99,7 @@ export default function RoomPage() {
               {/* Audio only */}
               <motion.button
                 onClick={() => setAudioOnly(!audioOnly)}
-                whileTap={{ scale: prefersReducedMotion ? 1 : 0.98 }}
+                whileTap={{ scale: prefersReducedMotion ? 1 : 0.98 }} // Already good
                 className="text-[10px] sm:text-xs font-mono tracking-[0.2em] transition-all duration-500 min-h-[50px] flex items-center gap-3 border border-ash/10 sm:border-transparent px-4 sm:px-0"
                 style={{
                   color: audioOnly ? 'rgba(176,176,176,1)' : 'rgba(107,127,143,0.4)',
@@ -155,7 +115,7 @@ export default function RoomPage() {
           <div className="mb-12 sm:mb-20">
             <motion.button
               onClick={loadRandom}
-              whileTap={{ scale: prefersReducedMotion ? 1 : 0.98 }}
+              whileTap={{ scale: prefersReducedMotion ? 1 : 0.98 }} // Already good
               className="text-[10px] sm:text-xs font-mono text-mist/60 hover:text-pale tracking-[0.2em] uppercase transition-all duration-700 min-h-[56px] flex items-center border border-ash/20 px-6 hover:bg-white/[0.02] w-full sm:w-auto justify-center sm:justify-start"
             >
               a random whisper → {/* Refined */}

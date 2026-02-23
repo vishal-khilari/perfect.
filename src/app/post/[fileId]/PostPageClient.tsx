@@ -37,8 +37,8 @@ const WhisperParticle: React.FC = () => {
 
 export function PostPageClient({ post }: PostPageClientProps) {
   const prefersReducedMotion = useReducedMotion();
-  const transitionDuration = prefersReducedMotion ? 0.1 : 0.8; // Short duration for reduced motion
-  const whileTapScale = prefersReducedMotion ? 1 : 0.98;
+  const transitionDuration = prefersReducedMotion ? 0.1 : 0.8; // Standardized duration
+  const whileTapScale = prefersReducedMotion ? 1 : 0.98; // Standardized scale
 
   const [reacted, setReacted] = useState<Set<ReactionType>>(() => new Set());
   const [counts, setCounts] = useState({
@@ -73,7 +73,7 @@ export function PostPageClient({ post }: PostPageClientProps) {
     setButtonStates(prev => ({ ...prev, [type]: { label: REACTIONS_CONFIG.find(r => r.key === type)!.changedLabel, isTemporarilyChanged: true } }));
     setTimeout(() => {
       setButtonStates(prev => ({ ...prev, [type]: { label: REACTIONS_CONFIG.find(r => r.key === type)!.initialLabel, isTemporarilyChanged: false } }));
-    }, prefersReducedMotion ? 100 : 1500); // Shorter duration for reduced motion
+    }, prefersReducedMotion ? 100 : 800); // Standardized micro-interaction duration (0.8s)
 
     // Particle animation
     if (!prefersReducedMotion) {
@@ -98,7 +98,7 @@ export function PostPageClient({ post }: PostPageClientProps) {
       <motion.article
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ duration: transitionDuration }}
+        transition={{ duration: transitionDuration }} // Standardized duration
         className="max-w-reading mx-auto"
       >
         {/* Mood badge */}
@@ -108,12 +108,12 @@ export function PostPageClient({ post }: PostPageClientProps) {
 
         {/* Title */}
         <h1 className="font-serif text-whisper/95 mb-12 sm:mb-16 leading-[1.1] sm:leading-tight max-w-full break-words">
-          {post.title || 'untitled'} {/* Refined */}
+          {post.title || 'untitled'}
         </h1>
 
         {/* Meta */}
         <div className="flex flex-wrap items-center gap-x-3 gap-y-3 mb-16 sm:mb-20 text-[9px] sm:text-xs font-mono text-mist/60 tracking-[0.1em] uppercase border-y border-ash/10 py-6 w-full overflow-hidden">
-          <span className="text-pale/60">{post.name || 'anonymous'}</span> {/* Refined */}
+          <span className="text-pale/60">{post.name || 'anonymous'}</span>
           <span className="opacity-20 text-[8px]">/</span>
           <span>{post.createdDate}</span>
           <span className="opacity-20 text-[8px]">/</span>
@@ -126,7 +126,7 @@ export function PostPageClient({ post }: PostPageClientProps) {
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: transitionDuration, delay: prefersReducedMotion ? 0 : 0.4 }}
+          transition={{ duration: transitionDuration, delay: prefersReducedMotion ? 0 : 0.4 }} // Standardized duration, delay 0.4s for micro-interaction
           className="reading-body mb-24 sm:mb-32"
         >
           {post.body}
@@ -135,7 +135,7 @@ export function PostPageClient({ post }: PostPageClientProps) {
         {/* Audio */}
         {post.hasAudio && post.audioFileId && (
           <div className="mb-24 sm:mb-32 p-8 border border-ash/10 bg-white/[0.01]">
-            <p className="text-[9px] font-mono text-mist/40 tracking-[0.3em] uppercase mb-6 text-center">voice recording</p> {/* Refined */}
+            <p className="text-[9px] font-mono text-mist/40 tracking-[0.3em] uppercase mb-6 text-center">voice recording</p>
             <AudioPlayer fileId={post.audioFileId} />
           </div>
         )}
@@ -146,10 +146,10 @@ export function PostPageClient({ post }: PostPageClientProps) {
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: transitionDuration, delay: prefersReducedMotion ? 0 : 0.8 }}
+          transition={{ duration: transitionDuration, delay: prefersReducedMotion ? 0 : 0.8 }} // Standardized duration
         >
           <p className="text-[9px] sm:text-xs font-mono text-mist/60 tracking-[0.3em] uppercase mb-12 sm:mb-16 text-center sm:text-left">
-            if this stayed with you {/* Refined */}
+            if this stayed with you
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 items-stretch sm:items-center">
@@ -157,7 +157,7 @@ export function PostPageClient({ post }: PostPageClientProps) {
               <motion.button
                 key={key}
                 onClick={() => handleReaction(key)}
-                whileTap={{ scale: whileTapScale, boxShadow: prefersReducedMotion ? 'none' : `0 0 10px ${moodHexColor}40` }}
+                whileTap={{ scale: whileTapScale, boxShadow: prefersReducedMotion ? 'none' : `0 0 10px ${moodHexColor}40` }} // Standardized scale
                 className={`reaction-btn flex-1 sm:flex-none px-8 py-4 transition-all duration-1000 min-h-[56px] relative overflow-hidden ${reacted.has(key) ? 'reacted' : 'hover:bg-white/[0.01]'}`}
                 disabled={reacted.has(key)}
               >
@@ -171,7 +171,7 @@ export function PostPageClient({ post }: PostPageClientProps) {
                 <AnimatePresence>
                   {showParticleForReaction === key && !prefersReducedMotion && (
                     <motion.div
-                      key={key + '-particle'} // Unique key for AnimatePresence
+                      key={key + '-particle'}
                       className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
                     >
                       <WhisperParticle />
@@ -186,10 +186,10 @@ export function PostPageClient({ post }: PostPageClientProps) {
             <motion.p
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ duration: transitionDuration }}
+              transition={{ duration: transitionDuration }} // Standardized duration
               className="mt-10 text-[10px] sm:text-xs font-mono text-mist/50 italic text-center sm:text-left tracking-wide"
             >
-              your listening was noted. {/* Refined */}
+              your listening was noted.
             </motion.p>
           )}
         </motion.div>
@@ -198,9 +198,9 @@ export function PostPageClient({ post }: PostPageClientProps) {
         <div className="mt-24 sm:mt-32 pt-12 border-t border-ash/10 text-center sm:text-left">
           <a
             href="/room"
-            className="text-[9px] sm:text-xs font-mono text-mist/50 hover:text-pale tracking-[0.3em] uppercase transition-all duration-700 inline-flex items-center gap-2 group"
+            className="text-[9px] sm:text-xs font-mono text-mist/50 hover:text-pale tracking-[0.3em] uppercase transition-colors duration-700 inline-flex items-center gap-2 group"
           >
-            <span className="transition-transform duration-500 group-hover:-translate-x-1">←</span> back to the room {/* Refined */}
+            <span className="transition-transform duration-500 group-hover:-translate-x-1">←</span> back to the room
           </a>
         </div>
       </motion.article>
