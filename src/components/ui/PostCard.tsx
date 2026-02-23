@@ -41,7 +41,7 @@ export function PostCard({ post, index = 0 }: PostCardProps) {
           )}
         </p>
 
-        <div className="flex flex-wrap items-center gap-x-3 gap-y-2 text-[9px] sm:text-xs font-mono text-mist/60 tracking-[0.1em] uppercase">
+        <div className="flex flex-wrap items-center gap-x-3 gap-y-2 text-[9px] sm:text-xs font-mono text-pale/60 tracking-[0.1em] uppercase">
           <span className="text-pale/50">{post.name || 'Anonymous'}</span>
           <span className="opacity-20 text-[8px]">/</span>
           <span>{date}</span>

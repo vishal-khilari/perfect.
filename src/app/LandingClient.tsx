@@ -32,27 +32,39 @@ export function LandingClient({ initialPosts }: LandingClientProps) {
           </p>
 
           <h1 className="font-serif text-whisper/95 mb-8 sm:mb-10 leading-[1.05] sm:leading-[0.95] tracking-tight">
-            Are you winning, son?
+            Leave it here.
           </h1>
 
           <p className="font-serif italic text-ghost/40 text-base sm:text-xl mb-16 sm:mb-24">
-            Or did something change?
+            Walk away lighter.
           </p>
 
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 1.5, delay: 1.2 }}
+            className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6"
           >
             <Link
               href="/write"
-              className="block sm:inline-block"
+              className="w-full sm:w-auto"
             >
               <motion.span
                 whileTap={{ scale: 0.98 }}
-                className="inline-flex w-full sm:w-auto border border-ash/40 text-pale/70 hover:text-ghost hover:border-mist px-10 sm:px-14 py-4 text-[9px] sm:text-xs tracking-[0.25em] sm:tracking-[0.35em] uppercase font-sans transition-all duration-1000 min-h-[56px] sm:min-h-[50px] items-center justify-center bg-transparent"
+                className="btn-ghost w-full sm:w-auto !border-ash/60 hover:!border-mist/80 !text-pale/80 hover:!text-ghost px-10 sm:px-12 tracking-[0.3em]"
               >
-                Enter the Room
+                Unburden
+              </motion.span>
+            </Link>
+            <Link
+              href="/room"
+              className="w-full sm:w-auto"
+            >
+              <motion.span
+                whileTap={{ scale: 0.98 }}
+                className="btn-ghost w-full sm:w-auto !border-ash/20 hover:!border-ash/50 !text-pale/50 hover:!text-pale/70 px-8 sm:px-10 tracking-[0.2em]"
+              >
+                Open the Archive
               </motion.span>
             </Link>
           </motion.div>

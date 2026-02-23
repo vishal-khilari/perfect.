@@ -235,7 +235,7 @@ export default function WritePage() {
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 maxLength={80}
-                className="w-full bg-transparent border-b border-ash/30 pb-3 text-ghost/80 text-sm font-sans focus:border-mist/60 transition-colors duration-700 placeholder:text-mist/40 min-h-[50px] break-words"
+                className="w-full bg-transparent border-b border-ash/30 pb-3 text-ghost/80 text-base font-sans focus:border-mist/60 transition-colors duration-700 placeholder:text-mist/40 min-h-[50px] break-words"
               />
             </div>
 

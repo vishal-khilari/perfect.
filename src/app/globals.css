@@ -247,7 +247,6 @@ textarea::placeholder {
 
 /* ── Post card hover ─────────────────────────────────────────────────── */
 .post-card .preview-text {
-  filter: blur(2.5px);
   transition: filter 1s ease;
 }
 
@@ -255,12 +254,12 @@ textarea::placeholder {
   .post-card .preview-text {
     filter: blur(4px);
   }
+  .post-card:hover .preview-text,
+  .post-card:active .preview-text {
+    filter: blur(0);
+  }
 }
 
-.post-card:hover .preview-text,
-.post-card:active .preview-text {
-  filter: blur(0);
-}
 
 /* ── Divider ─────────────────────────────────────────────────────────── */
 .divider {
