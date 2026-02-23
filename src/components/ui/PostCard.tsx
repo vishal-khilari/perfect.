@@ -53,7 +53,7 @@ export function PostCard({ post, index = 0, postCardDelay }: PostCardProps) {
         <div className="flex flex-wrap items-center gap-x-3 gap-y-2 text-[9px] sm:text-xs font-mono text-pale/60 tracking-[0.1em] uppercase">
           <span className="text-pale/50">{post.name || 'Anonymous'}</span>
           <span className="opacity-20 text-[8px]">/</span>
-          <span>{post.createdDate}</span>
+          <span>{post.createdAt}</span>
           <span className="opacity-20 text-[8px]">/</span>
           <span>{post.readingTime} min</span>
           {post.hasAudio && (

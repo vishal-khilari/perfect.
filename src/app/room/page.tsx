@@ -1,3 +1,4 @@
+'use client';
 import { useState, useEffect, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import { Nav } from '@/components/layout/Nav';
@@ -10,6 +11,18 @@ import { useReducedMotion } from '@/hooks/useReducedMotion'; // Import useReduce
 type SortOrder = 'latest' | 'oldest' | 'random';
 type FilterMood = Mood | 'all';
 
+const sorts = [
+  { value: 'latest' as const, label: 'Latest' },
+  { value: 'oldest' as const, label: 'Oldest' },
+  { value: 'random' as const, label: 'Random' },
+];
+
+const moods: FilterMood[] = ['all', 'Rain', 'Static', 'Silence', 'Night'];
+
+function getMoodColorValue(m: Mood) {
+  return MOOD_COLORS[m] || '#888888';
+}
+
 export default function RoomPage() {
   const [posts, setPosts] = useState<PostPreview[]>([]);
   const [loading, setLoading] = useState(true);
@@ -20,10 +33,12 @@ export default function RoomPage() {
   const prefersReducedMotion = useReducedMotion(); // Use the hook
 
   // Standardize duration to 0.8s for fade/entry
-  const transitionDuration = prefersReducedMotion ? 0.1 : 0.8; 
+  const transitionDuration = prefersReducedMotion ? 0.1 : 0.8;
   // Conditional delay for PostCard
-  const postCardDelay = prefersReducedMotion ? 0.0 : 0.15; 
-
+  const postCardDelay = prefersReducedMotion ? 0.0 : 0.15;
+  const loadRandom = useCallback(() => {
+    setSort('random');
+  }, []);
   return (
     <>
       <Nav />
