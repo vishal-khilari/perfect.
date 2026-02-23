@@ -88,7 +88,7 @@ export function LandingClient({ initialPosts }: LandingClientProps) {
       </section>
 
       {/* Recent whispers */}
-      <section className="px-6 pb-24 sm:pb-32 max-w-3xl mx-auto w-full">
+      <section className="px-6 pb-16 pt-24 sm:pt-32 max-w-3xl mx-auto w-full"> {/* Normalized pb, added pt */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -117,7 +117,7 @@ export function LandingClient({ initialPosts }: LandingClientProps) {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: transitionDuration, delay: prefersReducedMotion ? 0 : 0.3 }} // Standardized duration and delay
-              className="mt-12 text-center"
+              className="mt-16 text-center" {/* Increased mt */}
             >
               <Link
                 href="/room"

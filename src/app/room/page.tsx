@@ -112,7 +112,7 @@ export default function RoomPage() {
           </div>
 
           {/* Random confession button */}
-          <div className="mb-12 sm:mb-20">
+          <div className="mb-16 sm:mb-20"> {/* Normalized mb */}
             <motion.button
               onClick={loadRandom}
               whileTap={{ scale: prefersReducedMotion ? 1 : 0.98 }} // Already good
@@ -146,7 +146,7 @@ export default function RoomPage() {
           )}
 
           {posts.length > 0 && (
-            <p className="mt-12 text-center text-xs font-mono text-mist tracking-wider">
+            <p className="mt-16 text-center text-xs font-mono text-mist tracking-wider"> {/* Normalized mt */}
               {posts.length} {posts.length === 1 ? 'whisper' : 'whispers'} now heard {/* Refined */}
             </p>
           )}
