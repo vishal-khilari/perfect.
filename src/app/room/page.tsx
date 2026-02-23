@@ -74,21 +74,24 @@ export default function RoomPage() {
           animate={{ opacity: 1 }}
           transition={{ duration: transitionDuration }}
         >
-          <div className="mb-12 sm:mb-20">
-            <p className="font-mono text-[9px] sm:text-xs text-mist/60 tracking-[0.3em] uppercase mb-4">
+          {/* Section 6.2: Refine spacing of the Room title and intro copy */}
+          <div className="mb-16 sm:mb-24"> {/* Increased mb here */}
+            <p className="font-mono text-[9px] sm:text-xs text-mist/60 tracking-[0.3em] uppercase mb-6 sm:mb-8"> {/* Increased mb */}
               The Archive
             </p>
-            <h2 className="font-serif italic text-pale/30 text-lg sm:text-2xl">
+            <h2 className="font-serif italic text-pale/30 text-lg sm:text-2xl mb-10 sm:mb-14"> {/* Added mb */}
               What people left behind.
             </h2>
           </div>
 
+          {/* Section 6.3: Add more breathing room above and below the filter section */}
           {/* Controls */}
-          <div className="flex flex-col gap-10 mb-12 sm:mb-20">
+          <div className="flex flex-col gap-10 mt-16 sm:mt-24 mb-16 sm:mb-24"> {/* Added mt and increased mb */}
             {/* Sort */}
             <div className="flex flex-col gap-4">
               <span className="text-[9px] font-mono text-mist/40 tracking-[0.2em] uppercase">Order by</span>
-              <div className="flex gap-6 sm:gap-8 overflow-x-auto pb-2 scrollbar-hide">
+              {/* Section 6.4: Increase spacing between filter buttons slightly */}
+              <div className="flex gap-8 sm:gap-10 overflow-x-auto pb-2 scrollbar-hide"> {/* Increased gap */}
                 {sorts.map(({ value, label }) => (
                   <motion.button
                     key={value}
@@ -112,7 +115,8 @@ export default function RoomPage() {
               {/* Mood filter */}
               <div className="flex flex-col gap-4">
                 <span className="text-[9px] font-mono text-mist/40 tracking-[0.2em] uppercase">Filter by mood</span>
-                <div className="flex gap-3 flex-wrap">
+                {/* Section 6.4: Increase spacing between filter buttons slightly */}
+                <div className="flex gap-4 sm:gap-6 flex-wrap"> {/* Increased gap */}
                   {moods.map((m) => (
                     <motion.button
                       key={m}
@@ -163,23 +167,24 @@ export default function RoomPage() {
 
           <hr className="divider opacity-30" />
 
+          {/* Section 6.1, 6.6: Increase vertical spacing above the first PostCard / subtle top padding */}
           {/* Posts */}
           {loading ? (
-            <div className="space-y-8">
+            <div className="space-y-8 pt-16 sm:pt-20"> {/* Added pt */}
               {[...Array(3)].map((_, i) => (
                 <SkeletonPostCard key={i} />
               ))}
             </div>
           ) : posts.length === 0 ? (
-            <div className="py-32 text-center">
+            <div className="py-32 text-center pt-16 sm:pt-20"> {/* Added pt */}
               <p className="font-serif italic text-pale/30 text-lg tracking-wide">
                 The silence is complete.
               </p>
             </div>
           ) : (
-            <div className="space-y-8">
+            <div className="space-y-8 pt-16 sm:pt-20"> {/* Added pt */}
               {posts.map((post, i) => (
-                <PostCard key={post.id} post={post} index={i} postCardDelay={postCardDelay} /> // Pass delay to PostCard
+                <PostCard key={post.id} post={post} index={i} postCardDelay={postCardDelay} />
               ))}
             </div>
           )}
