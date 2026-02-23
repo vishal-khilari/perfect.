@@ -102,17 +102,17 @@ export function PostPageClient({ post }: PostPageClientProps) {
         className="max-w-reading mx-auto"
       >
         {/* Mood badge */}
-        <div className="mb-10 sm:mb-14">
+        <div className="mb-16 sm:mb-20">
           <span className={`mood-badge px-4 py-1.5 text-[9px] sm:text-xs tracking-[0.2em] ${moodTailwindClass}`}>{post.mood}</span>
         </div>
 
         {/* Title */}
-        <h1 className="font-serif text-whisper/95 mb-8 leading-[1.1] sm:leading-tight max-w-full break-words">
+        <h1 className="font-serif text-whisper/95 mb-12 sm:mb-16 leading-[1.1] sm:leading-tight max-w-full break-words">
           {post.title || 'Untitled'}
         </h1>
 
         {/* Meta */}
-        <div className="flex flex-wrap items-center gap-x-3 gap-y-3 mb-12 sm:mb-16 text-[9px] sm:text-xs font-mono text-mist/60 tracking-[0.1em] uppercase border-y border-ash/10 py-6 w-full overflow-hidden">
+        <div className="flex flex-wrap items-center gap-x-3 gap-y-3 mb-16 sm:mb-20 text-[9px] sm:text-xs font-mono text-mist/60 tracking-[0.1em] uppercase border-y border-ash/10 py-6 w-full overflow-hidden">
           <span className="text-pale/60">{post.name || 'Anonymous'}</span>
           <span className="opacity-20 text-[8px]">/</span>
           <span>{post.createdDate}</span>
@@ -127,20 +127,20 @@ export function PostPageClient({ post }: PostPageClientProps) {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: transitionDuration, delay: prefersReducedMotion ? 0 : 0.4 }}
-          className="reading-body mb-20 sm:mb-24"
+          className="reading-body mb-24 sm:mb-32"
         >
           {post.body}
         </motion.div>
 
         {/* Audio */}
         {post.hasAudio && post.audioFileId && (
-          <div className="mb-20 sm:mb-24 p-8 border border-ash/10 bg-white/[0.01]">
+          <div className="mb-24 sm:mb-32 p-8 border border-ash/10 bg-white/[0.01]">
             <p className="text-[9px] font-mono text-mist/40 tracking-[0.3em] uppercase mb-6 text-center">Voice Recording</p>
             <AudioPlayer fileId={post.audioFileId} />
           </div>
         )}
 
-        <hr className="divider opacity-30 my-16 sm:my-20" />
+        <hr className="divider opacity-30 my-20 sm:my-24" />
 
         {/* Reactions */}
         <motion.div
@@ -148,7 +148,7 @@ export function PostPageClient({ post }: PostPageClientProps) {
           animate={{ opacity: 1 }}
           transition={{ duration: transitionDuration, delay: prefersReducedMotion ? 0 : 0.8 }}
         >
-          <p className="text-[9px] sm:text-xs font-mono text-mist/60 tracking-[0.3em] uppercase mb-10 text-center sm:text-left">
+          <p className="text-[9px] sm:text-xs font-mono text-mist/60 tracking-[0.3em] uppercase mb-12 sm:mb-16 text-center sm:text-left">
             If this moved you
           </p>
 
