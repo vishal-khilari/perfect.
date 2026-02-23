@@ -7,22 +7,26 @@ import { PostPreview, MOOD_COLORS } from '@/types';
 interface PostCardProps {
   post: PostPreview;
   index?: number;
+  postCardDelay?: number; // New prop for conditional delay
 }
 
-export function PostCard({ post, index = 0 }: PostCardProps) {
+export function PostCard({ post, index = 0, postCardDelay }: PostCardProps) {
   const moodColor = MOOD_COLORS[post.mood as keyof typeof MOOD_COLORS] || 'text-pale';
   const date = new Date(post.createdAt).toLocaleDateString('en-US', {
     month: 'long',
     year: 'numeric',
   });
 
+  const delay = postCardDelay !== undefined ? postCardDelay : (index * 0.15); // Use prop if provided, else default
+  const scaleWhileTap = postCardDelay === 0 ? 1 : 0.995; // No scale if reduced motion is preferred
+
   return (
     <Link href={`/post/${post.id}`} className="block w-full">
       <motion.div
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1.2, delay: index * 0.15 }}
-        whileTap={{ scale: 0.995, opacity: 0.8 }}
+        transition={{ duration: 1.2, delay: delay }}
+        whileTap={{ scale: scaleWhileTap, opacity: 0.8 }}
         className="post-card group border-b border-ash/20 py-8 sm:py-12 transition-all duration-700 w-full"
       >
         <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4 mb-4 sm:mb-6">

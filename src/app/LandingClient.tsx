@@ -6,12 +6,18 @@ import { PostCard } from '@/components/ui/PostCard';
 import { FirstVisitModal } from '@/components/ui/FirstVisitModal';
 import { Nav } from '@/components/layout/Nav';
 import { PostPreview } from '@/types';
+import { useReducedMotion } from '@/hooks/useReducedMotion'; // Import useReducedMotion
 
 interface LandingClientProps {
   initialPosts: PostPreview[];
 }
 
 export function LandingClient({ initialPosts }: LandingClientProps) {
+  const prefersReducedMotion = useReducedMotion(); // Use the hook
+
+  const transitionDuration = prefersReducedMotion ? 0.1 : 1.5; // Conditional duration
+  const postCardDelay = prefersReducedMotion ? 0.0 : 0.15; // Conditional delay
+
   return (
     <>
       <FirstVisitModal />
@@ -24,7 +30,7 @@ export function LandingClient({ initialPosts }: LandingClientProps) {
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 2, delay: 0.3 }}
+          transition={{ duration: prefersReducedMotion ? 0.1 : 2, delay: prefersReducedMotion ? 0 : 0.3 }}
           className="max-w-3xl mx-auto w-full"
         >
           <p className="font-mono text-[9px] sm:text-xs text-mist/60 tracking-[0.3em] sm:tracking-[0.4em] uppercase mb-10 sm:mb-16">
@@ -42,7 +48,7 @@ export function LandingClient({ initialPosts }: LandingClientProps) {
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 1.5, delay: 1.2 }}
+            transition={{ duration: transitionDuration, delay: prefersReducedMotion ? 0 : 1.2 }}
             className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6"
           >
             <Link
@@ -50,7 +56,7 @@ export function LandingClient({ initialPosts }: LandingClientProps) {
               className="w-full sm:w-auto"
             >
               <motion.span
-                whileTap={{ scale: 0.98 }}
+                whileTap={{ scale: prefersReducedMotion ? 1 : 0.98 }}
                 className="btn-ghost w-full sm:w-auto !border-ash/60 hover:!border-mist/80 !text-pale/80 hover:!text-ghost px-10 sm:px-12 tracking-[0.3em]"
               >
                 Unburden
@@ -61,7 +67,7 @@ export function LandingClient({ initialPosts }: LandingClientProps) {
               className="w-full sm:w-auto"
             >
               <motion.span
-                whileTap={{ scale: 0.98 }}
+                whileTap={{ scale: prefersReducedMotion ? 1 : 0.98 }}
                 className="btn-ghost w-full sm:w-auto !border-ash/20 hover:!border-ash/50 !text-pale/50 hover:!text-pale/70 px-8 sm:px-10 tracking-[0.2em]"
               >
                 Open the Archive
@@ -74,7 +80,7 @@ export function LandingClient({ initialPosts }: LandingClientProps) {
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 1, delay: 2.5 }}
+          transition={{ duration: prefersReducedMotion ? 0.1 : 1, delay: prefersReducedMotion ? 0 : 2.5 }}
           className="absolute bottom-10 sm:bottom-16 flex flex-col items-center gap-3"
         >
           <div className="w-[1px] h-10 sm:h-16 bg-gradient-to-b from-transparent via-ash/40 to-transparent" />
@@ -86,7 +92,7 @@ export function LandingClient({ initialPosts }: LandingClientProps) {
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 1.5, delay: 1.8 }}
+          transition={{ duration: transitionDuration, delay: prefersReducedMotion ? 0 : 1.8 }}
         >
           <p className="font-mono text-[10px] sm:text-xs text-mist tracking-[0.2em] uppercase mb-10 sm:mb-12">
             From the archive
@@ -101,7 +107,7 @@ export function LandingClient({ initialPosts }: LandingClientProps) {
           ) : (
             <div className="w-full border-t border-ash/20 overflow-hidden space-y-8">
               {initialPosts.map((post, i) => (
-                <PostCard key={post.id} post={post} index={i} />
+                <PostCard key={post.id} post={post} index={i} postCardDelay={postCardDelay} />
               ))}
             </div>
           )}
@@ -110,7 +116,7 @@ export function LandingClient({ initialPosts }: LandingClientProps) {
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ duration: 1, delay: 2.5 }}
+              transition={{ duration: transitionDuration, delay: prefersReducedMotion ? 0 : 2.5 }}
               className="mt-12 text-center"
             >
               <Link
