@@ -35,16 +35,16 @@ export function LandingClient({ initialPosts }: LandingClientProps) {
         >
           {/* Section 11.6: Visual Noise Audit - Remove uppercase, adjust tracking */}
           {/* Section 11.5: Remove Brand Self-Reference - "The Quiet Room" branding on page, compress hero */}
-          <p className="font-mono text-[9px] sm:text-xs text-mist/60 tracking-[0.2em] mb-10 sm:mb-16"> {/* Removed uppercase, tracking adjusted */}
-            The Quiet Room
-          </p>
-
-          {/* Section 11.4: Hero Compression - Language refined in Section 9 */}
           <h1 className="font-serif text-whisper/95 mb-8 sm:mb-10 leading-[1.05] sm:leading-[0.95] tracking-tight">
-            Leave it here.
+            The Quiet Room
           </h1>
 
-          <p className="font-serif italic text-ghost/40 text-base sm:text-xl mb-16 sm:mb-24">
+          {/* Section 11.4: Hero Compression - Language refined in Section 9 */}
+          <p className="font-serif italic text-ghost/40 text-base sm:text-xl mb-8 sm:mb-10">
+            Leave it here.
+          </p>
+
+          <p className="font-serif italic text-ghost/40 text-base sm:text-xl mb-10 sm:mb-16">
             Walk away lighter.
           </p>
 
