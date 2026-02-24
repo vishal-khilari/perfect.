@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react'; // Added useEffect and useRef
 import { motion, AnimatePresence } from 'framer-motion'; // Added AnimatePresence
-import { AudioPlayer } from '@/components/audio/AudioRecorder';
+import { AudioPlayer } from '@/components/audio/AudioPlayer';
 import { FullPost, Mood, MOOD_COLORS, MOOD_HEX_COLORS } from '@/types'; // Import MOOD_HEX_COLORS
 import { useReducedMotion } from '@/hooks/useReducedMotion'; // Import useReducedMotion
 

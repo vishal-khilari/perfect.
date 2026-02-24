@@ -37,7 +37,7 @@ body {
   background-color: var(--void);
   color: var(--whisper);
   font-family: var(--font-dm-sans), system-ui, sans-serif;
-  font-weight: 300;
+  font-weight: 400; /* Increased for better legibility */
   min-height: 100vh;
   overflow-x: hidden;
   position: relative;
@@ -91,7 +91,7 @@ body::before {
   }
 
   70% {
-    transform: translate(-4%, 1%);
+    transform: translate(-4%, 1%) ;
   }
 
   80% {
@@ -142,7 +142,7 @@ h3 {
 
 p {
   line-height: 1.85; /* Increased for better reading rhythm */
-  color: var(--ghost);
+  color: var(--whisper); /* Increased contrast for readability */
   -webkit-hyphens: auto;
   -ms-hyphens: auto;
   hyphens: auto;
@@ -153,7 +153,7 @@ p {
   font-family: var(--font-eb-garamond), Georgia, serif;
   font-size: 1.1rem;
   line-height: 1.85; /* Increased for better reading rhythm on mobile */
-  color: var(--ghost);
+  color: var(--whisper); /* Increased contrast for readability */
   white-space: pre-wrap;
   overflow-wrap: break-word;
   word-wrap: break-word;
@@ -280,7 +280,7 @@ textarea::placeholder {
 /* ── Mood badge ──────────────────────────────────────────────────────── */
 .mood-badge {
   font-family: var(--font-courier-prime), monospace;
-  font-size: 0.65rem;
+  font-size: 0.75rem; /* Increased to match new metadata size */
   letter-spacing: 0.2em;
   text-transform: uppercase;
   padding: 0.25rem 0.75rem;
@@ -334,6 +334,64 @@ canvas.waveform {
 .modal-overlay {
   background: rgba(8, 8, 8, 0.85);
   backdrop-filter: blur(4px);
+}
+
+/* ── Audio player range input ────────────────────────────────────── */
+input[type='range'] {
+  -webkit-appearance: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+input[type='range']:focus {
+  outline: none;
+}
+
+/* Track */
+input[type='range']::-webkit-slider-runnable-track {
+  background: var(--ash);
+  border-radius: 0.5rem;
+  height: 4px;
+}
+
+input[type='range']::-moz-range-track {
+  background: var(--ash);
+  border-radius: 0.5rem;
+  height: 4px;
+}
+
+input[type='range']::-ms-track {
+  background: var(--ash);
+  border-radius: 0.5rem;
+  height: 4px;
+}
+
+/* Thumb */
+input[type='range']::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  height: 14px;
+  width: 14px;
+  background-color: var(--pale);
+  border-radius: 50%;
+  margin-top: -5px; /* Center thumb on track */
+}
+
+input[type='range']::-moz-range-thumb {
+  height: 14px;
+  width: 14px;
+  background-color: var(--pale);
+  border-radius: 50%;
+  border: none;
+}
+
+input[type='range']::-ms-thumb {
+  height: 14px;
+  width: 14px;
+  background-color: var(--pale);
+  border-radius: 50%;
+  margin-top: 0;
+  box-shadow: none;
+  border: none;
 }
 
 body::after {

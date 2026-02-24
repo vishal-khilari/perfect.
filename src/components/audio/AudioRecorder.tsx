@@ -241,31 +241,3 @@ export function AudioRecorder({ onAudioReady }: AudioRecorderProps) {
   );
 }
 
-// ─── Minimal audio player for post pages ──────────────────────────────────────
-
-export function AudioPlayer({ fileId }: { fileId: string }) {
-  const [loaded, setLoaded] = useState(false);
-
-  if (!fileId) return null;
-
-  return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 1 }}
-      className="my-8"
-    >
-      <audio
-        src={`/api/audio/${fileId}`}
-        controls
-        preload="metadata"
-        onCanPlay={() => setLoaded(true)}
-        className="w-full transition-opacity duration-700"
-        style={{
-          opacity: loaded ? 0.8 : 0.4,
-          filter: 'invert(0.8) contrast(0.5)',
-        }}
-      />
-    </motion.div>
-  );
-}

@@ -36,6 +36,7 @@ const config: Config = {
         'fade-in': 'fadeIn 1.2s ease forwards',
         'fade-up': 'fadeUp 1.4s ease forwards',
         'grain': 'grain 8s steps(10) infinite',
+        'pulse-subtle': 'pulseSubtle 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
       },
       keyframes: {
         fadeIn: {
@@ -57,6 +58,10 @@ const config: Config = {
           '70%': { transform: 'translate(-4%, 1%)' },
           '80%': { transform: 'translate(1%, -2%)' },
           '90%': { transform: 'translate(-2%, 3%)' },
+        },
+        pulseSubtle: {
+          '0%, 100%': { opacity: '0.3' },
+          '50%': { opacity: '0.6' },
         },
       },
     },

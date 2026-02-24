@@ -22,7 +22,7 @@ export function Nav() {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: transitionDuration, delay: transitionDelay }} // Standardized duration and delay
-      className="fixed top-0 left-0 right-0 z-50 py-5 sm:py-8"
+      className="fixed top-0 left-0 right-0 z-50 py-6 sm:py-8"
       style={{ background: 'linear-gradient(to bottom, rgba(14,14,14,0.95) 0%, transparent 100%)' }}
     >
       <div className="max-w-3xl mx-auto px-6 flex justify-between items-center w-full">
@@ -40,23 +40,8 @@ export function Nav() {
               key={href}
               href={href}
               aria-current={pathname === href ? 'page' : undefined}
-              className="relative font-sans text-[9px] sm:text-[11px] tracking-[0.15em] sm:tracking-[0.25em] uppercase transition-colors duration-500 py-2"
+              className="relative font-sans text-xs sm:text-[11px] tracking-[0.15em] sm:tracking-[0.25em] uppercase transition-colors duration-500 py-3"
               style={{
                 color: pathname === href ? '#f1f1f1' : 'rgba(136,136,136,0.8)',
-              }}
-            >
-              {label}
-              {pathname === href && (
-                <motion.span
-                  layoutId="nav-active"
-                  className="absolute -bottom-0.5 left-0 right-0 h-[1px] bg-whisper/40"
-                  transition={{ duration: transitionDuration }} // Standardized duration for layout animation
-                />
-              )}
-            </Link>
-          ))}
-        </div>
-      </div>
-    </motion.nav>
   );
 }

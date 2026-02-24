@@ -43,23 +43,23 @@ export function PostCard({ post, index = 0, postCardDelay }: PostCardProps) {
           </span>
         </div>
 
-        <p className="preview-text font-sans text-[13px] sm:text-sm text-pale/60 leading-relaxed mb-6 sm:mb-8 line-clamp-3 sm:line-clamp-none break-words">
+        <p className="preview-text font-sans text-ghost leading-relaxed mb-6 sm:mb-8 line-clamp-3 sm:line-clamp-none break-words text-sm sm:text-base">
           {post.preview || '...'}
           {post.preview && post.preview.length >= 120 && (
-            <span className="text-mist/40"> ···</span>
+            <span className="text-mist/60"> ···</span>
           )}
         </p>
 
-        <div className="flex flex-wrap items-center gap-x-3 gap-y-2 text-[9px] sm:text-xs font-mono text-pale/60 tracking-[0.1em] uppercase">
-          <span className="text-pale/50">{post.name || 'Anonymous'}</span>
-          <span className="opacity-20 text-[8px]">/</span>
-          <span>{post.createdAt}</span>
-          <span className="opacity-20 text-[8px]">/</span>
+        <div className="flex flex-wrap items-center gap-x-3 gap-y-2 font-mono text-pale/80 tracking-[0.1em] uppercase text-xs sm:text-sm">
+          <span className="text-pale/70">{post.name || 'Anonymous'}</span>
+          <span className="opacity-40 text-xs">/</span>
+          <span>{date}</span>
+          <span className="opacity-40 text-xs">/</span>
           <span>{post.readingTime} min</span>
           {post.hasAudio && (
             <>
-              <span className="opacity-20 text-[8px]">/</span>
-              <span className="text-pale/40">⟡ audio</span>
+              <span className="opacity-40 text-xs">/</span>
+              <span className="text-pale/60">⟡ audio</span>
             </>
           )}
           {hasReactions && (

@@ -36,6 +36,34 @@ export default function RoomPage() {
   const transitionDuration = prefersReducedMotion ? 0.1 : 0.8;
   // Conditional delay for PostCard
   const postCardDelay = prefersReducedMotion ? 0.0 : 0.15;
+
+  const fetchPosts = useCallback(async () => {
+    setLoading(true);
+    try {
+      const queryParams = new URLSearchParams();
+      queryParams.append('sort', sort);
+      if (moodFilter !== 'all') {
+        queryParams.append('mood', moodFilter);
+      }
+      if (audioOnly) {
+        queryParams.append('audioOnly', 'true');
+      }
+
+      const response = await fetch(`/api/posts?${queryParams.toString()}`);
+      const data = await response.json();
+      setPosts(data.posts);
+    } catch (error) {
+      console.error('Failed to fetch posts:', error);
+      setPosts([]);
+    } finally {
+      setLoading(false);
+    }
+  }, [sort, moodFilter, audioOnly]);
+
+  useEffect(() => {
+    fetchPosts();
+  }, [fetchPosts]);
+
   const loadRandom = useCallback(() => {
     setSort('random');
   }, []);
@@ -90,24 +118,23 @@ export default function RoomPage() {
                 <span className="text-[9px] font-mono text-mist/40 tracking-[0.15em]">mood</span> {/* Adjusted tracking */}
                 <div className="flex gap-4 sm:gap-6 flex-wrap">
                   {moods.map((m) => (
-                    <motion.button
-                      key={m}
-                      onClick={() => setMoodFilter(m)}
-                      whileTap={{ scale: prefersReducedMotion ? 1 : 0.98, boxShadow: prefersReducedMotion ? 'none' : `0 0 10px ${m === 'all' ? 'rgba(136,136,136,0.2)' : `${getMoodColorValue(m as Mood)}40`}` }}
-                      className="text-[10px] sm:text-xs font-mono tracking-[0.1em] capitalize transition-all duration-500 min-h-[44px] px-4 border flex items-center justify-center relative overflow-hidden group"
-                      style={{
-                        color: moodFilter === m ? 'rgba(176,176,176,1)' : 'rgba(136,136,136,0.6)',
-                        borderColor: moodFilter === m ? 'rgba(136,136,136,0.5)' : 'rgba(42,42,42,0.4)',
-                        backgroundColor: moodFilter === m ? 'rgba(255,255,255,0.03)' : 'transparent',
-                        boxShadow: moodFilter === m ? `0 0 10px ${m === 'all' ? 'rgba(136,136,136,0.2)' : `${getMoodColorValue(m as Mood)}40`}` : 'none', // Reduced glow intensity
-                      }}
-                    >
-                      {m !== 'all' && (
-                        <MoodIcon mood={m as Mood} className={`mr-2 h-4 w-4 ${moodFilter === m ? 'opacity-80' : 'opacity-40 group-hover:opacity-60'} transition-opacity duration-500`} />
-                      )}
-                      {m}
-                    </motion.button>
-                  ))}
+                                      <motion.button
+                                        key={m}
+                                        onClick={() => setMoodFilter(m)}
+                                        whileTap={{ scale: prefersReducedMotion ? 1 : 0.98, boxShadow: prefersReducedMotion ? 'none' : `0 0 10px ${moodFilter === m ? `${getMoodColorValue(m as Mood)}60` : 'transparent'}` }}
+                                        className="text-xs sm:text-sm font-mono tracking-[0.1em] capitalize transition-all duration-500 min-h-[44px] px-5 border flex items-center justify-center relative overflow-hidden group"
+                                        style={{
+                                          color: moodFilter === m ? 'rgba(255,255,255,1)' : 'rgba(176,176,176,0.8)',
+                                          borderColor: moodFilter === m ? 'rgba(255,255,255,0.4)' : 'rgba(42,42,42,0.6)',
+                                          backgroundColor: moodFilter === m ? 'rgba(255,255,255,0.05)' : 'transparent',
+                                          boxShadow: moodFilter === m ? `0 0 10px ${m === 'all' ? 'rgba(136,136,136,0.2)' : `${getMoodColorValue(m as Mood)}60`}` : 'none', // Slightly increased glow intensity for active, adjusted to be more subtle overall
+                                        }}
+                                      >
+                                          {m !== 'all' && (
+                                            <MoodIcon mood={m as Mood} className={`mr-2 h-4 w-4 ${moodFilter === m ? 'opacity-90' : 'opacity-50 group-hover:opacity-70'} transition-opacity duration-500`} />
+                                          )}
+                                          {m}
+                                        </motion.button>                  ))}
                 </div>
               </div>
 
@@ -152,8 +179,7 @@ export default function RoomPage() {
                 nothing has been left here yet.
               </p>
             </div>
-          ) : (
-            <div className="space-y-8 pt-16 sm:pt-20">
+            <div className="space-y-12 pt-16 sm:pt-20">
               {posts.map((post, i) => (
                 <PostCard key={post.id} post={post} index={i} postCardDelay={postCardDelay} />
               ))}
