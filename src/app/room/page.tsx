@@ -134,7 +134,8 @@ export default function RoomPage() {
                                             <MoodIcon mood={m as Mood} className={`mr-2 h-4 w-4 ${moodFilter === m ? 'opacity-90' : 'opacity-50 group-hover:opacity-70'} transition-opacity duration-500`} />
                                           )}
                                           {m}
-                                        </motion.button>                  ))}
+                                        </motion.button>
+                                      ))}
                 </div>
               </div>
 
@@ -174,11 +175,19 @@ export default function RoomPage() {
               ))}
             </div>
           ) : posts.length === 0 ? (
-            <div className="py-32 text-center pt-16 sm:pt-20">
-              <p className="font-serif italic text-pale/30 text-lg tracking-wide">
-                nothing has been left here yet.
-              </p>
-            </div>
+            <>
+              <div className="py-32 text-center pt-16 sm:pt-20">
+                <p className="font-serif italic text-pale/30 text-lg tracking-wide">
+                  nothing has been left here yet.
+                </p>
+              </div>
+              <div className="space-y-12 pt-16 sm:pt-20">
+                {posts.map((post, i) => (
+                  <PostCard key={post.id} post={post} index={i} postCardDelay={postCardDelay} />
+                ))}
+              </div>
+            </>
+          ) : (
             <div className="space-y-12 pt-16 sm:pt-20">
               {posts.map((post, i) => (
                 <PostCard key={post.id} post={post} index={i} postCardDelay={postCardDelay} />

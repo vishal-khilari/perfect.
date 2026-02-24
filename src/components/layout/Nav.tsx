@@ -43,5 +43,20 @@ export function Nav() {
               className="relative font-sans text-xs sm:text-[11px] tracking-[0.15em] sm:tracking-[0.25em] uppercase transition-colors duration-500 py-3"
               style={{
                 color: pathname === href ? '#f1f1f1' : 'rgba(136,136,136,0.8)',
+              }}
+            >
+              {label}
+              {pathname === href && (
+                <motion.span
+                  layoutId="nav-active"
+                  className="absolute -bottom-0.5 left-0 right-0 h-[1px] bg-whisper/40"
+                  transition={{ duration: transitionDuration }} // Standardized duration for layout animation
+                />
+              )}
+            </Link>
+          ))}
+        </div>
+      </div>
+    </motion.nav>
   );
 }
