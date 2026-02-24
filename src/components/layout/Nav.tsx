@@ -34,15 +34,15 @@ export function Nav() {
           <span className="sm:hidden">quiet room</span>
         </Link>
 
-        <div className="flex gap-4 sm:gap-10">
+        <div className="flex gap-6 sm:gap-12">
           {links.map(({ href, label }) => (
             <Link
               key={href}
               href={href}
               aria-current={pathname === href ? 'page' : undefined}
-              className="relative font-sans text-[9px] sm:text-[11px] tracking-[0.15em] sm:tracking-[0.25em] uppercase transition-colors duration-500 py-1"
+              className="relative font-sans text-[9px] sm:text-[11px] tracking-[0.15em] sm:tracking-[0.25em] uppercase transition-colors duration-500 py-2"
               style={{
-                color: pathname === href ? 'rgba(241,241,241,0.9)' : 'rgba(136,136,136,0.65)',
+                color: pathname === href ? '#f1f1f1' : 'rgba(136,136,136,0.8)',
               }}
             >
               {label}
